@@ -1,0 +1,46 @@
+#   -   Ignore file directory
+AliAOD/
+LHC18q/
+MCtrainResults/
+AliAODZDC/
+
+
+#   -   Ignore compilation files
+AliAnalysisTaskUPCforward_*
+
+
+#   -   Ignore output files
+/AnalysisResults*
+pngResults/
+trial/
+
+#   -   Ignore todolist
+todoLIST.txt
+listONLY10runs.txt
+list2015.txt
+
+#   -   Ignore the Fits
+fit.cpp
+fitCoherent.cpp
+fitEverything.cpp
+fitIncoherent.cpp
+fitMacros/MCplotsFromEvgenyKryshen.root
+fitMacros/fitR*
+fitMacros/nanan*
+fitMacros/
+fitRootConverted/fitM.*
+fitRootConverted/fitInvMassEvgeny*
+fitRootConverted/analysed*
+
+
+#  -  Ignore GRID files
+myTask*
+myAnalysis*
+outputs_valid*
+stderr
+wn.x*
+00029*
+Sta*
+ROOT*
+download2015*
+trending*

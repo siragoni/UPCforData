@@ -370,7 +370,7 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
     else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyShiftPlusTwoH");
   }
   else                           fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionH");
-  fInvariantMassDistributionH->Rebin(5);
+  fInvariantMassDistributionH->Rebin(4);
   fInvariantMassDistributionH->Draw("PE");
 
   fInvariantMassDistributionH->SetLineColor(kBlue);
@@ -598,21 +598,21 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
     // numberOfTotalPsi2s = fCohPsi2sToMuFromModelH-> Integral();
     // numberOfTotalJPsi  = JPsiPeakFit    -> Integral(2.2,6,1.E-15);
     // numberOfTotalPsi2s = PsiPrimePeakFit-> Integral(2.2,6,1.E-15);
-    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;
-    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.04;
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.04;
     Double_t JPsiRangeVar[9];
-    JPsiRangeVar[0]       = (JPsiPeakFit    -> Integral(2.85,3.35))/0.05;
-    JPsiRangeVar[1]       = (JPsiPeakFit    -> Integral(2.8,3.35))/0.05;
-    JPsiRangeVar[2]       = (JPsiPeakFit    -> Integral(2.9,3.35))/0.05;
-    JPsiRangeVar[3]       = (JPsiPeakFit    -> Integral(2.85,3.3))/0.05;
-    JPsiRangeVar[4]       = (JPsiPeakFit    -> Integral(2.85,3.4))/0.05;
+    JPsiRangeVar[0]       = (JPsiPeakFit    -> Integral(2.85,3.35))/0.04;
+    JPsiRangeVar[1]       = (JPsiPeakFit    -> Integral(2.8,3.35))/0.04;
+    JPsiRangeVar[2]       = (JPsiPeakFit    -> Integral(2.9,3.35))/0.04;
+    JPsiRangeVar[3]       = (JPsiPeakFit    -> Integral(2.85,3.3))/0.04;
+    JPsiRangeVar[4]       = (JPsiPeakFit    -> Integral(2.85,3.4))/0.04;
     numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
     numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
 
   // }
   // numberOfTotalBkg = fTwoGammaFromModelH      -> Integral();
   // numberOfTotalBkg = GammaGammaFit-> Integral(2.2,6,1.E-15);
-  numberOfTotalBkg    = (GammaGammaFit-> Integral(2.2,6))/0.05;
+  numberOfTotalBkg    = (GammaGammaFit-> Integral(2.2,6))/0.04;
   numberOfTotalBkgErr = numberOfTotalBkg*fFitInvMass->GetParError(17)/fFitInvMass->GetParameter(17);
   latex->DrawLatex(0.55,0.66,Form("N_{J/#psi} = %.0f #pm %.0f",        numberOfTotalJPsi,  numberOfTotalJPsiErr ));//fFitInvMass->GetParameter(0) *fFitInvMass->GetParError(15)/0.05 ) );
   latex->DrawLatex(0.55,0.60,Form("N_{#psi(2S)} = %.0f #pm %.0f",      numberOfTotalPsi2s, numberOfTotalPsi2sErr));//fFitInvMass->GetParameter(5) *fFitInvMass->GetParError(16)/0.05 ) );
@@ -641,7 +641,7 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
 
 
 
-  gPad->SaveAs(Form("pngResults/InvMassSystematics_%d_%d.png", selectionFlag, selectionFlag2), "RECREATE");
+  gPad->SaveAs(Form("pngResults/InvMassSystematicsHalfBin_%d_%d.png", selectionFlag, selectionFlag2), "RECREATE");
 
   // TFile* fileSyst = new TFile("pngResults/Systematics.root", "recreate");
   // TH1F* Systematics = new TH1F("Systematics", "Systematics", 1000, -0.5, 999.5);
@@ -653,14 +653,14 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   // fileSyst->Close();
 
 
-  TFile* fileSyst = new TFile("pngResults/Systematics.root");
+  TFile* fileSyst = new TFile("pngResults/SystematicsHalfBin.root");
   TH1F* Systematics  = (TH1F*) fileSyst->Get("Systematics");
   TH1F* Errors       = (TH1F*) fileSyst->Get("Errors");
   TH1F* Systematics2 = (TH1F*) Systematics->Clone("Systematics");
   TH1F* Errors2      = (TH1F*) Errors->Clone("Errors");
   // fileSyst->cd();
   // fileSyst->Close();
-  TFile* fileSyst2 = new TFile("pngResults/Systematics2.root", "recreate");
+  TFile* fileSyst2 = new TFile("pngResults/SystematicsHalfBin2.root", "recreate");
   fileSyst2->cd();
   // Systematics->Fill( selectionFlag+selectionFlag2, numberOfTotalJPsi    );
   // Errors     ->Fill( selectionFlag+selectionFlag2, numberOfTotalJPsiErr );

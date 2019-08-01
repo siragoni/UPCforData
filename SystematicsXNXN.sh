@@ -100,13 +100,21 @@ mv pngResults/SystematicsHalfHalfBin2.root pngResults/SystematicsHalfHalfBin.roo
 done
 done
 
-# for value in {0..4}
-# do
-# aliroot -b -l <<EOF
-# .L fitRootConverted/fitPtDistr0.cpp
-# fitPtDistr("$ROOTfile",$value);
-# EOF
-# done
+for value in {0..4}
+do
+aliroot -b -l <<EOF
+.L fitRootConverted/fitPtDistr0.cpp
+fitPtDistr("$ROOTfile",$value);
+EOF
+done
+
+for value in {0..4}
+do
+aliroot -b -l <<EOF
+.L fitRootConverted/fitPtDistrShift.cpp
+fitPtDistr("$ROOTfile",$value);
+EOF
+done
 
 
 # for value in {0..7}
@@ -130,6 +138,7 @@ mkdir -p pngResults/$(date +%F)/FitInvMassHalfHalfBin
 
 mv pngResults/InvMassSystematics_1_*              pngResults/$(date +%F)/FitInvMass
 mv pngResults/InvMassSystematics_2_*              pngResults/$(date +%F)/FitInvMass
+mv pngResults/fitPtDistrALL*                      pngResults/$(date +%F)/FitInvMass
 mv pngResults/InvMassSystematics_3_*              pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematics_4_*              pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematics_5_*              pngResults/$(date +%F)/XNXN
@@ -138,6 +147,10 @@ mv pngResults/InvMassSystematics_7_*              pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematics_8_*              pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematics_9_*              pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematics_10*              pngResults/$(date +%F)/XNXN
+mv pngResults/fitPtDistr0N0N*                     pngResults/$(date +%F)/XNXN
+mv pngResults/fitPtDistr0NXN*                     pngResults/$(date +%F)/XNXN
+mv pngResults/fitPtDistrXN0N*                     pngResults/$(date +%F)/XNXN
+mv pngResults/fitPtDistrXNXN*                     pngResults/$(date +%F)/XNXN
 mv pngResults/InvMassSystematicsHalfBin_1_*       pngResults/$(date +%F)/FitInvMassHalfBin
 mv pngResults/InvMassSystematicsHalfBin_2_*       pngResults/$(date +%F)/FitInvMassHalfBin
 mv pngResults/InvMassSystematicsHalfBin_3_*       pngResults/$(date +%F)/XNXNhalfBin
@@ -160,4 +173,4 @@ mv pngResults/InvMassSystematicsHalfHalfBin_9_*   pngResults/$(date +%F)/XNXNhal
 mv pngResults/InvMassSystematicsHalfHalfBin_10*   pngResults/$(date +%F)/XNXNhalfHalfBin
 mv pngResults/Systematics.root                    pngResults/$(date +%F)/XNXN
 mv pngResults/SystematicsHalfBin.root             pngResults/$(date +%F)/XNXNhalfBin
-mv pngResults/SystematicsHalfHalfBin.root         pngResults/$(date +%F)/XNXNhalfHalfBin           
+mv pngResults/SystematicsHalfHalfBin.root         pngResults/$(date +%F)/XNXNhalfHalfBin

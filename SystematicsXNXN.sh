@@ -22,6 +22,45 @@ EOF
 
 echo "OK2"
 
+aliroot -b -l <<EOF
+TFile* fileSyst = new TFile("pngResults/Systematics.root", "recreate");
+TH1F* Systematics = new TH1F("Systematics", "Systematics", 1000, -0.5, 999.5);
+TH1F* Errors = new TH1F("Errors", "Errors", 1000, -0.5, 999.5);
+Systematics->Fill(0);
+Errors->Fill(0);
+Systematics->Write(Systematics->GetName(), TObject::kOverwrite);
+Errors->Write(Errors->GetName(), TObject::kOverwrite);
+fileSyst->Close();
+EOF
+
+echo "REGENERATED Systematics.root"
+
+aliroot -b -l <<EOF
+TFile* fileSyst = new TFile("pngResults/SystematicsHalfBin.root", "recreate");
+TH1F* Systematics = new TH1F("Systematics", "Systematics", 1000, -0.5, 999.5);
+TH1F* Errors = new TH1F("Errors", "Errors", 1000, -0.5, 999.5);
+Systematics->Fill(0);
+Errors->Fill(0);
+Systematics->Write(Systematics->GetName(), TObject::kOverwrite);
+Errors->Write(Errors->GetName(), TObject::kOverwrite);
+fileSyst->Close();
+EOF
+
+echo "REGENERATED SystematicsHalfBin.root"
+
+aliroot -b -l <<EOF
+TFile* fileSyst = new TFile("pngResults/SystematicsHalfHalfBin.root", "recreate");
+TH1F* Systematics = new TH1F("Systematics", "Systematics", 1000, -0.5, 999.5);
+TH1F* Errors = new TH1F("Errors", "Errors", 1000, -0.5, 999.5);
+Systematics->Fill(0);
+Errors->Fill(0);
+Systematics->Write(Systematics->GetName(), TObject::kOverwrite);
+Errors->Write(Errors->GetName(), TObject::kOverwrite);
+fileSyst->Close();
+EOF
+
+echo "REGENERATED SystematicsHalfHalfBin.root"
+
 for value in {1..10}
 do
 for value2 in {0..4}
@@ -119,3 +158,6 @@ mv pngResults/InvMassSystematicsHalfHalfBin_7_*   pngResults/$(date +%F)/XNXNhal
 mv pngResults/InvMassSystematicsHalfHalfBin_8_*   pngResults/$(date +%F)/XNXNhalfHalfBin
 mv pngResults/InvMassSystematicsHalfHalfBin_9_*   pngResults/$(date +%F)/XNXNhalfHalfBin
 mv pngResults/InvMassSystematicsHalfHalfBin_10*   pngResults/$(date +%F)/XNXNhalfHalfBin
+mv pngResults/Systematics.root                    pngResults/$(date +%F)/XNXN
+mv pngResults/SystematicsHalfBin.root             pngResults/$(date +%F)/XNXNhalfBin
+mv pngResults/SystematicsHalfHalfBin.root         pngResults/$(date +%F)/XNXNhalfHalfBin           

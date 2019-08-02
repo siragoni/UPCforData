@@ -23,7 +23,8 @@ void fitHelicityCorrected1D(){
 
   // TFile* fileList = new TFile("AnalysisResultsMC06062019.root");
   // TFile* fileList = new TFile("MCtrainResults/2019-06-08/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
+  // TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
+  TFile* fileList = new TFile("AnalysisResultsMC01082019.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -37,8 +38,8 @@ void fitHelicityCorrected1D(){
    *     OBJ: TH1F	  fRAbsMuonH	                fRAbsMuonH                  : 0 at: 0x5a3c0c0
    *     OBJ: TH1F	  fInvariantMassDistributionH	fInvariantMassDistributionH : 0 at: 0x5a3c720
    */
-  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHeFrameForSignalExH");
-  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHeFrameForSignalExH");
+  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsH");
+  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsH");
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
@@ -48,12 +49,18 @@ void fitHelicityCorrected1D(){
   fReconPhiH->Sumw2();
   fGenerPhiH->Sumw2();
 
+  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiHelicityFrameTwentyfiveBinsH");
+  fReconTildePhiH->Sumw2();
+  fGenerTildePhiH->Sumw2();
+
 
   // gSystem->cd("pngResults/2019-05-30-18qr15o-NoSPD/SignalExtraction/");
 
   // TFile* fileDataRawCosTheta = new TFile("pngResults/TH1signalCosThetaEX.root");
   TFile* fileDataRawCosTheta = new TFile("pngResults/TH1functionalCosThetaEX.root");
   TFile* fileDataRawPhi      = new TFile("pngResults/TH1signalPhiEX.root");
+  TFile* fileDataRawTildePhi = new TFile("pngResults/TH1functionalTildePhiEX.root");
   // TFile* fileDataRaw = new TFile("TH2signalEX.root");
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();

@@ -202,7 +202,7 @@ void jpsiTheory(){
   hzhalov->GetXaxis()->SetTitle("y");
   hzhalov->GetYaxis()->SetTitleSize(0.05);
   hzhalov->GetYaxis()->SetTitleOffset(0.8);
-  hzhalov->GetYaxis()->SetTitle("d#\sigma/dy [mb]");
+  hzhalov->GetYaxis()->SetTitle("d#sigma/dy [mb]");
   hzhalov->SetLineColor(2); hzhalov->SetLineStyle(2); hzhalov->SetLineWidth(2);
   hzhalov->Draw();
   TLine *l1 = new TLine(-5.5,4.8,-4.5,4.8);
@@ -230,7 +230,7 @@ void jpsiTheory(){
   t3->SetTextSize(0.04); t3->SetTextAlign(12);
   t3->Draw();
 
-  TLatex *t9 = new TLatex(0.0,5.7,"Pb+Pb #rightarrow Pb+Pb+J/#\Psi   #\sqrt{s_{NN}} = 2.76 TeV");
+  TLatex *t9 = new TLatex(0.0,5.7,"Pb+Pb #rightarrow Pb+Pb+J/#Psi   #sqrt{s_{NN}} = 2.76 TeV");
   t9->SetTextSize(0.045); t9->SetTextAlign(21);
   t9->Draw();
 

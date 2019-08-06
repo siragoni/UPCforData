@@ -292,7 +292,7 @@ void fitJPsiTemplate(const int selectionFlag){
   // TH1F *fInvariantMassDistributionH = 0x0;
   fInvariantMassDistributionH = 0x0;
   fInvariantMassDistributionH = (TH1F*)listings->FindObject( Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", selectionFlag) );
-  // fInvariantMassDistributionH->Rebin(2);
+  fInvariantMassDistributionH->Scale(0.04);
   fInvariantMassDistributionH->Rebin(5);
   // if( selectionFlag < 16 || selectionFlag > 23 ) {
   //   fInvariantMassDistributionH->Rebin(2);

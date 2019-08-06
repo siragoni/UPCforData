@@ -23,7 +23,8 @@ void fitHelicityCorrected1D(){
 
   // TFile* fileList = new TFile("AnalysisResultsMC06062019.root");
   // TFile* fileList = new TFile("MCtrainResults/2019-06-08/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
+  // TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
+  TFile* fileList = new TFile("AnalysisResultsMC01082019.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -37,23 +38,29 @@ void fitHelicityCorrected1D(){
    *     OBJ: TH1F	  fRAbsMuonH	                fRAbsMuonH                  : 0 at: 0x5a3c0c0
    *     OBJ: TH1F	  fInvariantMassDistributionH	fInvariantMassDistributionH : 0 at: 0x5a3c720
    */
-  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHeFrameForSignalExH");
-  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHeFrameForSignalExH");
+  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsH");
+  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsH");
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
 
-  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHeFrameForSignalExH");
-  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiHeFrameForSignalExH");
+  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsH");
   fReconPhiH->Sumw2();
   fGenerPhiH->Sumw2();
+
+  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiHelicityFrameTwentyfiveBinsH");
+  fReconTildePhiH->Sumw2();
+  fGenerTildePhiH->Sumw2();
 
 
   // gSystem->cd("pngResults/2019-05-30-18qr15o-NoSPD/SignalExtraction/");
 
   // TFile* fileDataRawCosTheta = new TFile("pngResults/TH1signalCosThetaEX.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/TH1functionalCosThetaEX.root");
+  TFile* fileDataRawCosTheta = new TFile("pngResults/Polar25bins/TH1functionalCosTheta25binsEX.root");
   TFile* fileDataRawPhi      = new TFile("pngResults/TH1signalPhiEX.root");
+  TFile* fileDataRawTildePhi = new TFile("pngResults/TH1functionalTildePhiEX.root");
   // TFile* fileDataRaw = new TFile("TH2signalEX.root");
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();
@@ -62,6 +69,10 @@ void fitHelicityCorrected1D(){
   TH1F* PhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawPhi->Get("PhiAfterSignalExtractionErrorsH");
   PhiAfterSignalExtractionErrorsRawH->Sumw2();
   TH1F* RawPhiH = (TH1F*) PhiAfterSignalExtractionErrorsRawH->Clone("RawPhiH");
+
+  TH1F* TildePhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawTildePhi->Get("TildePhiAfterSignalExtractionErrorsH");
+  TildePhiAfterSignalExtractionErrorsRawH->Sumw2();
+  TH1F* RawTildePhiH = (TH1F*) TildePhiAfterSignalExtractionErrorsRawH->Clone("RawTildePhiH");
 
 
   TCanvas* AcceptanceCanvasCosTheta = new TCanvas("AcceptanceCanvasCosTheta","AcceptanceCanvasCosTheta",900,800);
@@ -79,28 +90,40 @@ void fitHelicityCorrected1D(){
   acceptancePhi->Draw("ep");
 
   TCanvas* CorrCanvasPhi = new TCanvas("CorrCanvasPhi","CorrCanvasPhi",900,800);
-  RawPhiH->Divide(acceptancePhi);
+  // RawPhiH->Divide(acceptancePhi);
   RawPhiH->Draw("colZ");
 
-  TH1F* AccErrors = new TH1F("AccErrors", "AccErrors", 40, -1, 1);
-  TH1F* EntErrors = new TH1F("EntErrors", "EntErrors", 40, -1, 1);
-  for( Int_t iLoop = 1; iLoop <= 40; iLoop++ ){
-    Double_t AcceptanceEntries = ReconTheta        ->GetBinContent(iLoop);
-    Double_t AcceptanceValue   = acceptanceCosTheta->GetBinContent(iLoop);
-    if( AcceptanceEntries >= 1  ){
-      AccErrors->SetBinContent( iLoop, AcceptanceValue/(TMath::Sqrt(AcceptanceEntries)) );
-      EntErrors->SetBinContent( iLoop, 1/(TMath::Sqrt(AcceptanceEntries)) );
-    }
-  }
+  TCanvas* AcceptanceCanvasTildePhi = new TCanvas("AcceptanceCanvasTildePhi","AcceptanceCanvasTildePhi",900,800);
+  TH1F* acceptanceTildePhi = (TH1F*) fReconTildePhiH->Clone("acceptanceTildePhi");
+  acceptanceTildePhi->Divide(fGenerTildePhiH);
+  acceptanceTildePhi->Draw("ep");
+
+  TCanvas* CorrCanvasTildePhi = new TCanvas("CorrCanvasTildePhi","CorrCanvasTildePhi",900,800);
+  RawTildePhiH->Divide(acceptanceTildePhi);
+  RawTildePhiH->Draw("colZ");
 
 
-  TFile f("pngResults/TH1corr2.root", "recreate");
+  // TH1F* AccErrors = new TH1F("AccErrors", "AccErrors", 40, -1, 1);
+  // TH1F* EntErrors = new TH1F("EntErrors", "EntErrors", 40, -1, 1);
+  // for( Int_t iLoop = 1; iLoop <= 40; iLoop++ ){
+  //   Double_t AcceptanceEntries = ReconTheta        ->GetBinContent(iLoop);
+  //   Double_t AcceptanceValue   = acceptanceCosTheta->GetBinContent(iLoop);
+  //   if( AcceptanceEntries >= 1  ){
+  //     AccErrors->SetBinContent( iLoop, AcceptanceValue/(TMath::Sqrt(AcceptanceEntries)) );
+  //     EntErrors->SetBinContent( iLoop, 1/(TMath::Sqrt(AcceptanceEntries)) );
+  //   }
+  // }
+
+
+  TFile f("pngResults/TH1corrComplete.root", "recreate");
   acceptanceCosTheta->Write();
   RawCosThetaH      ->Write();
   acceptancePhi     ->Write();
   RawPhiH           ->Write();
-  AccErrors         ->Write();
-  EntErrors         ->Write();
-  ReconTheta        ->Write();
+  acceptanceTildePhi->Write();
+  RawTildePhiH      ->Write();
+  // AccErrors         ->Write();
+  // EntErrors         ->Write();
+  // ReconTheta        ->Write();
   f.Close();
 }

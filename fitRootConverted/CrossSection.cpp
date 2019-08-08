@@ -30,22 +30,28 @@ void CrossSection(){
   Double_t fI[7]       = { 0.055, 0.060, 0.059, 0.061, 0.052, 0.051, 0.032 };
   Double_t fD          = 0.055;
   Double_t eJPsi[7]    = { 0.120, 0.051, 0.140, 0.204, 0.191, 0.119, 0.029 };
-  Double_t LUMI        = 746.26;
+  Double_t LUMI        = 740.71;
   Double_t BR          = 0.05961;
-  Double_t NumOfJPsi[7]= { 22063, 0,0,0,0,0,0 };
+  Double_t NumOfJPsi[7]= { 21835, 929, 3183, 5727, 6594, 4241, 1140 };
 
   for( Int_t iLoop = 0; iLoop < 7; iLoop++ ){
-      if( iLoop == 0 ) DSigmaDyAll = NumOfJPsi[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5 );
+      if( iLoop == 0 ) {
+        DSigmaDyAll  = NumOfJPsi[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95 );
+        DSigmaDyAll /= 1000;
+      } else {
+        DSigmaDy[iLoop-1]  = NumOfJPsi[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*(1.5/6)*0.95 );
+        DSigmaDy[iLoop-1] /= 1000;
+      }
   }
 
   Double_t x1[6]      = { -4+1*(4-2.5)/12, -4+3*(4-2.5)/12, -4+5*(4-2.5)/12, -4+7*(4-2.5)/12, -4+9*(4-2.5)/12, -4+11*(4-2.5)/12};
-  Double_t y1[6]      = {   2289, 3352, 3350, 2091, 682,  12};
+  Double_t y1[6]      = { DSigmaDy[0], DSigmaDy[1], DSigmaDy[2], DSigmaDy[3], DSigmaDy[4], DSigmaDy[5] };
   Double_t x2[1]      = { (-4-2.5)/2 };
   Double_t y2[1]      = { DSigmaDyAll };
-  Double_t y1Error[6] = {     71,   87,   89,   71,  41,   7};
+  Double_t y1Error[6] = { 0,0,0,0,0,0};
   Double_t y2Error[1] = { 0 };
   Double_t x1Error[6] = {  (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12 };
-  Double_t x2Error[1] = { (4-2.5)/2 };
+  Double_t x2Error[1] = {  (4-2.5)/2 };
 
   Coherent    = new TGraphErrors(6, x1, y1, x1Error, y1Error);
   CoherentAll = new TGraphErrors(1, x2, y2, x2Error, y2Error);
@@ -65,7 +71,7 @@ void CrossSection(){
 
   mg->Draw("APL");
   mg->GetXaxis()->SetTitle("y");
-  mg->GetYaxis()->SetTitle("d#sigma/dy");
+  mg->GetYaxis()->SetTitle("d#sigma/dy [mb]");
   // Change the axis limits
   gPad->Modified();
   // mg->GetXaxis()->SetLimits(-1., 1.);

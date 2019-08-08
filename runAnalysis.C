@@ -58,8 +58,8 @@ void runAnalysis(Int_t opt, Int_t isMC = 0)
         TChain* chain = new TChain("aodTree");
         // add a few files to the chain (change this so that your local files are added)
 
-        // FILE *f = fopen("list2015Full.txt","r");
-        FILE *f = fopen("list.txt","r");
+        FILE *f = fopen("list2015Full.txt","r");
+        // FILE *f = fopen("list.txt","r");
         // FILE *f = fopen("listLHC18qrAndLHC15o.txt","r");
         // FILE *f = fopen("listPROVA.txt","r");
         char fileadd[300];

@@ -115,7 +115,7 @@ void fitHelicityCorrected1D(){
   // }
 
 
-  TFile f("pngResults/TH1corrComplete.root", "recreate");
+  TFile f("pngResults/TH1corrCompleteV2.root", "recreate");
   acceptanceCosTheta->Write();
   RawCosThetaH      ->Write();
   acceptancePhi     ->Write();

@@ -75,7 +75,7 @@ void lumiEvgenyStyle(){
   AliTriggerClass* cl     = 0x0;
   AliTriggerClass* clRef  = 0x0;
   AliTriggerClass* clLT   = 0x0;
-  TFile* f = new TFile("AnalysisResultsLHC18qr15o06082019.root");
+  TFile* f = new TFile("AnalysisResultsLHC18qr15o30082019.root");
   TList* list = (TList*) f->Get("MyTask/MyOutputContainer"); // provide your list here
   // TH2D* fTriggersVsRun = (TH2D*) list->FindObject("fTriggersVsRun");
   TH2F* fTriggersVsRun = (TH2F*) list->FindObject("fTriggersVsRunH");

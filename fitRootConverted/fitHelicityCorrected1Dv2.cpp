@@ -23,8 +23,8 @@ void fitHelicityCorrected1D(){
 
   // TFile* fileList = new TFile("AnalysisResultsMC06062019.root");
   // TFile* fileList = new TFile("MCtrainResults/2019-06-08/kCohJpsiToMu/AnalysisResults.root");
-  // TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("AnalysisResultsMC01082019.root");
+  TFile* fileList = new TFile("MCtrainResults/2019-08-30-LHC18l7/kCohJpsiToMu/AnalysisResults.root");
+  // TFile* fileList = new TFile("AnalysisResultsMC01082019.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -58,7 +58,8 @@ void fitHelicityCorrected1D(){
   // gSystem->cd("pngResults/2019-05-30-18qr15o-NoSPD/SignalExtraction/");
 
   // TFile* fileDataRawCosTheta = new TFile("pngResults/TH1signalCosThetaEX.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/Polar25bins/TH1functionalCosTheta25binsEX.root");
+  // TFile* fileDataRawCosTheta = new TFile("pngResults/Polar25bins/TH1functionalCosTheta25binsEX.root");
+  TFile* fileDataRawCosTheta = new TFile("pngResults/TH1functionalCosTheta25binsEX.root");
   TFile* fileDataRawPhi      = new TFile("pngResults/TH1signalPhiEX.root");
   TFile* fileDataRawTildePhi = new TFile("pngResults/TH1functionalTildePhiEX.root");
   // TFile* fileDataRaw = new TFile("TH2signalEX.root");

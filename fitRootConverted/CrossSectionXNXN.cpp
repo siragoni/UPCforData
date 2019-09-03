@@ -21,27 +21,31 @@ using namespace std;
    - after the fit in terms of CosTheta bins.
    -
  */
-void CrossSection(){
+void CrossSectionXNXN(){
   TCanvas *c2 = new TCanvas("c2","c2",600,400);
-  TGraphErrors *Coherent;
-  TGraphErrors *CoherentAll;
-  Double_t DSigmaDy[6] = { 0,0,0,0,0,0};
-  Double_t DSigmaDyAll = 0;
-  Double_t fI[7]       = { 0.055, 0.060, 0.059, 0.061, 0.052, 0.051, 0.032 };
-  Double_t fD          = 0.055;
-  Double_t eJPsi[7]    = { 0.120, 0.051, 0.140, 0.204, 0.191, 0.119, 0.029 };
-  Double_t LUMI        = 747.849;
-  Double_t BR          = 0.05961;
-  Double_t NumOfJPsi[7]= { 22073, 928, 3181, 5796, 6547, 4455, 1255 };
+  TGraphErrors *Coherent0N0N;
+  TGraphErrors *Coherent0NXN;
+  TGraphErrors *CoherentXN0N;
+  TGraphErrors *CoherentXNXN;
+  Double_t DSigmaDy0N0N[3]  = { 0,0,0};
+  Double_t DSigmaDy0NXN[3]  = { 0,0,0};
+  Double_t DSigmaDyXN0N[3]  = { 0,0,0};
+  Double_t DSigmaDyXNXN[3]  = { 0,0,0};
+  Double_t fI[3]            = { 0.0595, 0.056,  0.041 };
+  Double_t fD               = 0.055;
+  Double_t eJPsi[3]         = { (0.051 + 0.140)*0.5, (0.204 + 0.191)*0.5, (0.119 + 0.029)*0.5 };
+  Double_t LUMI             = 747.849;
+  Double_t BR               = 0.05961;
+  Double_t NumOfJPsi0N0N[3] = { 3324, 9766, 4364 };
+  Double_t NumOfJPsi0NXN[3] = {  237,  858,  431 };
+  Double_t NumOfJPsiXN0N[3] = {  420, 1235,  605 };
+  Double_t NumOfJPsiXNXN[3] = {  122,  486,  293 };
 
-  for( Int_t iLoop = 0; iLoop < 7; iLoop++ ){
-      if( iLoop == 0 ) {
-        DSigmaDyAll  = NumOfJPsi[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95 );
-        DSigmaDyAll /= 1000;
-      } else {
-        DSigmaDy[iLoop-1]  = NumOfJPsi[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*(1.5/6)*0.95 );
-        DSigmaDy[iLoop-1] /= 1000;
-      }
+  for( Int_t iLoop = 0; iLoop < 3; iLoop++ ){
+      DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
+      DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
+      DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
+      DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
   }
 
   Double_t x1[6]      = { -4+1*(4-2.5)/12, -4+3*(4-2.5)/12, -4+5*(4-2.5)/12, -4+7*(4-2.5)/12, -4+9*(4-2.5)/12, -4+11*(4-2.5)/12};
@@ -59,8 +63,10 @@ void CrossSection(){
   Double_t x1Error[6] = {  (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12 };
   Double_t x2Error[1] = {  (4-2.5)/2 };
 
-  Coherent    = new TGraphErrors(6, x1, y1, x1Error, y1Error);
-  CoherentAll = new TGraphErrors(1, x2, y2, x2Error, y2Error);
+  Coherent0N0N = new TGraphErrors(3, x1, y1, x1Error, y1Error);
+  Coherent0NXN = new TGraphErrors(3, x1, y1, x1Error, y1Error);
+  CoherentXN0N = new TGraphErrors(3, x1, y1, x1Error, y1Error);
+  CoherentXNXN = new TGraphErrors(3, x1, y1, x1Error, y1Error);
 
   TMultiGraph *mg = new TMultiGraph();
   Coherent->SetMarkerStyle(20);

@@ -188,7 +188,7 @@ void fBkgPolFit(TH1F* histoToBeFit)//, Double_t &bookKeeping[5])
 /* - Fit function for the ZNC plots.
  * -
  */
-void fitJPsiTemplateMC(const int selectionFlag = 0, const int selectionFlag2 = 0){
+void fitJPsiTemplateMC(const int selectionFlag = 0){
   // fileMC[0] = new TFile("MCtrainResults/2019-08-09-LHC16b218l7/kCohJpsiToMu/AnalysisResults.root");
   // fileMC[1] = new TFile("MCtrainResults/2019-08-09-LHC16b218l7/kCohPsi2sToMu/AnalysisResults.root");
   // fileMC[2] = new TFile("MCtrainResults/2019-08-09-LHC16b218l7/kCohPsi2sToMuPi/AnalysisResults.root");
@@ -227,164 +227,16 @@ void fitJPsiTemplateMC(const int selectionFlag = 0, const int selectionFlag2 = 0
   for(Int_t iDirectory = 0; iDirectory < 8; iDirectory++) {
     dirMC[iDirectory]->GetObject("MyOutputContainer", listingsMC[iDirectory]);
   }
-  if( selectionFlag > 2){
-    if( selectionFlag2 == 2 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fCohJpsiToMu       ->Add((TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fCohPsi2sToMu      ->Add((TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fCohPsi2sToMuPi    ->Add((TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fIncohJpsiToMu     ->Add((TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fIncohPsi2sToMu    ->Add((TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fIncohPsi2sToMuPi  ->Add((TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fTwoGammaToMuMedium->Add((TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-      fTwoGammaToMuHigh  ->Add((TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_1"));
-    } else if( selectionFlag2 == 3 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fCohJpsiToMu       ->Add((TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fCohPsi2sToMu      ->Add((TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fCohPsi2sToMuPi    ->Add((TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fIncohJpsiToMu     ->Add((TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fIncohPsi2sToMu    ->Add((TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fIncohPsi2sToMuPi  ->Add((TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fTwoGammaToMuMedium->Add((TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-      fTwoGammaToMuHigh  ->Add((TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_3"));
-    } else if( selectionFlag2 == 4 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fCohJpsiToMu       ->Add((TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fCohPsi2sToMu      ->Add((TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fCohPsi2sToMuPi    ->Add((TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fIncohJpsiToMu     ->Add((TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fIncohPsi2sToMu    ->Add((TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fIncohPsi2sToMuPi  ->Add((TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fTwoGammaToMuMedium->Add((TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-      fTwoGammaToMuHigh  ->Add((TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_5"));
-    } else {
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
-    }
-  } else if ( selectionFlag == 1 ){
-    if( selectionFlag2 == 0 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
-    } else if( selectionFlag2 == 1 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_0");
-    } else if( selectionFlag2 == 2 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_1");
-    } else if( selectionFlag2 == 3 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_2");
-    } else if( selectionFlag2 == 4 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
-    }
-  } else if ( selectionFlag == 2 ){
-    if( selectionFlag2 == 0 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
-    } else if( selectionFlag2 == 1 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_4");
-    } else if( selectionFlag2 == 2 ){
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_5");
-    } else {
-      fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
-      fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
-      fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
-      fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
-      fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
-    }
-  } else {
-    fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-    fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
-    fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
-    fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
-    fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
-    fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-    fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
-    fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
-  }
 
+
+  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fTwoGammaToMuMedium = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
+  fTwoGammaToMuHigh   = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionRapidityBinsH_3");
   /* - Rebin
      -
    */
@@ -458,76 +310,76 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   if      ( selectionFlag == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("hM");
   else if ( selectionFlag == 1 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_0");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_1");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_2");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_3");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentShiftPlusTwoH");
   }
   else if ( selectionFlag == 2 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_4");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_5");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentShiftPlusTwoH");
   }
   else if ( selectionFlag == 3 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAzeroShiftPlusTwoH");
   }
   else if ( selectionFlag == 4 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCzeroZNAanyShiftPlusTwoH");
   }
   else if ( selectionFlag == 5 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAzeroShiftPlusTwoH");
   }
   else if ( selectionFlag == 6 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentZNCanyZNAanyShiftPlusTwoH");
   }
   else if ( selectionFlag == 7 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAzeroShiftPlusTwoH");
   }
   else if ( selectionFlag == 8 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCzeroZNAanyShiftPlusTwoH");
   }
   else if ( selectionFlag == 9 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAzeroShiftPlusTwoH");
   }
   else if ( selectionFlag == 10 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyHv2");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyRapidityHv2_0");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyRapidityHv2_1");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyRapidityHv2_2");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyShiftMinusTwoH");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyShiftMinusOneH");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyShiftPlusOneH");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyShiftPlusTwoH");
   }
   else                           fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionH");
-  fInvariantMassDistributionH->Rebin(5);
+  // fInvariantMassDistributionH->Rebin(5);
   fInvariantMassDistributionH->Draw("PE");
 
   fInvariantMassDistributionH->SetLineColor(kBlue);
@@ -544,8 +396,7 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   fInvariantMassDistributionH->SetTitle("");
 
 
-  // fitJPsiTemplateMC();
-  fitJPsiTemplateMC( selectionFlag, selectionFlag2 );
+  fitJPsiTemplateMC();
   new TCanvas;
   // TF1* JPsiPeakFit     = new TF1( "JPsiPeakFit",    "crystalball",2.2,6);
   // TF1* PsiPrimePeakFit = new TF1( "PsiPrimePeakFit","crystalball",2.2,6);

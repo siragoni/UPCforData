@@ -644,14 +644,16 @@ void CreateCosThetaTh1(const char* AnalysisName){
                       "TildePhiAfterSignalExtractionH",
                       // 40, -1, 1//, 10, -3.14, 3.14
                       // 10, -1, 1, 10, -4, 4
-                      25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      // 25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      25, 0, 2 * 3.14
                       );
   TH1F* TildePhiGammaGammaH =
             new TH1F( "TildePhiGammaGammaH",
                       "TildePhiGammaGammaH",
                       // 40, -1, 1//, 10, -3.14, 3.14
                       // 10, -1, 1, 10, -4, 4
-                      25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      // 25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      25, 0, 2 * 3.14
                       );
 
   TH1F* TildePhiAfterSignalExtractionErrorsH =
@@ -659,14 +661,16 @@ void CreateCosThetaTh1(const char* AnalysisName){
                       "TildePhiAfterSignalExtractionErrorsH",
                       // 40, -1, 1//, 10, -3.14, 3.14
                       // 10, -1, 1, 10, -4, 4
-                      25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      // 25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      25, 0, 2 * 3.14
                       );
   TH1F* TildePhiGammaGammaErrorsH =
             new TH1F( "TildePhiGammaGammaErrorsH",
                       "TildePhiGammaGammaErrorsH",
                       // 40, -1, 1//, 10, -3.14, 3.14
                       // 10, -1, 1, 10, -4, 4
-                      25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      // 25, -3.14*0.75-3.14, 3.14-3.14*0.25
+                      25, 0, 2 * 3.14
                       );
   // TH1F* IntegralH        = new TH1F( "IntegralH","IntegralH",50, 25, -3.14*0.75-3.14, 3.14-3.14*0.25);
   // TH1F* PercentageH      = new TH1F( "PercentageH","PercentageH",50, 25, -3.14*0.75-3.14, 3.14-3.14*0.25);
@@ -694,7 +698,7 @@ void CreateCosThetaTh1(const char* AnalysisName){
                                             // -2.826 + (Double_t)iPhiBins      * 0.628,
                                             // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
                                             // -3.14*0.75-3.14 + 3.14 * 2.5 * (Double_t)iCosThetaBins /25 ,
-                                            -3.14*0.75-3.14 + 3.14 * 2.5 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
+                                            3.14 * 2.0 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
                                             JPsiPeakValue
                                             // JPsiPeakValue/Widths[iCosThetaBins]
                                             );
@@ -702,7 +706,8 @@ void CreateCosThetaTh1(const char* AnalysisName){
                                                    // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
                                                    // -2.826 + (Double_t)iPhiBins      * 0.628,
                                                    // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
-                                                   -3.14*0.75-3.14 + 3.14 * 2.5 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
+                                                   // -3.14*0.75-3.14 + 3.14 * 2.5 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
+                                                   3.14 * 2.0 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
                                                    JPsiPeakValue
                                                    // JPsiPeakValue/Widths[iCosThetaBins]
                                                    );
@@ -710,7 +715,8 @@ void CreateCosThetaTh1(const char* AnalysisName){
                                         // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
                                         // -2.826 + (Double_t)iPhiBins      * 0.628,
                                         // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
-                                        -3.14*0.75-3.14 + 3.14 * 2.5 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
+                                        // -3.14*0.75-3.14 + 3.14 * 2.5 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
+                                        3.14 * 2.0 * ( (Double_t)iCosThetaBins + 0.5 ) /25 ,
                                         BkgValue
                                         // BkgValue/Widths[iCosThetaBins]
                                         );

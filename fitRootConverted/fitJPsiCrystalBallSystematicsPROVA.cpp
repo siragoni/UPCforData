@@ -452,21 +452,28 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
 
-  TFile* EvgenyFile = new TFile("m.root");
+  TFile* EvgenyFile = new TFile("fitM.root");
 
   TH1F *fInvariantMassDistributionH = 0x0;
   if      ( selectionFlag == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("hM");
   else if ( selectionFlag == 1 ) {
-    if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_0");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_1");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_2");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_3");
+    // if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentH");
+    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_0");
+    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_1");
+    // else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_2");
+    // else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_3");
+    if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_0_0_4");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_1_0_4");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_2_0_4");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_3_0_4");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_4_0_4");
   }
   else if ( selectionFlag == 2 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_4");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_5");
+    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_4");
+    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_5");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_5_0_4");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_6_0_4");
     else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
     else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
   }
@@ -527,7 +534,7 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
     else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyRapidityHv2_2");
   }
   else                           fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionH");
-  fInvariantMassDistributionH->Rebin(5);
+  // fInvariantMassDistributionH->Rebin(5);
   fInvariantMassDistributionH->Draw("PE");
 
   fInvariantMassDistributionH->SetLineColor(kBlue);

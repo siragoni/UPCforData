@@ -26,9 +26,11 @@ void YieldLumiRatio(){
   TGraphErrors *CoherentMine;
   TGraphErrors *CoherentEvgeny;
   TGraphErrors *CoherentRatio;
-  Double_t LUMImine        = 747.849;
+  // Double_t LUMImine        = 747.849;
+  Double_t LUMImine        = 754;
   Double_t LUMIevgeny      = 754;
-  Double_t NumOfJPsiMine[7]   = { 22141, 968, 3263, 5890, 6459, 4283, 1212 };
+  // Double_t NumOfJPsiMine[7]   = { 22141, 968, 3263, 5890, 6459, 4283, 1212 };
+  Double_t NumOfJPsiMine[7]   = { 21805, 969, 3228, 5767, 6361, 4210, 1200 };
   Double_t NumOfJPsiEvgeny[7] = { 21747, 974, 3217, 5769, 6387, 4229, 1190 };
   Double_t YieldLumiRatioMine[7];
   Double_t YieldLumiRatioEvgeny[7];
@@ -41,7 +43,8 @@ void YieldLumiRatio(){
 
   Double_t x1[7]      = { (-4-2.5)/2, -4+1*(4-2.5)/12, -4+3*(4-2.5)/12, -4+5*(4-2.5)/12, -4+7*(4-2.5)/12, -4+9*(4-2.5)/12, -4+11*(4-2.5)/12};
   // Double_t y1[7]      = { DSigmaDy[0], DSigmaDy[1], DSigmaDy[2], DSigmaDy[3], DSigmaDy[4], DSigmaDy[5] };
-  Double_t y1Error[7] = { 223/LUMImine,   45/LUMImine,   84/LUMImine,   114/LUMImine,    97/LUMImine,   100/LUMImine,   55/LUMImine   };
+  // Double_t y1Error[7] = { 223/LUMImine,   45/LUMImine,   84/LUMImine,   114/LUMImine,    97/LUMImine,   100/LUMImine,   55/LUMImine   };
+  Double_t y1Error[7] = { 221/LUMImine,   45/LUMImine,   84/LUMImine,    90/LUMImine,    96/LUMImine,    98/LUMImine,   53/LUMImine   };
   Double_t y2Error[7] = { 190/LUMIevgeny, 36/LUMIevgeny, 70/LUMIevgeny,  98/LUMIevgeny, 105/LUMIevgeny,  85/LUMIevgeny, 47/LUMIevgeny };
   Double_t y3Error[7] = { 0,0,0,0,0,0,0 };
   Double_t x1Error[7] = {  (4-2.5)/2, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12 };

@@ -457,23 +457,23 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   TH1F *fInvariantMassDistributionH = 0x0;
   if      ( selectionFlag == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("hM");
   else if ( selectionFlag == 1 ) {
-    // if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentH");
-    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_0");
-    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_1");
-    // else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_2");
-    // else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_3");
-    if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_0_0_4");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_1_0_4");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_2_0_4");
-    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_3_0_4");
-    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_4_0_4");
+    if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentH");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_0");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_1");
+    else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_2");
+    else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_3");
+    // if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_0_0_4");
+    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_1_0_4");
+    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_2_0_4");
+    // else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_3_0_4");
+    // else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_4_0_4");
   }
   else if ( selectionFlag == 2 ) {
     if      ( selectionFlag2 == 0 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
-    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_4");
-    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_5");
-    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_5_0_4");
-    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_6_0_4");
+    else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_4");
+    else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionCoherentRapidityBinsH_5");
+    // else if ( selectionFlag2 == 1 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_5_0_4");
+    // else if ( selectionFlag2 == 2 ) fInvariantMassDistributionH = (TH1F*)EvgenyFile->Get("data_noTKLcut_6_0_4");
     else if ( selectionFlag2 == 3 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
     else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentH");
   }
@@ -534,7 +534,7 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
     else if ( selectionFlag2 == 4 ) fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionIncoherentZNCanyZNAanyRapidityHv2_2");
   }
   else                           fInvariantMassDistributionH = (TH1F*)listings->FindObject("fInvariantMassDistributionH");
-  // fInvariantMassDistributionH->Rebin(5);
+  fInvariantMassDistributionH->Rebin(5);
   fInvariantMassDistributionH->Draw("PE");
 
   fInvariantMassDistributionH->SetLineColor(kBlue);
@@ -720,13 +720,23 @@ void fitJPsiTemplate(const char* AnalysisName, const int selectionFlag, const in
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
-  latex->DrawLatex(0.55,0.84,"UPC, LHC18q+LHC18r");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset");
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.3 GeV/#it{c}");
-  if      ( selectionFlag == 0 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T}-integrated");
-  else if ( selectionFlag == 1 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
-  else if ( selectionFlag == 2 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T} > 0.25 GeV/#it{c}");
-  else                           latex->DrawLatex(0.55,0.78,"#it{p}_{T}-integrated");
-  latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
+  if      ( selectionFlag <  7 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
+  else                           latex->DrawLatex(0.55,0.78,"#it{p}_{T} > 0.25 GeV/#it{c}");
+
+  // latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
+  if      ( selectionFlag >  2 ) {
+    if ( selectionFlag2 == 2 ) latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-3.5));
+    if ( selectionFlag2 == 3 ) latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-3.5,-3.0));
+    if ( selectionFlag2 == 4 ) latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-3.0,-2.5));
+  } else                       latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
+
+  if      ( selectionFlag == 3 || selectionFlag == 7 ) latex->DrawLatex(0.17,0.80,"0N0N");
+  else if ( selectionFlag == 4 || selectionFlag == 8 ) latex->DrawLatex(0.17,0.80,"0NXN");
+  else if ( selectionFlag == 5 || selectionFlag == 9 ) latex->DrawLatex(0.17,0.80,"XN0N");
+  else if ( selectionFlag == 6 || selectionFlag == 10) latex->DrawLatex(0.17,0.80,"XNXN");
+
 
   /* - This is the part where we obtain the actual number of J/Psi, PsiPrime
      - and the background. This is still Kay's original code. I will modify it.

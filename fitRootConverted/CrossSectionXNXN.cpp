@@ -36,55 +36,70 @@ void CrossSectionXNXN(){
   Double_t eJPsi[3]         = { (0.051 + 0.140)*0.5, (0.204 + 0.191)*0.5, (0.119 + 0.029)*0.5 };
   Double_t LUMI             = 747.849;
   Double_t BR               = 0.05961;
-  Double_t NumOfJPsi0N0N[3] = { 3324, 9766, 4364 };
-  Double_t NumOfJPsi0NXN[3] = {  237,  858,  431 };
-  Double_t NumOfJPsiXN0N[3] = {  420, 1235,  605 };
-  Double_t NumOfJPsiXNXN[3] = {  122,  486,  293 };
+  Double_t NumOfJPsi0N0N[3] = { 3404, 9719, 4148 };
+  Double_t NumOfJPsi0NXN[3] = {  242,  856,  412 };
+  Double_t NumOfJPsiXN0N[3] = {  420, 1232,  592 };
+  Double_t NumOfJPsiXNXN[3] = {  123,  485,  290 };
 
   for( Int_t iLoop = 0; iLoop < 3; iLoop++ ){
-      DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
-      DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
-      DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
-      DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*1.5*0.95*1000 );
+      DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
   }
 
-  Double_t x1[6]      = { -4+1*(4-2.5)/12, -4+3*(4-2.5)/12, -4+5*(4-2.5)/12, -4+7*(4-2.5)/12, -4+9*(4-2.5)/12, -4+11*(4-2.5)/12};
-  Double_t y1[6]      = { DSigmaDy[0], DSigmaDy[1], DSigmaDy[2], DSigmaDy[3], DSigmaDy[4], DSigmaDy[5] };
-  Double_t x2[1]      = { (-4-2.5)/2 };
-  Double_t y2[1]      = { DSigmaDyAll };
-  Double_t y1Error[6] = { 45 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
-                          84 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
-                          114/( (1+fI[3]+fD)*eJPsi[3]*BR*LUMI*1.5*0.95*1000 ),
-                          97 /( (1+fI[4]+fD)*eJPsi[4]*BR*LUMI*1.5*0.95*1000 ),
-                          100/( (1+fI[5]+fD)*eJPsi[5]*BR*LUMI*1.5*0.95*1000 ),
-                          55 /( (1+fI[6]+fD)*eJPsi[6]*BR*LUMI*1.5*0.95*1000 )
-                          };
-  Double_t y2Error[1] = { 223/( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ) };
-  Double_t x1Error[6] = {  (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12, (4-2.5)/12 };
-  Double_t x2Error[1] = {  (4-2.5)/2 };
+  Double_t x1[3]          = { -4+1*(4-2.5)/6, -4+3*(4-2.5)/6, -4+5*(4-2.5)/6    };
+  Double_t y1Error0N0N[3] = { 83 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              119/( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              98 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+                              };
+  Double_t y1Error0NXN[3] = { 18 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              34 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              32 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+                              };
+  Double_t y1ErrorXN0N[3] = { 29 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              52 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              29 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+                              };
+  Double_t y1ErrorXNXN[3] = { 16 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              25 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              24 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+                              };
+  Double_t x1Error[3]     = {  (4-2.5)/6, (4-2.5)/6, (4-2.5)/6 };
 
-  Coherent0N0N = new TGraphErrors(3, x1, y1, x1Error, y1Error);
-  Coherent0NXN = new TGraphErrors(3, x1, y1, x1Error, y1Error);
-  CoherentXN0N = new TGraphErrors(3, x1, y1, x1Error, y1Error);
-  CoherentXNXN = new TGraphErrors(3, x1, y1, x1Error, y1Error);
+  Coherent0N0N = new TGraphErrors(3, x1, DSigmaDy0N0N, x1Error, y1Error0N0N);
+  Coherent0NXN = new TGraphErrors(3, x1, DSigmaDy0NXN, x1Error, y1Error0NXN);
+  CoherentXN0N = new TGraphErrors(3, x1, DSigmaDyXN0N, x1Error, y1ErrorXN0N);
+  CoherentXNXN = new TGraphErrors(3, x1, DSigmaDyXNXN, x1Error, y1ErrorXNXN);
 
   TMultiGraph *mg = new TMultiGraph();
-  Coherent->SetMarkerStyle(20);
-  Coherent->SetMarkerColor(2);
-  Coherent->SetLineColor(2);
-  mg->Add(Coherent);
-  CoherentAll->SetMarkerStyle(20);
-  CoherentAll->SetMarkerColor(3);
-  CoherentAll->SetLineColor(3);
-  mg->Add(CoherentAll);
+  Coherent0N0N->SetMarkerStyle(20);
+  Coherent0N0N->SetMarkerColor(2);
+  Coherent0N0N->SetLineColor(2);
+  mg->Add(Coherent0N0N);
+  Coherent0NXN->SetMarkerStyle(20);
+  Coherent0NXN->SetMarkerColor(3);
+  Coherent0NXN->SetLineColor(3);
+  mg->Add(Coherent0NXN);
+  CoherentXN0N->SetMarkerStyle(20);
+  CoherentXN0N->SetMarkerColor(4);
+  CoherentXN0N->SetLineColor(4);
+  mg->Add(CoherentXN0N);
+  CoherentXNXN->SetMarkerStyle(20);
+  CoherentXNXN->SetMarkerColor(6);
+  CoherentXNXN->SetLineColor(6);
+  mg->Add(CoherentXNXN);
 
-  Coherent->SetTitle("J/#Psi in rapidity bins");
-  CoherentAll->SetTitle("J/#Psi integrated");
+  Coherent0N0N->SetTitle("J/#Psi 0N0N");
+  Coherent0NXN->SetTitle("J/#Psi 0NXN");
+  CoherentXN0N->SetTitle("J/#Psi XN0N");
+  CoherentXNXN->SetTitle("J/#Psi XNXN");
 
   mg->Draw("APL");
   mg->GetXaxis()->SetTitle("y");
   mg->GetYaxis()->SetTitle("d#sigma/dy [mb]");
   // Change the axis limits
+  gPad->BuildLegend();
   gPad->Modified();
   // mg->GetXaxis()->SetLimits(-1., 1.);
   // mg->SetMinimum(0.);

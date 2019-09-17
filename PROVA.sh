@@ -50,6 +50,18 @@ done
 
 
 
+for value in {0..4}
+do
+for value2 in {0..3}
+do
+aliroot -b -l <<EOF
+.L fitRootConverted/fitPtDistrRapidity.cpp
+fitPtDistr("$ROOTfile",$value, $value2);
+EOF
+done
+done
+
+
 # for value in {0..7}
 # do
 # aliroot -b -l <<EOF

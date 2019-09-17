@@ -146,7 +146,7 @@ void fitZNC(const char* AnalysisName){
   fZNAEnergyAgainstEntriesH->SetLineWidth(3);
   fZNAEnergyAgainstEntriesH->SetMarkerStyle(kFullCircle);
   fZNAEnergyAgainstEntriesH->SetMarkerSize(1);
-  fZNAEnergyAgainstEntriesH->GetXaxis()->SetTitle("ZNC Energy [a.u.]");
+  fZNAEnergyAgainstEntriesH->GetXaxis()->SetTitle("ZNC Energy [GeV]");
   fZNAEnergyAgainstEntriesH->GetYaxis()->SetTitle( Form( "Counts / (%.0f a.u.)",
                                                          fZNAEnergyAgainstEntriesH->GetXaxis()->GetBinWidth(1)
                                                         )
@@ -258,7 +258,7 @@ void fitZNC(const char* AnalysisName){
      -
    */
   RooPlot* frame = x.frame();
-  frame->SetTitle(  Form(  ";ZNC Energy [a.u.];Counts / (%.0f a.u.)",
+  frame->SetTitle(  Form(  ";ZNC Energy GeV;Counts / (%.0f a.u.)",
                            fZNAEnergyAgainstEntriesH->GetXaxis()->GetBinWidth(1)  )  );
   fZNCEnergyAgainstEntriesRoofitH->plotOn( frame, MarkerStyle(kFullCircle), MarkerSize(1)     );
   fit                            ->plotOn( frame, LineColor(kBlue),         LineStyle(kSolid) );
@@ -289,7 +289,7 @@ void fitZNC(const char* AnalysisName){
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
-  latex->DrawLatex(0.55,0.84,"UPC, LHC18q+LHC18r data");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset");
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T}-integrated");
   latex->DrawLatex(0.55,0.78,Form("%.1f < y < %.1f",-4.0,-2.5));
   // latex->DrawLatex(0.55,0.72,Form("N_{0 neutrons} = %.0f #pm %.0f", n0Neutrons.getVal(), n0Neutrons.getError()));

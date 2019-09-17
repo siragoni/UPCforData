@@ -32,6 +32,10 @@ void CrossSectionXNXN(){
   Double_t DSigmaDyXN0N[3]  = { 0,0,0};
   Double_t DSigmaDyXNXN[3]  = { 0,0,0};
   Double_t fI[3]            = { 0.0595, 0.056,  0.041 };
+  Double_t fI0N0N[3]        = { 0.0430, 0.027,  0.043 };
+  Double_t fI0NXN[3]        = { 0.0840, 0.084,  0.084 };
+  Double_t fIXN0N[3]        = { 5.6430, 2.335,  1.511 };
+  Double_t fIXNXN[3]        = { 0.5000, 0.485,  0.500 };
   Double_t fD               = 0.055;
   Double_t eJPsi[3]         = { (0.051 + 0.140)*0.5, (0.204 + 0.191)*0.5, (0.119 + 0.029)*0.5 };
   Double_t LUMI             = 747.849;
@@ -42,28 +46,44 @@ void CrossSectionXNXN(){
   Double_t NumOfJPsiXNXN[3] = {  123,  485,  290 };
 
   for( Int_t iLoop = 0; iLoop < 3; iLoop++ ){
-      DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
-      DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
-      DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
-      DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      // DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      // DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      // DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      // DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fI[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDy0N0N[iLoop] = NumOfJPsi0N0N[iLoop]/( (1+fI0N0N[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDy0NXN[iLoop] = NumOfJPsi0NXN[iLoop]/( (1+fI0NXN[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDyXN0N[iLoop] = NumOfJPsiXN0N[iLoop]/( (1+fIXN0N[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
+      DSigmaDyXNXN[iLoop] = NumOfJPsiXNXN[iLoop]/( (1+fIXNXN[iLoop]+fD)*eJPsi[iLoop]*BR*LUMI*0.5*0.95*1000 );
   }
 
   Double_t x1[3]          = { -4+1*(4-2.5)/6, -4+3*(4-2.5)/6, -4+5*(4-2.5)/6    };
-  Double_t y1Error0N0N[3] = { 83 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
-                              119/( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
-                              98 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+  Double_t y1Error0N0N[3] = { // 83 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              // 119/( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              // 98 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
+                              83 /( (1+fI0N0N[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              119/( (1+fI0N0N[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              98 /( (1+fI0N0N[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
                               };
-  Double_t y1Error0NXN[3] = { 18 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
-                              34 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
-                              32 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+  Double_t y1Error0NXN[3] = { // 18 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              // 34 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              // 32 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
+                              18 /( (1+fI0NXN[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              34 /( (1+fI0NXN[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              32 /( (1+fI0NXN[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
                               };
-  Double_t y1ErrorXN0N[3] = { 29 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
-                              52 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
-                              29 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+  Double_t y1ErrorXN0N[3] = { // 29 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              // 52 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              // 29 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
+                              29 /( (1+fIXN0N[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              52 /( (1+fIXN0N[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              29 /( (1+fIXN0N[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
                               };
-  Double_t y1ErrorXNXN[3] = { 16 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
-                              25 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
-                              24 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 ),
+  Double_t y1ErrorXNXN[3] = { // 16 /( (1+fI[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              // 25 /( (1+fI[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              // 24 /( (1+fI[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
+                              16 /( (1+fIXNXN[0]+fD)*eJPsi[0]*BR*LUMI*1.5*0.95*1000 ),
+                              25 /( (1+fIXNXN[1]+fD)*eJPsi[1]*BR*LUMI*1.5*0.95*1000 ),
+                              24 /( (1+fIXNXN[2]+fD)*eJPsi[2]*BR*LUMI*1.5*0.95*1000 )
                               };
   Double_t x1Error[3]     = {  (4-2.5)/6, (4-2.5)/6, (4-2.5)/6 };
 
@@ -108,5 +128,15 @@ void CrossSectionXNXN(){
   // mg->Draw("a fb l3d");
   // c2->Print("pngResults/MultiGraph2Dview.png");
   // return c2;
+
+  cout << "0N0N : " << endl << DSigmaDy0N0N[0] << endl << DSigmaDy0N0N[1] << endl << DSigmaDy0N0N[2] << endl;
+  cout << "0NXN : " << endl << DSigmaDy0NXN[0] << endl << DSigmaDy0NXN[1] << endl << DSigmaDy0NXN[2] << endl;
+  cout << "XN0N : " << endl << DSigmaDyXN0N[0] << endl << DSigmaDyXN0N[1] << endl << DSigmaDyXN0N[2] << endl;
+  cout << "XNXN : " << endl << DSigmaDyXNXN[0] << endl << DSigmaDyXNXN[1] << endl << DSigmaDyXNXN[2] << endl;
+
+  cout << "0N0N E: " << endl << y1Error0N0N[0] << endl << y1Error0N0N[1] << endl << y1Error0N0N[2] << endl;
+  cout << "0NXN E: " << endl << y1Error0NXN[0] << endl << y1Error0NXN[1] << endl << y1Error0NXN[2] << endl;
+  cout << "XN0N E: " << endl << y1ErrorXN0N[0] << endl << y1ErrorXN0N[1] << endl << y1ErrorXN0N[2] << endl;
+  cout << "XNXN E: " << endl << y1ErrorXNXN[0] << endl << y1ErrorXNXN[1] << endl << y1ErrorXNXN[2] << endl;
 
 }

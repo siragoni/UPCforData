@@ -101,3 +101,25 @@ echo "OK6"
 
 mv pngResults/PolarisationCorrectedHe1D.root      pngResults/$(date +%F)/1Dresults
 mv pngResults/PolarisationCorrectedCs1D.root      pngResults/$(date +%F)/1Dresults
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/Polarisation2DHE.cpp
+CreateCosThetaTh2("$ROOTfile");
+EOF
+
+echo "OK7"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/Polarisation2DCS.cpp
+CreateCosThetaTh2("$ROOTfile");
+EOF
+
+echo "OK8"
+
+
+mv pngResults/2DHe_*                              pngResults/$(date +%F)/2DHE
+mv pngResults/Polarisation2DHE.root               pngResults/$(date +%F)/2DHE
+mv pngResults/2DCs_*                              pngResults/$(date +%F)/2DCS
+mv pngResults/Polarisation2DCs.root               pngResults/$(date +%F)/2DCS

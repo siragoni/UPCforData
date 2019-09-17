@@ -225,14 +225,14 @@ void fitJPsiTemplateMC(const int selectionFlag = 0){
   // } else {
   //   fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
   // }
-  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
-  // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsH_%d", selectionFlag));
+  // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsH_%d", selectionFlag));
   fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
   fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
   fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-  // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsH_%d", selectionFlag));
   fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
   fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
   /* - Rebin
@@ -452,7 +452,7 @@ void fitJPsiTemplate(const int selectionFlag){
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
   latex->DrawLatex(0.55,0.78,Form("%.1f < #cos(#theta) < %.1f", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
   latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
@@ -510,7 +510,7 @@ void fitJPsiTemplate(const int selectionFlag){
 
 
 
-  gPad->SaveAs(Form("pngResults/CosThetaHe_%d.png", selectionFlag), "recreate");
+  gPad->SaveAs(Form("pngResults/CosThetaCs_%d.png", selectionFlag), "recreate");
 
 
 
@@ -618,7 +618,7 @@ void CreateCosThetaTh1(const char* AnalysisName){
     // }
   }
 
-  TFile f("pngResults/TH1functionalCosTheta25binsEX.root", "recreate");
+  TFile f("pngResults/CosThetaCsFrame.root", "recreate");
   CosThetaAfterSignalExtractionH      ->Write();
   CosThetaGammaGammaH                 ->Write();
   CosThetaAfterSignalExtractionErrorsH->Write();

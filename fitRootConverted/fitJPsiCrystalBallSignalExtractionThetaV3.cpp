@@ -128,14 +128,16 @@ void fCrystalBallFitJPsi(TH1F* histoToBeFit)//, Double_t &bookKeeping[5])
   TF1* CBfit     = new TF1("CBfit","crystalball",2,15);
   // TF1* CBfit     = new TF1("CBfit","crystalball",1.8,7);
   CBfit       ->SetParameter(0,1);
-  CBfit       ->SetParameter(3,1.08);
-  CBfit       ->SetParameter(4,10);
+  // CBfit       ->SetParameter(3,1.08);
+  CBfit       ->FixParameter(3,1.08);
+  CBfit       ->SetParameter(4,115);
   // CBfit       ->SetParameter(4,6);
-  CBfit       ->SetParLimits(4,2,20);
+  CBfit       ->SetParLimits(4,110,120);
   // CBfit       ->SetParLimits(4,1,12);
   // CBfit       ->SetParLimits(4,12,99999999);
   CBfit       ->SetParameter(2,0.090);
-  CBfit       ->SetParameter(1,3.1);
+  CBfit       ->SetParameter(1,3.115);
+  CBfit       ->SetParLimits(1,3.113,3.17);
   CBfit       ->SetNpx(1000);
   TCanvas*    JPsiCanvas = new TCanvas( "JPsiCanvas", "JPsiCanvas", 900, 800 );
   CBfit       ->Draw();
@@ -218,16 +220,19 @@ void fBkgPolFit(TH1F* histoToBeFit)//, Double_t &bookKeeping[5])
  */
 void fitJPsiTemplateMC(const int selectionFlag = 0){
 
-  if ( selectionFlag != 0 ) {
-    fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject( Form( "fInvariantMassDistributionOnlyCosThetaForSignalExtractionHelicityFrameH_%d", selectionFlag ) );
-  } else {
-    fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
-  }
+  // if ( selectionFlag != 0 ) {
+  //   fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject( Form( "fInvariantMassDistributionOnlyCosThetaForSignalExtractionHelicityFrameH_%d", selectionFlag ) );
+  // } else {
+  //   fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
+  // }
+  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
   fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
   fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
   fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
+  // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
   fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
   fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
   /* - Rebin
@@ -271,12 +276,12 @@ void fitJPsiTemplateMC(const int selectionFlag = 0){
   fTwoGammaToMuHigh   -> Scale( 1/Integral_fTwoGammaToMuHigh   );
 
   fCrystalBallFitJPsi    (fCohJpsiToMu);//,      CBparameters[0]);
-  if( selectionFlag < 10 ){
+  // if( selectionFlag < 10 ){
   fCrystalBallFitPsiPrime(fCohPsi2sToMu);//,     CBparameters[1]);
   // fCrystalBallFitJPsi    (fIncohJpsiToMu,    CBparameters[2]);
   // fCrystalBallFitPsiPrime(fIncohPsi2sToMu,   CBparameters[3]);
   fBkgPolFit             (fTwoGammaToMuHigh);//, CBparameters[4]);
-  }
+  // }
 }
 //_____________________________________________________________________________
 /* - Fit function for the ZNC plots.
@@ -286,12 +291,12 @@ void fitJPsiTemplate(const int selectionFlag){
 
   // TH1F *fInvariantMassDistributionH = 0x0;
   fInvariantMassDistributionH = 0x0;
-  fInvariantMassDistributionH = (TH1F*)listings->FindObject( Form("fInvariantMassDistributionOnlyCosThetaForSignalExtractionHelicityFrameH_%d", selectionFlag) );
-  // fInvariantMassDistributionH->Rebin(5);
+  fInvariantMassDistributionH = (TH1F*)listings->FindObject( Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag) );
+  fInvariantMassDistributionH->Rebin(5);
   // fInvariantMassDistributionH->Rebin(4);
-  if( selectionFlag < 16 || selectionFlag > 23 ) {
-    fInvariantMassDistributionH->Rebin(2);
-  }
+  // if( selectionFlag < 16 || selectionFlag > 23 ) {
+  //   fInvariantMassDistributionH->Rebin(2);
+  // }
   // fInvariantMassDistributionH->Rebin(8);
   fInvariantMassDistributionH->Draw("PE");
 
@@ -311,37 +316,6 @@ void fitJPsiTemplate(const int selectionFlag){
 
   // fitJPsiTemplateMC();
   new TCanvas;
-  // TF1* JPsiPeakFit     = new TF1( "JPsiPeakFit",    "crystalball",2.2,6);
-  // TF1* PsiPrimePeakFit = new TF1( "PsiPrimePeakFit","crystalball",2.2,6);
-  // TF1* GammaGammaFit   = new TF1( "GammaGammaFit",
-  //                                 "[0]*TMath::Exp(-[1]*x)*( (x > 4) ? 1 : 1 + [2]*(x-4)*(x-4) + [3]*(x-4)*(x-4)*(x-4) + [4]*(x-4)*(x-4)*(x-4)*(x-4) )",
-  //                                 2.2,6
-  //                                 );
-
-  // for(Int_t i=0; i<5; i++){
-  //   for(Int_t j=0; j<5; j++) cout << CBparameters[i][j] << " ";
-  //   cout << endl << flush;
-  // }
-
-  // JPsiPeakFit->FixParameter(0, CBparameters[0][0]);
-  // JPsiPeakFit->FixParameter(3, CBparameters[0][3]);
-  // JPsiPeakFit->FixParameter(4, CBparameters[0][4]);
-  // JPsiPeakFit->SetParameter(1, CBparameters[0][1]);
-  // JPsiPeakFit->SetParLimits(1, CBparameters[0][1]*0.8, CBparameters[0][1]*1.2);
-  // JPsiPeakFit->SetParameter(2, CBparameters[0][2]);
-  // JPsiPeakFit->SetParLimits(2, CBparameters[0][2]*0.8, CBparameters[0][2]*1.2);
-  // PsiPrimePeakFit->FixParameter(0, CBparameters[1][0]);
-  // PsiPrimePeakFit->FixParameter(3, CBparameters[1][3]);
-  // PsiPrimePeakFit->FixParameter(4, CBparameters[1][4]);
-  // PsiPrimePeakFit->FixParameter(1, CBparameters[1][1]);
-  // PsiPrimePeakFit->FixParameter(2, JPsiPeakFit->GetParameter(2)*CBparameters[1][2]/CBparameters[0][2]);
-  // GammaGammaFit->FixParameter(0, CBparameters[4][0]);
-  // GammaGammaFit->FixParameter(2, CBparameters[4][2]);
-  // GammaGammaFit->FixParameter(3, CBparameters[4][3]);
-  // GammaGammaFit->FixParameter(4, CBparameters[4][4]);
-  // GammaGammaFit->SetParameter(1, CBparameters[4][1]);
-  // GammaGammaFit->SetParLimits(1, CBparameters[4][1]*0.8, CBparameters[4][1]*1.2);
-  // TF1 *fFitInvMass = new TF1("fFitInvMass","[0]*JPsiPeakFit+[1]*PsiPrimePeakFit+[2]*GammaGammaFit",2.2001,5.9999);
 
 
 
@@ -349,30 +323,35 @@ void fitJPsiTemplate(const int selectionFlag){
   fFitInvMass->SetNpx(1000000);
   fFitInvMass->FixParameter(0, CBparameters[0][0]);    // best
   fFitInvMass->FixParameter(3, CBparameters[0][3]);    // best
+  // fFitInvMass->FixParameter(3, 1.02714e+00);    // best
+  // fFitInvMass->FixParameter(4, 140);    // best
   fFitInvMass->FixParameter(4, CBparameters[0][4]);    // best
   // fFitInvMass->SetParameter(3, CBparameters[0][3]);
   // fFitInvMass->SetParLimits(3, CBparameters[0][3]*0.8, CBparameters[0][3]*1.2);
   // fFitInvMass->SetParameter(4, CBparameters[0][4]);
   // fFitInvMass->SetParLimits(4, CBparameters[0][4]*0.8, CBparameters[0][4]*1.2);
-  fFitInvMass->FixParameter(1, CBparameters[0][1]);
-  fFitInvMass->FixParameter(2, CBparameters[0][2]);
-  // fFitInvMass->SetParameter(1, CBparameters[0][1]);
-  // fFitInvMass->SetParLimits(1, CBparameters[0][1]*0.8, CBparameters[0][1]*1.2);
-  // fFitInvMass->SetParameter(2, CBparameters[0][2]);
-  // fFitInvMass->SetParLimits(2, CBparameters[0][2]*0.8, CBparameters[0][2]*1.2);
+  // fFitInvMass->FixParameter(1, CBparameters[0][1]);
+  // fFitInvMass->FixParameter(2, CBparameters[0][2]);
+  fFitInvMass->SetParameter(1, CBparameters[0][1]);
+  fFitInvMass->SetParLimits(1, CBparameters[0][1]*0.9, CBparameters[0][1]*1.1);
+  fFitInvMass->SetParameter(2, CBparameters[0][2]);
+  fFitInvMass->SetParLimits(2, CBparameters[0][2]*0.8, CBparameters[0][2]*1.2);
   fFitInvMass->FixParameter(0+5, CBparameters[1][0]);
   fFitInvMass->FixParameter(3+5, CBparameters[1][3]);
   fFitInvMass->FixParameter(4+5, CBparameters[1][4]);
   fFitInvMass->FixParameter(1+5, CBparameters[1][1]);
   fFitInvMass->FixParameter(2+5, fFitInvMass->GetParameter(2)*CBparameters[1][2]/CBparameters[0][2]);
-  // fFitInvMass->FixParameter(0+10, CBparameters[4][0]);    // best
-  // fFitInvMass->FixParameter(2+10, CBparameters[4][2]);    // best
-  // fFitInvMass->FixParameter(3+10, CBparameters[4][3]);    // best
-  // fFitInvMass->FixParameter(4+10, CBparameters[4][4]);    // best
-  fFitInvMass->SetParameter(0+10, CBparameters[4][0]);    // mmmh
-  fFitInvMass->SetParameter(2+10, CBparameters[4][2]);    // mmmh
-  fFitInvMass->SetParameter(3+10, CBparameters[4][3]);    // mmmh
-  fFitInvMass->SetParameter(4+10, CBparameters[4][4]);    // mmmh
+  fFitInvMass->FixParameter(0+10, CBparameters[4][0]);    // best
+  fFitInvMass->FixParameter(2+10, CBparameters[4][2]);    // best
+  fFitInvMass->FixParameter(3+10, CBparameters[4][3]);    // best
+  fFitInvMass->FixParameter(4+10, CBparameters[4][4]);    // best
+  // fFitInvMass->FixParameter(2+10, 0.509393 );    // Fix to previous fit...
+  // fFitInvMass->FixParameter(3+10, 0.833773 );    // Fix to previous fit...
+  // fFitInvMass->FixParameter(4+10, 0.237383 );    // Fix to previous fit...
+  // fFitInvMass->SetParameter(0+10, CBparameters[4][0]);    // mmmh
+  // fFitInvMass->SetParameter(2+10, CBparameters[4][2]);    // mmmh
+  // fFitInvMass->SetParameter(3+10, CBparameters[4][3]);    // mmmh
+  // fFitInvMass->SetParameter(4+10, CBparameters[4][4]);    // mmmh
   fFitInvMass->SetParameter(1+10, CBparameters[4][1]);
   // fFitInvMass->FixParameter(1+10, CBparameters[4][1]);
   fFitInvMass->SetParLimits(1+10, CBparameters[4][1]*0.9, CBparameters[4][1]*1.1);
@@ -473,12 +452,9 @@ void fitJPsiTemplate(const int selectionFlag){
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
-  latex->DrawLatex(0.55,0.84,"UPC, LHC18q+LHC18r");
-  // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.3 GeV/#it{c}");
-  if      ( selectionFlag == 0 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T}-integrated");
-  else if ( selectionFlag == 1 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
-  else if ( selectionFlag == 2 ) latex->DrawLatex(0.55,0.78,"#it{p}_{T} > 0.25 GeV/#it{c}");
-  else                           latex->DrawLatex(0.55,0.78,"#it{p}_{T}-integrated");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset");
+  latex->DrawLatex(0.55,0.78,Form("%.1f < #cos(#theta) < %.1f", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
   latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
 
   /* - This is the part where we obtain the actual number of J/Psi, PsiPrime
@@ -487,48 +463,6 @@ void fitJPsiTemplate(const int selectionFlag){
      - it by the time you are reading this.
      -
    */
-  TH1F* fCohJpsiToMuFromModelH = (TH1F*) JPsiPeakFit->GetHistogram()->Clone("fCohJpsiToMuFromModelH");
-  for (Int_t ibin=1; ibin<=fCohJpsiToMuFromModelH->GetNbinsX(); ibin++) {
-    fCohJpsiToMuFromModelH->SetBinError(ibin,0);
-  }
-  // fCohJpsiToMuFromModelH->Rebin(5);
-  // fCohJpsiToMuFromModelH->Scale(0.2);
-  // fCohJpsiToMuFromModelH->Rebin(4);
-  // fCohJpsiToMuFromModelH->Scale(0.25);
-  if( selectionFlag < 16 || selectionFlag > 23 ) {
-    fCohJpsiToMuFromModelH->Rebin(2);
-    fCohJpsiToMuFromModelH->Scale(0.5);
-  }
-  // fCohJpsiToMuFromModelH->Rebin(8);
-  // fCohJpsiToMuFromModelH->Scale(0.125);
-  TH1F* fCohPsi2sToMuFromModelH = (TH1F*) PsiPrimePeakFit->GetHistogram()->Clone("fCohPsi2sToMuFromModelH");
-  for (Int_t ibin=1; ibin<=fCohPsi2sToMuFromModelH->GetNbinsX(); ibin++) {
-    fCohPsi2sToMuFromModelH->SetBinError(ibin,0);
-  }
-  // fCohPsi2sToMuFromModelH->Scale(0.2);
-  // fCohPsi2sToMuFromModelH->Rebin(5);
-  // fCohPsi2sToMuFromModelH->Scale(0.25);
-  // fCohPsi2sToMuFromModelH->Rebin(4);
-  if( selectionFlag < 16 || selectionFlag > 23 ) {
-    fCohPsi2sToMuFromModelH->Scale(0.5);
-    fCohPsi2sToMuFromModelH->Rebin(2);
-  }
-  // fCohPsi2sToMuFromModelH->Scale(0.125);
-  // fCohPsi2sToMuFromModelH->Rebin(8);
-  TH1F* fTwoGammaFromModelH = (TH1F*) GammaGammaFit->GetHistogram()->Clone("fTwoGammaFromModelH");
-  for (Int_t ibin=1; ibin<=fTwoGammaFromModelH->GetNbinsX(); ibin++) {
-    fTwoGammaFromModelH->SetBinError(ibin,0);
-  }
-  // fTwoGammaFromModelH->Scale(0.2);
-  // fTwoGammaFromModelH->Rebin(5);
-  // fTwoGammaFromModelH->Scale(0.25);
-  // fTwoGammaFromModelH->Rebin(4);
-  if( selectionFlag < 16 || selectionFlag > 23 ) {
-    fTwoGammaFromModelH->Scale(0.5);
-    fTwoGammaFromModelH->Rebin(2);
-  }
-  // fTwoGammaFromModelH->Scale(0.125);
-  // fTwoGammaFromModelH->Rebin(8);
 
 
   Double_t numberOfTotalJPsi     = 0;
@@ -537,38 +471,16 @@ void fitJPsiTemplate(const int selectionFlag){
   Double_t numberOfTotalJPsiErr  = 0;
   Double_t numberOfTotalPsi2sErr = 0;
   Double_t numberOfTotalBkgErr   = 0;
-  // if ( ptrSelectionFlag == 2 ) {
-  //   numberOfTotalJPsi  = fIncohJpsiToMuC  -> Integral();
-  //   numberOfTotalPsi2s = fIncohPsi2sToMuC -> Integral();
-  // } else {
-    // numberOfTotalJPsi  = fCohJpsiToMuFromModelH -> Integral();
-    // numberOfTotalPsi2s = fCohPsi2sToMuFromModelH-> Integral();
-    // numberOfTotalJPsi  = JPsiPeakFit    -> Integral(2.2,6,1.E-15);
-    // numberOfTotalPsi2s = PsiPrimePeakFit-> Integral(2.2,6,1.E-15);
-    // numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.04;
-    // numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.04;
-    if( selectionFlag < 16 || selectionFlag > 23 ) {
-      numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.02;
-      numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.02;
-    } else {
-      numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.01;
-      numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.01;
-    }
-    // numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
-    // numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
-    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
-    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
+  numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
+  numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+  numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
 
-  // }
-  // numberOfTotalBkg = fTwoGammaFromModelH      -> Integral();
-  // numberOfTotalBkg = GammaGammaFit-> Integral(2.2,6,1.E-15);
   numberOfTotalBkg    = (GammaGammaFit-> Integral(2.2,6))/0.05;
   numberOfTotalBkgErr = numberOfTotalBkg*fFitInvMass->GetParError(17)/fFitInvMass->GetParameter(17);
   latex->DrawLatex(0.55,0.66,Form("N_{J/#psi} = %.0f #pm %.0f",        numberOfTotalJPsi,  numberOfTotalJPsiErr ));//fFitInvMass->GetParameter(0) *fFitInvMass->GetParError(15)/0.05 ) );
   latex->DrawLatex(0.55,0.60,Form("N_{#psi(2S)} = %.0f #pm %.0f",      numberOfTotalPsi2s, numberOfTotalPsi2sErr));//fFitInvMass->GetParameter(5) *fFitInvMass->GetParError(16)/0.05 ) );
   latex->DrawLatex(0.55,0.54,Form("N_{#gamma#gamma} = %.0f #pm %.0f",  numberOfTotalBkg,   numberOfTotalBkgErr  ));//fFitInvMass->GetParameter(10)*fFitInvMass->GetParError(17)/0.05 ) );
-  // latex->DrawLatex(0.55,0.54,Form("#sigma_{J/#psi} = %.0f #pm %.0f MeV/c^{2}", sigma.getVal()*1000,    sigma.getError()*1000));
-  // latex->DrawLatex(0.55,0.48,Form("#sigma_{#psi(2S)} = %.0f MeV/c^{2} fixed",  sigma2.getVal()*1000));
 
   /* - This part concerns the background of the two signals.
      - Here, we extrapolate the background and compute the significance maybe?
@@ -578,15 +490,6 @@ void fitJPsiTemplate(const int selectionFlag){
   Double_t Psi2JPsiPeakBkg    = 0;
   Double_t JPsiPeakSignal     = 0;
   Double_t Psi2JPsiPeakSignal = 0;
-  // if ( ptrSelectionFlag == 2 ) {
-  //   JPsiPeakSignal     = fIncohJpsiToMuC  -> Integral( fIncohJpsiToMuC ->GetXaxis()->FindBin(2.75), fIncohJpsiToMuC ->GetXaxis()->FindBin(3.45) );
-  //   Psi2JPsiPeakSignal = fIncohPsi2sToMuC -> Integral( fIncohPsi2sToMuC->GetXaxis()->FindBin(3.45), fIncohPsi2sToMuC->GetXaxis()->FindBin(3.90) );
-  // } else {
-    // JPsiPeakSignal     = fCohJpsiToMuFromModelH -> Integral(fCohJpsiToMuFromModelH ->GetXaxis()->FindBin(2.75), fCohJpsiToMuFromModelH ->GetXaxis()->FindBin(3.45));
-    // Psi2JPsiPeakSignal = fCohPsi2sToMuFromModelH-> Integral(fCohPsi2sToMuFromModelH->GetXaxis()->FindBin(3.45), fCohPsi2sToMuFromModelH->GetXaxis()->FindBin(3.90));
-    // JPsiPeakSignal     = fCohJpsiToMuFromModelH -> Integral(fCohJpsiToMuFromModelH ->GetXaxis()->FindBin(2.75), fCohJpsiToMuFromModelH ->GetXaxis()->FindBin(3.45));
-    // Psi2JPsiPeakSignal = fCohPsi2sToMuFromModelH-> Integral(fCohPsi2sToMuFromModelH->GetXaxis()->FindBin(3.45), fCohPsi2sToMuFromModelH->GetXaxis()->FindBin(3.90));
-  // }
   JPsiPeakBkg     = GammaGammaFit->Integral(2.75,3.45);
   Psi2JPsiPeakBkg = GammaGammaFit->Integral(3.45,3.90);
 
@@ -606,125 +509,10 @@ void fitJPsiTemplate(const int selectionFlag){
                                     );
 
 
-  // //Signal to background ratios
-  // Double_t errSB1 = sqrt(   fFitInvMass->GetParError(15) * fFitInvMass->GetParError(15)/( numberOfTotalJPsi  *numberOfTotalJPsi )  +
-  //                         ( fFitInvMass->GetParError(17) * fFitInvMass->GetParError(17)/( JPsiPeakBkg        * JPsiPeakBkg)) );
-  // Double_t errSB2 = sqrt(   fFitInvMass->GetParError(16) * fFitInvMass->GetParError(16)/( numberOfTotalPsi2s * numberOfTotalPsi2s )  +
-  //                           fFitInvMass->GetParError(17) * fFitInvMass->GetParError(17)/( Psi2JPsiPeakBkg    * Psi2JPsiPeakBkg ) );
-  // latex->DrawLatex(0.55,0.30,Form("S/B for J/#psi = %.2f #pm %.2f",   JPsiPeakSignal/(Double_t)JPsiPeakBkg,         errSB1*JPsiPeakSignal/(Double_t)JPsiPeakBkg));
-  // latex->DrawLatex(0.55,0.24,Form("S/B for #psi(2s) = %.2f #pm %.2f", Psi2JPsiPeakSignal/(Double_t)Psi2JPsiPeakBkg, errSB2*Psi2JPsiPeakSignal/(Double_t)Psi2JPsiPeakBkg));
-  // if      ( selectionFlag == 0 ) gPad->SaveAs("pngResults/PtIntJPsiTF1.png",      "RECREATE");
-  // else if ( selectionFlag == 1 ) gPad->SaveAs("pngResults/CoherentJPsiTF1.png",   "RECREATE");
-  // else if ( selectionFlag == 2 ) gPad->SaveAs("pngResults/IncoherentJPsiTF1.png", "RECREATE");
-  // else                           gPad->SaveAs("pngResults/ops.png",               "RECREATE");
-  //
-  // TLegend* l = new TLegend(0.2,0.55,0.5,0.85);
-  // l->SetMargin(0.1);
-  // l->SetBorderSize(0);
-  // l->AddEntry(  fInvariantMassDistributionH, "ALICE data 2018");
-  // l->AddEntry(  fFitInvMass, Form( "Fit: #chi^{2}/NDF = %.2f / %.2d = %.2f  ",
-  //                                   fFitInvMass->GetChisquare(),
-  //                                   fFitInvMass->GetNDF(),
-  //                                   fFitInvMass->GetChisquare()/fFitInvMass->GetNDF()
-  //                                   )
-  //                                  );
-  // if ( selectionFlag == 2 ) {
-  //   l->AddEntry(  JPsiPeakFit,        "Incoherent J/#psi");
-  //   l->AddEntry(  PsiPrimePeakFit,    "Incoherent #psi(2S)");
-  // } else {
-  //   l->AddEntry(  JPsiPeakFit,        "Coherent   J/#psi");
-  //   l->AddEntry(  PsiPrimePeakFit,    "Coherent   #psi(2S)");
-  // }
-  // // l->AddEntry(  fTwoGammaToMuMediumC, "Continuum  #gamma#gamma #rightarrow #mu#mu");
-  // l->AddEntry(  GammaGammaFit,        "Continuum  #gamma#gamma #rightarrow #mu#mu");
-  // l->Draw();
 
-  gPad->SaveAs(Form("pngResults/FunctionalSignalCosTheta_%d.png", selectionFlag), "recreate");
+  gPad->SaveAs(Form("pngResults/CosThetaHe_%d.png", selectionFlag), "recreate");
 
 
-  // cout << "nBackGround:           " << nBackGround.getVal() << endl;
-  // cout << "fValueBkgJPsiPeak:     " << fValueBkgJPsiPeak << endl;
-  // cout << "fValueBkgPsiPrimePeak: " << fValueBkgPsiPrimePeak << endl;
-
-  // exp = TotalBackGroundJPsiPeak;
-  // err = errorTotalBackGroundJPsiPeak;
-
-  new TCanvas;
-  fCohJpsiToMuFromModelH->Draw();
-
-  // Double_t ChiSquareSingleContribution[76];
-  // TCanvas* ChiSquareCanvas = new TCanvas( "ChiSquareCanvas", "ChiSquareCanvas", 900, 800 );
-  // TH1F* ChiSquareH  = new TH1F( "ChiSquareH" ,"ChiSquareH" ,76, 2.2, 6);
-  // TH1F* ChiSquareH2 = new TH1F( "ChiSquareH2","ChiSquareH2",76, 2.2, 6);
-  // TH1F* ChiSquareH3 = new TH1F( "ChiSquareH3","ChiSquareH3",76, 2.2, 6);
-  // // TH1F* fTwoGammaFromModelH = (TH1F*) GammaGammaFit->GetHistogram()->Clone("fTwoGammaFromModelH");
-  // // for (Int_t ibin=1; ibin<=fTwoGammaFromModelH->GetNbinsX(); ibin++) {
-  // //   fTwoGammaFromModelH->SetBinError(ibin,0);
-  // // }
-  // Int_t whichBin  = fInvariantMassDistributionH->GetXaxis()->FindBin(2.225);
-  // Int_t whichBin2 = ChiSquareH                 ->GetXaxis()->FindBin(2.225);
-  // for( Int_t iLoop = 0; iLoop < 76; iLoop++ ) {
-  //   // Double_t binContent = fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.225+iLoop*0.5));
-  //   Double_t binContent = fInvariantMassDistributionH->GetBinContent(whichBin + iLoop);
-  //   Double_t binError   = fInvariantMassDistributionH->GetBinError(whichBin + iLoop);
-  //   Double_t binCenter  = fInvariantMassDistributionH->GetXaxis()->GetBinCenter(whichBin + iLoop);
-  //   // Double_t fitValue   = fFitInvMass->Eval(2.225+iLoop*0.5);
-  //   Double_t fitValue   = fFitInvMass->Eval(binCenter);
-  //   cout << "binContent = " << binContent << endl;
-  //   cout << "fitValue   = " << fitValue   << endl;
-  //   // Double_t pull = fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.225+iLoop*0.5)) - fFitInvMass->Eval(2.225+iLoop*0.5);
-  //   Double_t pull = binContent - fitValue;
-  //   cout << pull << endl;
-  //   // Double_t help = fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.225+iLoop*0.5));
-  //   // Double_t help = fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.225+iLoop*0.5));
-  //   Double_t pullHelp;
-  //   if( pull != 0 && binContent != 0 ) pullHelp = pull /binContent;
-  //   else pullHelp = 0;
-  //   cout << "pullHelp = " << pullHelp << endl;
-  //   Double_t pullHelp2;
-  //   if( pull != 0 && binError != 0 ) pullHelp2 = pull /binError;
-  //   else pullHelp2 = 0;
-  //   cout << "pullHelp2 = " << pullHelp2 << endl;
-  //   cout << "binCenter = " << ChiSquareH                 ->GetBinCenter( whichBin2 + iLoop ) << endl;
-  //   cout << "binCenter = " << fInvariantMassDistributionH->GetBinCenter( whichBin  + iLoop ) << endl;
-  //
-  //   ChiSquareH->SetBinContent(
-  //                              // ChiSquareH->GetXaxis()->FindBin(2.2+iLoop*0.5),
-  //                              whichBin2 + iLoop,
-  //                              // fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.2+iLoop*0.5)) - fFitInvMass->Eval(2.2+iLoop*0.5)
-  //                              pullHelp
-  //                              // pull
-  //                              );
-  //   ChiSquareH2->SetBinContent(
-  //                              // ChiSquareH->GetXaxis()->FindBin(2.2+iLoop*0.5),
-  //                              whichBin2 + iLoop,
-  //                              // fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.2+iLoop*0.5)) - fFitInvMass->Eval(2.2+iLoop*0.5)
-  //                              pullHelp2
-  //                              // pull
-  //                              );
-  //   ChiSquareH3->SetBinContent(
-  //                              // ChiSquareH->GetXaxis()->FindBin(2.2+iLoop*0.5),
-  //                              whichBin2 + iLoop,
-  //                              // fInvariantMassDistributionH->GetBinContent(fInvariantMassDistributionH->GetXaxis()->FindBin(2.2+iLoop*0.5)) - fFitInvMass->Eval(2.2+iLoop*0.5)
-  //                              pull*pull/binContent
-  //                              // pull
-  //                              );
-  //   ChiSquareSingleContribution[iLoop] = pull*pull/binContent;
-  //
-  //
-  // }
-  // Double_t AllChiSquare = 0;
-  // for( Int_t i = 0; i < 76; i++){
-  //   cout << "ChiSquareSingleContribution = " << ChiSquareSingleContribution[i] << endl;
-  //   AllChiSquare += ChiSquareSingleContribution[i];
-  // }
-  // cout << "AllChiSquare = " << AllChiSquare << endl;
-  // // ChiSquareH->Draw();
-  // // TCanvas* ChiSquareCanvas2 = new TCanvas( "ChiSquareCanvas2", "ChiSquareCanvas2", 900, 800 );
-  // // ChiSquareH2->Draw();
-  // TCanvas* ChiSquareCanvas3 = new TCanvas( "ChiSquareCanvas3", "ChiSquareCanvas3", 900, 800 );
-  // ChiSquareH3->Draw();
-  // ChiSquareCanvas3->SaveAs(Form("pngResults/FunctionalSignalCosThetaChi_%d.png", selectionFlag), "recreate");
 
 }
 //_____________________________________________________________________________
@@ -735,25 +523,17 @@ void fitJPsiTemplate(const int selectionFlag){
  * -
  */
 void CreateCosThetaTh1(const char* AnalysisName){
-  // fileMC[0] = new TFile("MCtrainResults/2019-05-17/kCohJpsiToMu/AnalysisResults.root");
-  // fileMC[0] = new TFile("AnalysisResultsMC20062019.root");
-  fileMC[0] = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
-  fileMC[1] = new TFile("MCtrainResults/2019-06-24/kCohPsi2sToMu/AnalysisResults.root");
-  fileMC[2] = new TFile("MCtrainResults/2019-06-24/kCohPsi2sToMuPi/AnalysisResults.root");
-  fileMC[3] = new TFile("MCtrainResults/2019-06-24/kIncohJpsiToMu/AnalysisResults.root");
-  fileMC[4] = new TFile("MCtrainResults/2019-06-24/kIncohPsi2sToMu/AnalysisResults.root");
-  fileMC[5] = new TFile("MCtrainResults/2019-06-24/kIncohPsi2sToMuPi/AnalysisResults.root");
-  fileMC[6] = new TFile("MCtrainResults/2019-06-24/kTwoGammaToMuHigh/AnalysisResults.root");
-  fileMC[7] = new TFile("MCtrainResults/2019-06-24/kTwoGammaToMuMedium/AnalysisResults.root");
-  // fileMC[0] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kCohJpsiToMu/AnalysisResults.root");
-  // fileMC[1] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kCohPsi2sToMu/AnalysisResults.root");
-  // fileMC[2] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kCohPsi2sToMuPi/AnalysisResults.root");
-  // fileMC[3] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kIncohJpsiToMu/AnalysisResults.root");
-  // fileMC[4] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kIncohPsi2sToMu/AnalysisResults.root");
-  // fileMC[5] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kIncohPsi2sToMuPi/AnalysisResults.root");
-  // fileMC[6] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kTwoGammaToMuHigh/AnalysisResults.root");
-  // fileMC[7] = new TFile("MCtrainResults/2019-06-16-LHC18qr/kTwoGammaToMuMedium/AnalysisResults.root");
+  fileMC[0] = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
+  fileMC[1] = new TFile("MCtrainResults/2019-09-17/kCohPsi2sToMu/AnalysisResults.root");
+  fileMC[2] = new TFile("MCtrainResults/2019-09-17/kCohPsi2sToMuPi/AnalysisResults.root");
+  fileMC[3] = new TFile("MCtrainResults/2019-09-17/kIncohJpsiToMu/AnalysisResults.root");
+  fileMC[4] = new TFile("MCtrainResults/2019-09-17/kIncohPsi2sToMu/AnalysisResults.root");
+  fileMC[5] = new TFile("MCtrainResults/2019-09-17/kIncohPsi2sToMuPi/AnalysisResults.root");
+  fileMC[6] = new TFile("MCtrainResults/2019-09-17/kTwoGammaToMuHigh/AnalysisResults.root");
+  fileMC[7] = new TFile("MCtrainResults/2019-09-17/kTwoGammaToMuMedium/AnalysisResults.root");
   // TDirectory* dirMC[8];
+  cout << "CHECKPOINT 4 " << endl << flush;
+
   for(Int_t iDirectory = 0; iDirectory < 8; iDirectory++) {
     dirMC[iDirectory] = fileMC[iDirectory]->GetDirectory("MyTask");
   }
@@ -768,89 +548,62 @@ void CreateCosThetaTh1(const char* AnalysisName){
     dirMC[iDirectory]->GetObject("MyOutputContainer", listingsMC[iDirectory]);
   }
 
-  fitJPsiTemplateMC();
+
+  // fitJPsiTemplateMC();
   fileList = new TFile(AnalysisName);
   dir      = fileList->GetDirectory("MyTask");
   dir->GetObject("MyOutputContainer", listings);
 
 
-  // Double_t CosThetaBinCenters[] = { -0.9, -0.7, -0.5, -0.3, -0.1,
-  //                                    0.1,  0.3,  0.5,  0.7,  0.9 };
-  // Double_t PhiBinCenters[]      = { -2.826, -2.198, -1.57, -0.942, -0.314,
-  //                                    0.314,  0.942,  1.57,  2.198,  2.826};
-  Double_t CosThetaBinCenters[40];
-  Double_t PhiBinCenters     [50];
-  for( Int_t iFillingCenters = 0; iFillingCenters < 50; iFillingCenters++ ){
-    if( iFillingCenters < 40 ) {
-      CosThetaBinCenters[iFillingCenters] = -0.975 + (Double_t)iFillingCenters * 0.025;
-    }
-    PhiBinCenters[iFillingCenters] = -3.14 + (Double_t)iFillingCenters * 0.1256;
-  }
-  for( Int_t looping = 0; looping < 40; looping++ ) {cout << "CosThetaBinCenters  " << CosThetaBinCenters[looping] << endl; }
-  for( Int_t looping = 0; looping < 50; looping++ ) {cout << "PhiBinCenters       " << PhiBinCenters[looping]      << endl; }
-
   TH1F* CosThetaAfterSignalExtractionH =
             new TH1F( "CosThetaAfterSignalExtractionH",
                       "CosThetaAfterSignalExtractionH",
-                      40, -1, 1//, 10, -3.14, 3.14
-                      // 10, -1, 1, 10, -4, 4
+                      25, -1, 1
                       );
   TH1F* CosThetaGammaGammaH =
             new TH1F( "CosThetaGammaGammaH",
                       "CosThetaGammaGammaH",
-                      40, -1, 1//, 10, -3.14, 3.14
-                      // 10, -1, 1, 10, -4, 4
+                      25, -1, 1
                       );
 
   TH1F* CosThetaAfterSignalExtractionErrorsH =
             new TH1F( "CosThetaAfterSignalExtractionErrorsH",
                       "CosThetaAfterSignalExtractionErrorsH",
-                      40, -1, 1//, 10, -3.14, 3.14
-                      // 10, -1, 1, 10, -4, 4
+                      25, -1, 1
                       );
   TH1F* CosThetaGammaGammaErrorsH =
             new TH1F( "CosThetaGammaGammaErrorsH",
                       "CosThetaGammaGammaErrorsH",
-                      40, -1, 1//, 10, -3.14, 3.14
-                      // 10, -1, 1, 10, -4, 4
+                      25, -1, 1
                       );
 
-  for (size_t iCosThetaBins = 8; iCosThetaBins < 32; iCosThetaBins++) {
+  for (size_t iCosThetaBins = 5; iCosThetaBins < 20; iCosThetaBins++) {
     // for (size_t iPhiBins = 0; iPhiBins < 10; iPhiBins++) {
       JPsiPeakValue    = 0;
       JPsiPeakValueErr = 0;
       BkgValue         = 0;
       BkgValueError    = 0;
-      if( iCosThetaBins > 17 && iCosThetaBins < 23 ) {
+      // if( iCosThetaBins > 17 && iCosThetaBins < 23 ) {
+      cout << "CHECKPOINT 1 " << endl << flush;
         fitJPsiTemplateMC(iCosThetaBins);
-      } else {
-        fitJPsiTemplateMC();
-      }
-      fitJPsiTemplate(iCosThetaBins);
+        cout << "CHECKPOINT 2 " << endl << flush;
 
-      CosThetaAfterSignalExtractionH->Fill( -0.975 + (Double_t)iCosThetaBins * 0.05,
-                                            // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
-                                            // -2.826 + (Double_t)iPhiBins      * 0.628,
+      // } else {
+      //   fitJPsiTemplateMC();
+      // }
+      fitJPsiTemplate(iCosThetaBins);
+      cout << "CHECKPOINT 3 " << endl << flush;
+
+
+      CosThetaAfterSignalExtractionH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
                                             // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
                                             JPsiPeakValue
                                             );
-      CosThetaGammaGammaH->Fill( -0.975 + (Double_t)iCosThetaBins * 0.05,
-                                 // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
-                                 // -2.826 + (Double_t)iPhiBins      * 0.628,
-                                 // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
-                                 BkgValue
-                                 );
 
-      CosThetaAfterSignalExtractionErrorsH->Fill(  -0.975 + (Double_t)iCosThetaBins * 0.05,
-                                                   // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
-                                                   // -2.826 + (Double_t)iPhiBins      * 0.628,
-                                                   // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
+      CosThetaAfterSignalExtractionErrorsH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
                                                    JPsiPeakValue
                                                    );
-      CosThetaGammaGammaErrorsH->Fill(  -0.975 + (Double_t)iCosThetaBins * 0.05,
-                                        // -3.6 + (Double_t)iPhiBins      * 8.0 / 10.0,
-                                        // -2.826 + (Double_t)iPhiBins      * 0.628,
-                                        // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
+      CosThetaGammaGammaErrorsH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
                                         BkgValue
                                         );
       CosThetaAfterSignalExtractionErrorsH->SetBinError(  iCosThetaBins + 1 ,
@@ -865,7 +618,7 @@ void CreateCosThetaTh1(const char* AnalysisName){
     // }
   }
 
-  TFile f("pngResults/TH1functionalCosThetaEX.root", "recreate");
+  TFile f("pngResults/TH1functionalCosTheta25binsEX.root", "recreate");
   CosThetaAfterSignalExtractionH      ->Write();
   CosThetaGammaGammaH                 ->Write();
   CosThetaAfterSignalExtractionErrorsH->Write();

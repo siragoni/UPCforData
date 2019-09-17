@@ -39,6 +39,21 @@ EOF
 echo "OK4"
 
 
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTildePhiHE.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK5"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTildePhiCS.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK6"
+
 
 
 

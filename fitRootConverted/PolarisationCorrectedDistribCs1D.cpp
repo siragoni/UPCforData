@@ -19,7 +19,7 @@ using namespace std;
 /* - Fit function for the ZNC plots.
  * -
  */
-void PolarisationCorrectedDistribHe1D(){
+void PolarisationCorrectedDistribCs1D(){
 
   TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
@@ -35,28 +35,28 @@ void PolarisationCorrectedDistribHe1D(){
    *     OBJ: TH1F	  fRAbsMuonH	                fRAbsMuonH                  : 0 at: 0x5a3c0c0
    *     OBJ: TH1F	  fInvariantMassDistributionH	fInvariantMassDistributionH : 0 at: 0x5a3c720
    */
-  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsH");
-  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaCsFrameTwentyfiveBinsH");
+  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaCsFrameTwentyfiveBinsH");
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
 
-  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsH");
-  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiCsFrameTwentyfiveBinsH");
+  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiCsFrameTwentyfiveBinsH");
   fReconPhiH->Sumw2();
   fGenerPhiH->Sumw2();
 
-  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiHelicityFrameTwentyfiveBinsH");
-  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiCsFrameTwentyfiveBinsH");
+  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiCsFrameTwentyfiveBinsH");
   fReconTildePhiH->Sumw2();
   fGenerTildePhiH->Sumw2();
 
-  // TFile* fileDataRawCosTheta = new TFile("pngResults/CosThetaHeFrame.root");
-  // TFile* fileDataRawPhi      = new TFile("pngResults/PhiHeFrame.root");
-  // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiHeFrame.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-17/CosThetaHE/CosThetaHeFrame.root");
-  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-17/PhiHE/PhiHeFrame.root");
-  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-17/TildePhiHE/TildePhiHeFrame.root");
+  // TFile* fileDataRawCosTheta = new TFile("pngResults/CosThetaCsFrame.root");
+  // TFile* fileDataRawPhi      = new TFile("pngResults/PhiCsFrame.root");
+  // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiCsFrame.root");
+  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-17/CosThetaCS/CosThetaCSFrame.root");
+  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-17/PhiCS/PhiCsFrame.root");
+  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-17/TildePhiCS/TildePhiCsFrame.root");
 
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();
@@ -115,7 +115,7 @@ void PolarisationCorrectedDistribHe1D(){
   // }
 
 
-  TFile f("pngResults/PolarisationCorrectedHe1D.root", "recreate");
+  TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
   acceptanceCosTheta->Write();
   CorrCosThetaH     ->Write();
   acceptancePhi     ->Write();

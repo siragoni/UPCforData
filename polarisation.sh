@@ -87,15 +87,15 @@ mv pngResults/TildePhiCsFrame.root                pngResults/$(date +%F)/TildePh
 
 #before I had always used aliroot -b -l -q , but it doesn't seem to work...
 aliroot -b -l <<EOF
-.L fitRootConverted/PolarisationCorrectedHe1D.cpp
-PolarisationCorrectedHe1D();
+.L fitRootConverted/PolarisationCorrectedDistribHe1D.cpp
+PolarisationCorrectedDistribHe1D();
 EOF
 
 echo "OK5"
 
 aliroot -b -l <<EOF
-.L fitRootConverted/PolarisationCorrectedCs1D.cpp
-PolarisationCorrectedCs1D();
+.L fitRootConverted/PolarisationCorrectedDistribCs1D.cpp
+PolarisationCorrectedDistribCs1D();
 EOF
 
 echo "OK6"
@@ -164,3 +164,21 @@ echo "OK9"
 
 mv pngResults/PolFitWithRootHe2D.png              pngResults/$(date +%F)/2Dresults
 mv pngResults/PolFitWithRootCs2D.png              pngResults/$(date +%F)/2Dresults
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationHeMinuit1D.cpp
+PolarisationHeMinuit1D();
+EOF
+
+echo "OK10"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCsMinuit1D.cpp
+PolarisationCsMinuit1D();
+EOF
+
+echo "OK11"
+
+mv pngResults/*Minuit.png                         pngResults/$(date +%F)/1Dresults

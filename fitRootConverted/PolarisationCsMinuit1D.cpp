@@ -243,9 +243,9 @@ void FcnForMinimisationV2(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
 /* - Fit function for the helicity case. It is basically a parabolic fit...
    -
  */
-void PolarisationHeMinuit1D(){
+void PolarisationCsMinuit1D(){
 
-  TFile* file1D = new TFile("pngResults/2019-09-18/1Dresults/PolarisationCorrectedHe1D.root");  //
+  TFile* file1D = new TFile("pngResults/2019-09-18/1Dresults/PolarisationCorrectedCs1D.root");  //
   TH1F* CorrectedCosTheta = (TH1F*) file1D->Get("CorrCosThetaH");
   TH1F* CorrectedPhi      = (TH1F*) file1D->Get("CorrPhiH");
   TH1F* CorrectedTildePhi = (TH1F*) file1D->Get("CorrTildePhiH");
@@ -357,7 +357,7 @@ void PolarisationHeMinuit1D(){
   latex->SetNDC();
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
   latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   // latex->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
@@ -365,7 +365,7 @@ void PolarisationHeMinuit1D(){
   Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
   Model->Draw("same");
-  gPad->SaveAs("pngResults/CosThetaHeMinuit.png", "recreate");
+  gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
 
 
   TF1* Model2 = new TF1("Model2", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
@@ -395,7 +395,7 @@ void PolarisationHeMinuit1D(){
   latex2->SetNDC();
   latex2->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex2->SetTextSize(0.045);
-  latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
   latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
   latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
@@ -405,7 +405,7 @@ void PolarisationHeMinuit1D(){
   Model2->SetParameter( 1, NormalisPhi );
   Model2->SetNpx(500);
   Model2->Draw("same");
-  gPad->SaveAs("pngResults/PhiHeMinuit.png", "recreate");
+  gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
 
   TF1* Model3 = new TF1("Model3", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
   new TCanvas;
@@ -434,7 +434,7 @@ void PolarisationHeMinuit1D(){
   latex3->SetNDC();
   latex3->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex3->SetTextSize(0.045);
-  latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
   latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
   latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,    LambdaThetaErr));
@@ -445,7 +445,7 @@ void PolarisationHeMinuit1D(){
   Model3->SetParameter( 1, NormalisTildePhi );
   Model3->SetNpx(500);
   Model3->Draw("same");
-  gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
+  gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
 
 
 

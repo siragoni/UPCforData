@@ -68,6 +68,8 @@ mkdir -p pngResults/$(date +%F)/TildePhiCS
 mkdir -p pngResults/$(date +%F)/1Dresults
 mkdir -p pngResults/$(date +%F)/2DHE
 mkdir -p pngResults/$(date +%F)/2DCS
+mkdir -p pngResults/$(date +%F)/2Dresults
+
 
 mv pngResults/CosThetaHe_*                        pngResults/$(date +%F)/CosThetaHE
 mv pngResults/CosThetaHeFrame.root                pngResults/$(date +%F)/CosThetaHE
@@ -143,3 +145,22 @@ echo "OK8"
 
 mv pngResults/PolarisationCorrectedHe2D.root      pngResults/$(date +%F)/2DHE
 mv pngResults/PolarisationCorrectedCs2D.root      pngResults/$(date +%F)/2DCS
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationHeFitWithRoot2D.cpp
+PolarisationHeFitWithRoot2D();
+EOF
+
+echo "OK9"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCsFitWithRoot2D.cpp
+PolarisationCsFitWithRoot2D();
+EOF
+
+echo "OK9"
+
+mv pngResults/PolFitWithRootHe2D.png              pngResults/$(date +%F)/2Dresults
+mv pngResults/PolFitWithRootCs2D.png              pngResults/$(date +%F)/2Dresults

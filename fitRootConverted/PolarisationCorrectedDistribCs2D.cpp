@@ -42,7 +42,7 @@ void PolarisationCorrectedDistribCs2D(){
   fReconH->Sumw2();
   fGenerH->Sumw2();
 
-  TFile* fileDataRaw = new TFile("pngResults/2019-09-18/2DCS/Polarisation2DCS.root");
+  TFile* fileDataRaw = new TFile("pngResults/2019-09-18/2DCS/Polarisation2DCs.root");
   TH2F* helicity2DafterSignalExtractionErrors = (TH2F*)fileDataRaw->Get("helicity2DafterSignalExtractionErrors");
   helicity2DafterSignalExtractionErrors->Sumw2();
   TH2F* RawH = (TH2F*) helicity2DafterSignalExtractionErrors->Clone("RawH");

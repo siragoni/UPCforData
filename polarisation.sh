@@ -135,7 +135,7 @@ echo "OK7"
 
 aliroot -b -l <<EOF
 .L fitRootConverted/PolarisationCorrectedDistribCs2D.cpp
-PolarisationCorrectedDistribHe2D();
+PolarisationCorrectedDistribCs2D();
 EOF
 
 echo "OK8"

@@ -654,7 +654,7 @@ void CreateCosThetaTh2(const char* AnalysisName){
     }
   }
 
-  TFile f("pngResults/Polarisation2DCS.root", "recreate");
+  TFile f("pngResults/Polarisation2DCs.root", "recreate");
   helicity2DafterSignalExtraction      ->Write();
   helicityOfGammaGamma                 ->Write();
   helicity2DafterSignalExtractionErrors->Write();

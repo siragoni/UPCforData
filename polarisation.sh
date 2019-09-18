@@ -123,3 +123,23 @@ mv pngResults/2DHe_*                              pngResults/$(date +%F)/2DHE
 mv pngResults/Polarisation2DHE.root               pngResults/$(date +%F)/2DHE
 mv pngResults/2DCs_*                              pngResults/$(date +%F)/2DCS
 mv pngResults/Polarisation2DCs.root               pngResults/$(date +%F)/2DCS
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribHe2D.cpp
+PolarisationCorrectedDistribHe2D();
+EOF
+
+echo "OK7"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribCs2D.cpp
+PolarisationCorrectedDistribHe2D();
+EOF
+
+echo "OK8"
+
+
+mv pngResults/PolarisationCorrectedHe2D.root      pngResults/$(date +%F)/2DHE
+mv pngResults/PolarisationCorrectedCs2D.root      pngResults/$(date +%F)/2DCS

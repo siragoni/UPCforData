@@ -54,9 +54,9 @@ void PolarisationCorrectedDistribCs1D(){
   // TFile* fileDataRawCosTheta = new TFile("pngResults/CosThetaCsFrame.root");
   // TFile* fileDataRawPhi      = new TFile("pngResults/PhiCsFrame.root");
   // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiCsFrame.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-17/CosThetaCS/CosThetaCSFrame.root");
-  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-17/PhiCS/PhiCsFrame.root");
-  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-17/TildePhiCS/TildePhiCsFrame.root");
+  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-18/CosThetaCS/CosThetaCSFrame.root");
+  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-18/PhiCS/PhiCsFrame.root");
+  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-18/TildePhiCS/TildePhiCsFrame.root");
 
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();

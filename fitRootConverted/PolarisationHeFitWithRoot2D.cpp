@@ -108,7 +108,7 @@ void PolarisationHeFitWithRoot2D(){
   fCorrectedShape->SetTitle("");
   new TCanvas;
   TCanvas* ZNAEnergy = new TCanvas( "CosTheta", "CosTheta", 900, 800 );
-  gPad->SetMargin(0.08,0.125,0.12,0.01);
+  gPad->SetMargin(0.13,0.125,0.12,0.13);
   /* - Beautifying is starting now.
      -
    */

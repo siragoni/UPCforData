@@ -12,6 +12,7 @@ using namespace std;
 #include <math.h>
 #include <vector>
 
+#include "TDatime.h"
 
 #include "TH2.h"
 
@@ -42,7 +43,9 @@ void PolarisationCorrectedDistribCs2D(){
   fReconH->Sumw2();
   fGenerH->Sumw2();
 
-  TFile* fileDataRaw = new TFile("pngResults/2019-09-18/2DCS/Polarisation2DCs.root");
+
+  TDatime d;
+  TFile* fileDataRaw = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TH2F* helicity2DafterSignalExtractionErrors = (TH2F*)fileDataRaw->Get("helicity2DafterSignalExtractionErrors");
   helicity2DafterSignalExtractionErrors->Sumw2();
   TH2F* RawH = (TH2F*) helicity2DafterSignalExtractionErrors->Clone("RawH");

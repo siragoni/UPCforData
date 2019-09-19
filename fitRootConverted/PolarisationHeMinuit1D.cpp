@@ -19,6 +19,8 @@ using namespace std;
 #include "TVirtualFitter.h"
 #include "TList.h"
 
+#include "TDatime.h"
+
 #include <vector>
 #include <map>
 
@@ -245,7 +247,9 @@ void FcnForMinimisationV2(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
  */
 void PolarisationHeMinuit1D(){
 
-  TFile* file1D = new TFile("pngResults/2019-09-18/1Dresults/PolarisationCorrectedHe1D.root");  //
+  TDatime d;
+  TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* file1D = new TFile("pngResults/2019-09-18/1Dresults/PolarisationCorrectedHe1D.root");  //
   TH1F* CorrectedCosTheta = (TH1F*) file1D->Get("CorrCosThetaH");
   TH1F* CorrectedPhi      = (TH1F*) file1D->Get("CorrPhiH");
   TH1F* CorrectedTildePhi = (TH1F*) file1D->Get("CorrTildePhiH");
@@ -294,7 +298,7 @@ void PolarisationHeMinuit1D(){
   }
 
 
-  TMinuit *gMinuit = new TMinuit(4);
+  TMinuit *gMinuit = new TMinuit(6);
   // gMinuit->SetFCN(FcnForMinimisation);
   gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);

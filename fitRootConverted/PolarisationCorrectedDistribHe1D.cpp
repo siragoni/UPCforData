@@ -13,6 +13,9 @@ using namespace std;
 #include <vector>
 
 
+#include "TDatime.h"
+
+
 #include "TH2.h"
 
 //_____________________________________________________________________________
@@ -51,12 +54,13 @@ void PolarisationCorrectedDistribHe1D(){
   fReconTildePhiH->Sumw2();
   fGenerTildePhiH->Sumw2();
 
-  // TFile* fileDataRawCosTheta = new TFile("pngResults/CosThetaHeFrame.root");
-  // TFile* fileDataRawPhi      = new TFile("pngResults/PhiHeFrame.root");
-  // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiHeFrame.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-18/CosThetaHE/CosThetaHeFrame.root");
-  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-18/PhiHE/PhiHeFrame.root");
-  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-18/TildePhiHE/TildePhiHeFrame.root");
+  TDatime d;
+  TFile* fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaHE/CosThetaHeFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiHE/PhiHeFrame.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiHE/TildePhiHeFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-18/CosThetaHE/CosThetaHeFrame.root");
+  // TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-18/PhiHE/PhiHeFrame.root");
+  // TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-18/TildePhiHE/TildePhiHeFrame.root");
 
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();

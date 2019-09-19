@@ -12,6 +12,8 @@ using namespace std;
 #include <math.h>
 #include <vector>
 
+#include "TDatime.h"
+
 
 #include "TH2.h"
 
@@ -54,9 +56,10 @@ void PolarisationCorrectedDistribCs1D(){
   // TFile* fileDataRawCosTheta = new TFile("pngResults/CosThetaCsFrame.root");
   // TFile* fileDataRawPhi      = new TFile("pngResults/PhiCsFrame.root");
   // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiCsFrame.root");
-  TFile* fileDataRawCosTheta = new TFile("pngResults/2019-09-18/CosThetaCS/CosThetaCSFrame.root");
-  TFile* fileDataRawPhi      = new TFile("pngResults/2019-09-18/PhiCS/PhiCsFrame.root");
-  TFile* fileDataRawTildePhi = new TFile("pngResults/2019-09-18/TildePhiCS/TildePhiCsFrame.root");
+  TDatime d;
+  TFile* fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
 
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();

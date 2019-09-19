@@ -182,3 +182,21 @@ EOF
 echo "OK11"
 
 mv pngResults/*Minuit.png                         pngResults/$(date +%F)/1Dresults
+
+
+# #before I had always used aliroot -b -l -q , but it doesn't seem to work...
+# aliroot -b -l <<EOF
+# .L fitRootConverted/PolarisationHeMinuit2D.cpp
+# PolarisationHeMinuit2D();
+# EOF
+#
+# echo "OK10"
+#
+# aliroot -b -l <<EOF
+# .L fitRootConverted/PolarisationCsMinuit2D.cpp
+# PolarisationCsMinuit2D();
+# EOF
+#
+# echo "OK11"
+#
+# mv pngResults/*Minuit.png                         pngResults/$(date +%F)/2Dresults

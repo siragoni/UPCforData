@@ -8,6 +8,7 @@
 #include "TAxis.h"
 #include "TMath.h"
 #include "TF1.h"
+#include "TF2.h"
 #include "TLatex.h"
 #include "TStyle.h"
 using namespace std;
@@ -22,7 +23,7 @@ using namespace std;
 #include <vector>
 #include <map>
 
-
+Double_t GlobalChi = 0;
 
 
 //_____________________________________________________________________________
@@ -95,16 +96,17 @@ void FcnForMinimisation(Int_t & /*nPar*/, Double_t * /*grad*/ , Double_t &fval, 
     }
     chi2 += tmp*tmp;
   }
-  fval = chi2;
+  fval      = chi2;
+  GlobalChi = chi2;
 }
 //_____________________________________________________________________________
 /* - Fit function for the helicity case. It is basically a parabolic fit...
    -
  */
-void fitHelicitySimultaneously2D(){
+void PolarisationHeMinuit2D(){
 
-  // TFile* file2D = new TFile("pngResults/TH2corrPerfect.root");
-  TFile* file2D = new TFile("pngResults/TH2corrPerfect2.root");
+  TDatime d;
+  TFile* file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TH2F* Distr2D = (TH2F*) file2D->Get("RawH");
 
 
@@ -125,7 +127,7 @@ void fitHelicitySimultaneously2D(){
   /// fill data structure
   for (Int_t ix = 1; ix <= nBinsCosTheta; ++ix) {
     for (Int_t iy = 1; iy <= nBinsPhi; ++iy) {
-      if( ((ix==1)&&(iy==18)) || ((ix==7)&&(iy==9)) || ((ix==7)&&(iy==10)) ) continue;
+      if( ((ix==0)&&(iy==18)) || ((ix==6)&&(iy==8))/*|| ((ix==7)&&(iy==9)) || ((ix==7)&&(iy==10))*/ ) continue;
       coordsX.push_back( ((TAxis*) Distr2D->GetXaxis())->GetBinCenter( ix ) );
       coordsY.push_back( Distr2D->GetYaxis()->GetBinCenter( iy ) );
       values.push_back(  Distr2D->GetBinContent( ix, iy )        );
@@ -135,52 +137,88 @@ void fitHelicitySimultaneously2D(){
 
 
 
-  TVirtualFitter::SetDefaultFitter("Minuit");
-  TVirtualFitter * minuit = TVirtualFitter::Fitter(0,4);
-  minuit->SetParameter(0, "LambdaTheta",         1, 0.1, -2, 2 ); // LambdaTheta
-  minuit->SetParameter(1, "LambdaPhi"  ,         0, 0.1, -2, 2 ); // LambdaPhi
-  minuit->SetParameter(2, "LambdaThetaPhi"  ,    0, 0.1, -2, 2 ); // LambdaThetaPhi
-  // minuit->SetParameter(3, "Norm",            52000, 100,  0, 100000 ); // normalisation
-  minuit->SetParameter(3, "Norm",            48200, 100,  0, 100000 ); // normalisation
-
-  // cout << "AHM" << flush << endl;
 
 
-  minuit->SetFCN(FcnForMinimisation);
+  /* - NB:
+   * - COMPUTING THE
+   * - CHI SQUARE
+   */
+  int ndf = coordsX.size()-4;
 
-  double arglist[100];
-  arglist[0] = 0;
-  // set print level
-  minuit->ExecuteCommand("SET PRINT",arglist,2);
-  // cout << "UHM" << flush << endl;
+  TMinuit *gMinuit = new TMinuit(4);
+  gMinuit->SetFCN(FcnForMinimisation);
+  gMinuit->DefineParameter(0, "LambdaTheta",        1., 0.1,    -2, 2        );
+  gMinuit->DefineParameter(1, "LambdaPhi",           0, 0.1,    -2, 2        );
+  gMinuit->DefineParameter(2, "LambdaThetaPhi",      0, 0.1,    -2, 2        );
+  gMinuit->DefineParameter(3, "Normalisation",   50000, 100, 45000, 55000    );
+  gMinuit->Command("SIMPLEX");
+  gMinuit->Command("MIGRAD");
+  gMinuit->Command("MIGRAD");
+  gMinuit->Command("MINOS");
+  Double_t LambdaTheta,    LambdaPhi,        LambdaThetaPhi,    Normalisation;
+  Double_t LambdaThetaErr, LambdaPhiErr,     LambdaThetaPhiErr, NormalisationErr;
+  gMinuit->GetParameter(0, LambdaTheta,      LambdaThetaErr     );
+  gMinuit->GetParameter(1, LambdaPhi,        LambdaPhiErr       );
+  gMinuit->GetParameter(2, LambdaThetaPhi,   LambdaThetaPhiErr  );
+  gMinuit->GetParameter(3, Normalisation,    NormalisationErr   );
+  printf("LambdaTheta     : %+.7f +- %.7f\n",LambdaTheta,     LambdaThetaErr     );
+  printf("LambdaPhi       : %+.7f +- %.7f\n",LambdaPhi,       LambdaPhiErr       );
+  printf("LambdaThetaPhi  : %+.7f +- %.7f\n",LambdaThetaPhi,  LambdaThetaPhiErr  );
+  printf("Normalisation   : %+.7f +- %.7f\n",Normalisation,   NormalisationErr   );
+  Double_t amin,edm,errdef;
+  Int_t nvpar,nparx,icstat;
+  gMinuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
+  gMinuit->mnprin(3,amin);
 
+  gStyle->SetOptStat(0);
 
-  // minimize
-  arglist[0] = 5000; // number of function calls
-  arglist[1] = 1; // tolerance
-  minuit->ExecuteCommand("MIGRAD",arglist, 2);
-  minuit->ExecuteCommand("HESSE", arglist, 2);
-	minuit->ExecuteCommand("MINOS", arglist, 2);
+  cout << "OK1" << endl << flush;
 
-  // cout << "EHM" << flush << endl;
+  TF2* Model = new TF2("Model", helicity2D, -0.6 ,0.6, -3.14, 3.14, 4 );
+  new TCanvas;
+  gPad->SetMargin(0.13,0.13,0.12,0.12);
+  Distr2D->GetXaxis()->SetTitleOffset(1.15);
+  // Distr2D->GetYaxis()->SetTitleOffset(1.25);
+  Distr2D->GetYaxis()->SetTitleOffset(1.);
+  Distr2D->GetXaxis()->SetTitleSize(0.045);
+  Distr2D->GetYaxis()->SetTitleSize(0.045);
+  Distr2D->GetXaxis()->SetLabelSize(0.045);
+  Distr2D->GetYaxis()->SetLabelSize(0.045);
+  Distr2D->GetXaxis()->SetTitleFont(42);
+  Distr2D->GetYaxis()->SetTitleFont(42);
+  Distr2D->GetXaxis()->SetLabelFont(42);
+  Distr2D->GetYaxis()->SetLabelFont(42);
+  Distr2D->GetXaxis()->SetNdivisions(408);
+  cout << "OK2" << endl << flush;
+  // Distr2D->GetYaxis()->SetRangeUser(0., Distr2D->GetMaximum()*2);
+  // Distr2D->GetXaxis()->SetRangeUser(2, 6);
+  Distr2D->SetTitle( ";cos(#theta); #phi" );
+  Distr2D->Draw("colZ");
+  TLatex* latex = new TLatex();
+  latex->SetTextSize(0.05);
+  latex->SetTextFont(42);
+  latex->SetTextAlign(11);
+  latex->SetNDC();
+  latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->SetTextSize(0.045);
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex->DrawLatex(0.55,0.78,"Minuit 2D Fit");
+  latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,      LambdaThetaErr   ));
+  latex->DrawLatex(0.55,0.62,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,        LambdaPhiErr     ));
+  latex->DrawLatex(0.55,0.54,Form("#lambda_{#theta#phi} = %.3f #pm %.3f", LambdaThetaPhi,   LambdaThetaPhiErr));
+  latex->DrawLatex(0.55,0.44,Form("#tilde{#chi} = %3.3f/%3.3d = %2.2f",      GlobalChi,        ndf, (Double_t)GlobalChi/(Double_t)ndf ));
+  Model->SetParameter( 0, LambdaTheta    );
+  Model->SetParameter( 1, LambdaPhi      );
+  Model->SetParameter( 2, LambdaThetaPhi );
+  Model->SetParameter( 3, Normalisation  );
+  cout << "OK3" << endl << flush;
+  // Model->SetNpx(500);
+  Model->Draw("same");
+  gPad->SaveAs("pngResults/He2DMinuit.png", "recreate");
+  cout << "OK4" << endl << flush;
 
-  // get result
-  double minParams[10];
-  double parErrors[10];
-  for (int i = 0; i < 4; ++i) {
-    minParams[i] = minuit->GetParameter(i);
-    parErrors[i] = minuit->GetParError(i);
-  }
-  double chi2, edm, errdef;
-  int nvpar, nparx;
-  minuit->GetStats(chi2,edm,errdef,nvpar,nparx);
+  new TCanvas;
+  Model->Draw("surf1");
 
-  // func->SetParameters(minParams);
-  // func->SetParErrors(parErrors);
-  // func->SetChisquare(chi2);
-  int ndf = coordsX.size()-nvpar;
-  // func->SetNDF(ndf);
-
-  std::cout << "Chi2 Fit = " << chi2 << " ndf = " << ndf << "  " << endl; //func->GetNDF() << std::endl;
 
 }

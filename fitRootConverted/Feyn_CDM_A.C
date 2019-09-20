@@ -94,7 +94,7 @@ void Feyn_CDM_B()
    TArc *a = new TArc(50,20,5,195,344); a->SetLineStyle(2);
    a->Draw();
    t.DrawLatex(50,12,"t");
-   t.DrawLatex(50, 3,"(a)");
+   // t.DrawLatex(50, 3,"(a)");
 
    TArc *a1 = new TArc(58,29,25,150,210); a1->SetLineStyle(3);
    a1->SetNoEdges();
@@ -108,14 +108,14 @@ void Feyn_CDM_B()
    l = new TLine(25, 60, 90, 70); l->Draw();
    //   t.DrawLatex(15,74,"p, Pb");
    // t.DrawLatex(85,74,"p, Pb");
-   t.DrawLatex(15,74,"Pb, p");
-   t.DrawLatex(85,74,"Pb, p");
+   t.DrawLatex(15,74,"Pb");
+   t.DrawLatex(85,74,"Pb");
 
    // draw lower particle
    l = new TLine(10, 10, 50, 20); l->Draw();
    l = new TLine(50, 20, 90, 10); l->Draw();
-   t.DrawLatex(15,6,"Pb, p");
-   t.DrawLatex(85,6,"Pb, p");
+   t.DrawLatex(15,6,"Pb");
+   t.DrawLatex(85,6,"Pb");
 
    // draw photon
    TCurlyLine *gamma = new TCurlyLine(25, 60, 40, 37);

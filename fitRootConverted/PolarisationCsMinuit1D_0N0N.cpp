@@ -218,10 +218,10 @@ void FcnForMinimisationV2(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
   Double_t chi2 = 0;
   Double_t tmp,x[2];
   for ( Int_t i = 0; i < n; ++i ) {
-    if        ( i < 15 ) {
+    if        ( i < 13/*15*/ ) {
       x[0] = coords[i];
       x[1] = 0;
-    } else if ( i < 40 ) {
+    } else if ( i < 38/*40*/ ) {
       // x[0] = coords[i] + 4*TMath::Pi();
       x[0] = coords[i] + 4*3.14;
       x[1] = 0;
@@ -276,7 +276,7 @@ void PolarisationCsMinuit1D_0N0N(){
   values = std::vector<Double_t>();
   errors = std::vector<Double_t>();
   /// fill data structure
-  for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
+  for (Int_t ix = 7/*6*/; ix <= nBinsCosTheta-6; ++ix) {
     coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
     values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
     errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
@@ -302,11 +302,11 @@ void PolarisationCsMinuit1D_0N0N(){
   // gMinuit->SetFCN(FcnForMinimisation);
   gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 2.8e+04);
+  gMinuit->DefineParameter(1, "NormalTheta", 2.25e+04, 100,  2.2e+04, 2.3e+04);
   // gMinuit->DefineParameter(2, "NormalisPhi", 4137, 100,  4000, 4400);
-  gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(2, "NormalisPhi",      6500, 100,  6000, 7000);
   gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 6500, 100,  6000, 7000);
   gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
@@ -334,7 +334,7 @@ void PolarisationCsMinuit1D_0N0N(){
 
   gStyle->SetOptStat(0);
 
-  TF1* Model = new TF1("Model", "[1]*(1+[0]*x*x)/(3+[0])", -0.6 ,0.6 );
+  TF1* Model = new TF1("Model", "[1]*(1+[0]*x*x)/(3+[0])", -0.5 ,0.5 );
   new TCanvas;
   gPad->SetMargin(0.13,0.01,0.12,0.01);
   CorrectedCosTheta->GetXaxis()->SetTitleOffset(1.15);

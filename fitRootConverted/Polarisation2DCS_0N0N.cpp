@@ -464,8 +464,8 @@ void fitJPsiTemplate( const int selectionFlag, const int selectionFlag2 ){
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
   latex->DrawLatex(0.55,0.84,"UPC, Run 2, 0N0N, CS");
-  latex->DrawLatex(0.55,0.78,Form("%.1f < cos(#theta) < %.1f", MyVariableCosThetaBinning2[selectionFlag] , MyVariableCosThetaBinning2[selectionFlag+1]));
-  latex->DrawLatex(0.55,0.72,Form("%.1f < #phi < %.1f",        MyVariablePhiBinning2[selectionFlag2] ,     MyVariablePhiBinning2[selectionFlag2+1]    ));
+  latex->DrawLatex(0.55,0.78,Form("#color[2]{%.3f < cos(#theta) < %.3f}", MyVariableCosThetaBinning2[selectionFlag] , MyVariableCosThetaBinning2[selectionFlag+1]));
+  latex->DrawLatex(0.55,0.72,Form("#color[4]{%.3f < #phi < %.3f}",        MyVariablePhiBinning2[selectionFlag2] ,     MyVariablePhiBinning2[selectionFlag2+1]    ));
 
   /* - This is the part where we obtain the actual number of J/Psi, PsiPrime
      - and the background. This is still Kay's original code. I will modify it.

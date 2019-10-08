@@ -453,7 +453,7 @@ void fitJPsiTemplate(const int selectionFlag){
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
   latex->DrawLatex(0.55,0.84,"UPC, Run 2, 0N0N, CS");
-  latex->DrawLatex(0.55,0.78,Form("%.1f < cos(#theta) < %.1f", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  latex->DrawLatex(0.55,0.78,Form("#color[2]{%.3f < cos(#theta) < %.3f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
   latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
 

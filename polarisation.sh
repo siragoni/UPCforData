@@ -200,3 +200,200 @@ EOF
 echo "OK11"
 
 mv pngResults/*Minuit.png                         pngResults/$(date +%F)/2Dresults
+
+
+
+
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCosThetaHE_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK1"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCosThetaCS_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK2"
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationPhiHE_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK3"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationPhiCS_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK4"
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTildePhiHE_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK5"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTildePhiCS_0N0N.cpp
+CreateCosThetaTh1("$ROOTfile");
+EOF
+
+echo "OK6"
+
+
+
+
+mkdir -p pngResults/$(date +%F)/CosThetaHE_0N0N
+mkdir -p pngResults/$(date +%F)/CosThetaCS_0N0N
+mkdir -p pngResults/$(date +%F)/PhiHE_0N0N
+mkdir -p pngResults/$(date +%F)/PhiCS_0N0N
+mkdir -p pngResults/$(date +%F)/TildePhiHE_0N0N
+mkdir -p pngResults/$(date +%F)/TildePhiCS_0N0N
+mkdir -p pngResults/$(date +%F)/1Dresults_0N0N
+mkdir -p pngResults/$(date +%F)/2DHE_0N0N
+mkdir -p pngResults/$(date +%F)/2DCS_0N0N
+mkdir -p pngResults/$(date +%F)/2Dresults_0N0N
+
+
+mv pngResults/CosThetaHe_*                        pngResults/$(date +%F)/CosThetaHE_0N0N
+mv pngResults/CosThetaHeFrame_0N0N.root           pngResults/$(date +%F)/CosThetaHE_0N0N
+mv pngResults/CosThetaCs_*                        pngResults/$(date +%F)/CosThetaCS_0N0N
+mv pngResults/CosThetaCsFrame_0N0N.root           pngResults/$(date +%F)/CosThetaCS_0N0N
+mv pngResults/PhiHe_*                             pngResults/$(date +%F)/PhiHE_0N0N
+mv pngResults/PhiHeFrame_0N0N.root                pngResults/$(date +%F)/PhiHE_0N0N
+mv pngResults/PhiCs_*                             pngResults/$(date +%F)/PhiCS_0N0N
+mv pngResults/PhiCsFrame_0N0N.root                pngResults/$(date +%F)/PhiCS_0N0N
+mv pngResults/TildePhiHe_*                        pngResults/$(date +%F)/TildePhiHE_0N0N
+mv pngResults/TildePhiHeFrame_0N0N.root           pngResults/$(date +%F)/TildePhiHE_0N0N
+mv pngResults/TildePhiCs_*                        pngResults/$(date +%F)/TildePhiCS_0N0N
+mv pngResults/TildePhiCsFrame_0N0N.root           pngResults/$(date +%F)/TildePhiCS_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribHe1D_0N0N.cpp
+PolarisationCorrectedDistribHe1D_0N0N();
+EOF
+
+echo "OK5"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribCs1D_0N0N.cpp
+PolarisationCorrectedDistribCs1D_0N0N();
+EOF
+
+echo "OK6"
+
+
+mv pngResults/PolarisationCorrectedHe1D_0N0N.root      pngResults/$(date +%F)/1Dresults_0N0N
+mv pngResults/PolarisationCorrectedCs1D_0N0N.root      pngResults/$(date +%F)/1Dresults_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/Polarisation2DHE_0N0N.cpp
+CreateCosThetaTh2("$ROOTfile");
+EOF
+
+echo "OK7"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/Polarisation2DCS_0N0N.cpp
+CreateCosThetaTh2("$ROOTfile");
+EOF
+
+echo "OK8"
+
+
+mv pngResults/2DHe_*                              pngResults/$(date +%F)/2DHE_0N0N
+mv pngResults/Polarisation2DHE_0N0N.root          pngResults/$(date +%F)/2DHE_0N0N
+mv pngResults/2DCs_*                              pngResults/$(date +%F)/2DCS_0N0N
+mv pngResults/Polarisation2DCs_0N0N.root          pngResults/$(date +%F)/2DCS_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribHe2D_0N0N.cpp
+PolarisationCorrectedDistribHe2D_0N0N();
+EOF
+
+echo "OK7"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCorrectedDistribCs2D_0N0N.cpp
+PolarisationCorrectedDistribCs2D_0N0N();
+EOF
+
+echo "OK8"
+
+
+mv pngResults/PolarisationCorrectedHe2D_0N0N.root      pngResults/$(date +%F)/2DHE_0N0N
+mv pngResults/PolarisationCorrectedCs2D_0N0N.root      pngResults/$(date +%F)/2DCS_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationHeFitWithRoot2D_0N0N.cpp
+PolarisationHeFitWithRoot2D_0N0N();
+EOF
+
+echo "OK9"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCsFitWithRoot2D_0N0N.cpp
+PolarisationCsFitWithRoot2D_0N0N();
+EOF
+
+echo "OK9"
+
+mv pngResults/PolFitWithRootHe2D_0N0N.png         pngResults/$(date +%F)/2Dresults_0N0N
+mv pngResults/PolFitWithRootCs2D_0N0N.png         pngResults/$(date +%F)/2Dresults_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationHeMinuit1D_0N0N.cpp
+PolarisationHeMinuit1D_0N0N();
+EOF
+
+echo "OK10"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCsMinuit1D_0N0N.cpp
+PolarisationCsMinuit1D_0N0N();
+EOF
+
+echo "OK11"
+
+mv pngResults/*Minuit_0N0N.png                    pngResults/$(date +%F)/1Dresults_0N0N
+
+
+#before I had always used aliroot -b -l -q , but it doesn't seem to work...
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationHeMinuit2D_0N0N.cpp
+PolarisationHeMinuit2D_0N0N();
+EOF
+
+echo "OK10"
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationCsMinuit2D_0N0N.cpp
+PolarisationCsMinuit2D_0N0N();
+EOF
+
+echo "OK11"
+
+mv pngResults/*Minuit_0N0N.png                    pngResults/$(date +%F)/2Dresults_0N0N

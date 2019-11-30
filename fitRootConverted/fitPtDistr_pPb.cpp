@@ -44,9 +44,9 @@ Double_t fPtDistr(Double_t* x,Double_t* par)
      -
    */
   Double_t val = 0;
-  val += par[0]* ( fCohJpsiToMu       ->Interpolate(x[0]) );   //needed
+  // val += par[0]* ( fCohJpsiToMu       ->Interpolate(x[0]) );   //needed
   // val += par[1]* ( fCohPsi2sToMu      ->Interpolate(x[0]) );
-  val += par[0]* ( fCohPsi2sToMuPi    ->Interpolate(x[0]) ) * par[4];   //needed
+  // val += par[0]* ( fCohPsi2sToMuPi    ->Interpolate(x[0]) ) * par[4];   //needed
   val += par[1]* ( fIncohJpsiToMu     ->Interpolate(x[0]) );   //needed
   // val += par[4]* ( fIncohPsi2sToMu    ->Interpolate(x[0]) );
   val += par[1]* ( fIncohPsi2sToMuPi  ->Interpolate(x[0]) ) * par[4];   //needed
@@ -70,7 +70,7 @@ Double_t fPtDistrPreliminary(Double_t* x,Double_t* par)
 /* - Fit function for the ZNC plots.
  * -
  */
-void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int selectionFlag2){
+void fitPtDistr(const char* AnalysisName, const int selectionFlag){
   TFile* fileList = new TFile(AnalysisName);
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TFile* fileMC[8];
@@ -116,67 +116,15 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   // fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fDimuonPtDistributionH");
   // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fDimuonPtDistributionH");
   // fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fDimuonPtDistributionH");
-  if        ( selectionFlag2 == 0 ) {
-    fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionH");
-    fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionH");
-  } else if ( selectionFlag2 == 1 ) {
-    // fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionRapidityH_0");
-    // fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionRapidityH_0");
-    fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionH");
-    fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionH");
-  } else if ( selectionFlag2 == 2 ) {
-    // fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionRapidityH_1");
-    // fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionRapidityH_1");
-    fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionH");
-    fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionH");
-  } else if ( selectionFlag2 == 3 ) {
-    // fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionRapidityH_2");
-    // fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionRapidityH_2");
-    fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionH");
-    fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionH");
-    fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionH");
-    fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionH");
-    fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionH");
-  }
+  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject("fTemplatePtDistributionH");
+  fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fTemplatePtDistributionH");
+  fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fTemplatePtDistributionH");
+  fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fTemplatePtDistributionH");
+  fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fTemplatePtDistributionH");
+  fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fTemplatePtDistributionH");
+  fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fTemplatePtDistributionH");
+  fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fTemplatePtDistributionH");
+
   /* - Rebin
      -
    */
@@ -252,42 +200,12 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
 
 
   TH1F *fDimuonPtDistributionDataH = 0x0;
-  if      ( selectionFlag == 0 ) {
-       if      ( selectionFlag2 == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
-       else if ( selectionFlag2 == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
-       else if ( selectionFlag2 == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
-       else if ( selectionFlag2 == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
-       else                            fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
-  }
-  else if ( selectionFlag == 1 ) {
-       if      ( selectionFlag2 == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroHv2");
-       else if ( selectionFlag2 == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroRapidityHv2_0");
-       else if ( selectionFlag2 == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroRapidityHv2_1");
-       else if ( selectionFlag2 == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroRapidityHv2_2");
-       else                            fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroHv2");
-  }
-  else if ( selectionFlag == 2 ) {
-       if      ( selectionFlag2 == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyHv2");
-       else if ( selectionFlag2 == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyRapidityHv2_0");
-       else if ( selectionFlag2 == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyRapidityHv2_1");
-       else if ( selectionFlag2 == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyRapidityHv2_2");
-       else                            fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyHv2");
-  }
-  else if ( selectionFlag == 3 ) {
-       if      ( selectionFlag2 == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroHv2");
-       else if ( selectionFlag2 == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroRapidityHv2_0");
-       else if ( selectionFlag2 == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroRapidityHv2_1");
-       else if ( selectionFlag2 == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroRapidityHv2_2");
-       else                            fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroHv2");
-  }
-  else if ( selectionFlag == 4 ) {
-       if      ( selectionFlag2 == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyHv2");
-       else if ( selectionFlag2 == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyRapidityHv2_0");
-       else if ( selectionFlag2 == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyRapidityHv2_1");
-       else if ( selectionFlag2 == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyRapidityHv2_2");
-       else                            fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyHv2");
-  }
-  else                                 fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
+  if      ( selectionFlag == 0 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
+  else if ( selectionFlag == 1 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAzeroH");
+  else if ( selectionFlag == 2 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCzeroZNAanyH");
+  else if ( selectionFlag == 3 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAzeroH");
+  else if ( selectionFlag == 4 ) fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionZNCanyZNAanyH");
+  else                           fDimuonPtDistributionDataH = (TH1F*)listings->FindObject("fDimuonPtDistributionH");
   fDimuonPtDistributionDataH->Rebin(5);
   fDimuonPtDistributionDataH->Draw("PE");
 
@@ -335,10 +253,6 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   FitPtDistr->SetParameter(4, kFeedDownCoherent);
   FitPtDistr->SetParLimits(4, FitPtDistr->GetParameter(4)*(1-kError), FitPtDistr->GetParameter(4)*(1+kError));
 
-
-  FitPtDistr->SetParLimits(0, 0.00000000000000001, 99999999999);
-  FitPtDistr->SetParLimits(1, 0.00000000000000001, 99999999999);
-
   // FEED-DOWN COHERENT
   // Double_t kFeedDownIncoherent = 1705;     // neutral element
   // Double_t kErrorInc           = 0.175;
@@ -348,72 +262,30 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   // Gamma+Gamma Medium
   // FitPtDistr->SetParameter(2, 4800);
   // FitPtDistr->SetParameter(2, 6531);
-  if        ( selectionFlag == 0 ) {
-    // FitPtDistr->SetParameter(2, 6531);  //2018
-    // FitPtDistr->SetParameter(2, 9035);  //2018+2015 with SPD
-    FitPtDistr->SetParameter(2, 11000);  //2018+2015 no SPD
-  } else if ( selectionFlag == 1 ) {
-    // FitPtDistr->SetParameter(2, 5213);  //2018
-    // FitPtDistr->SetParameter(2, 7754);  //2018+2015 with SPD
-    if      ( selectionFlag2 == 0 ) FitPtDistr->SetParameter(2, 9000);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 1 ) FitPtDistr->SetParameter(2, 9000 * 0.161);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 2 ) FitPtDistr->SetParameter(2, 9000 * 0.574);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 3 ) FitPtDistr->SetParameter(2, 9000 * 0.268);  //2018+2015 no SPD
-    else                            FitPtDistr->SetParameter(2, 9000);  //2018+2015 no SPD
-  } else if ( selectionFlag == 2 ) {
-    // FitPtDistr->SetParameter(2,  370);  //2018
-    // FitPtDistr->SetParameter(2,  439);  //2018+2015 with SPD
-    if      ( selectionFlag2 == 0 ) FitPtDistr->SetParameter(2, 550);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 1 ) FitPtDistr->SetParameter(2, 550 * 0.156);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 2 ) FitPtDistr->SetParameter(2, 550 * 0.523);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 3 ) FitPtDistr->SetParameter(2, 550 * 0.325);  //2018+2015 no SPD
-    else                            FitPtDistr->SetParameter(2, 550);  //2018+2015 no SPD
-  } else if ( selectionFlag == 3 ) {
-    // FitPtDistr->SetParameter(2,  470);  //2018
-    // FitPtDistr->SetParameter(2,  543);  //2018+2015 with SPD
-    if      ( selectionFlag2 == 0 ) FitPtDistr->SetParameter(2, 700);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 1 ) FitPtDistr->SetParameter(2, 700 * 0.158);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 2 ) FitPtDistr->SetParameter(2, 700 * 0.583);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 3 ) FitPtDistr->SetParameter(2, 700 * 0.26);  //2018+2015 no SPD
-    else                            FitPtDistr->SetParameter(2, 700);  //2018+2015 no SPD
-  } else if ( selectionFlag == 4 ) {
-    // FitPtDistr->SetParameter(2,  140);  //2018
-    // FitPtDistr->SetParameter(2,  145);  //2018+2015 with SPD
-    if      ( selectionFlag2 == 0 ) FitPtDistr->SetParameter(2, 200);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 1 ) FitPtDistr->SetParameter(2, 200 * 0.104);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 2 ) FitPtDistr->SetParameter(2, 200 * 0.621);  //2018+2015 no SPD
-    else if ( selectionFlag2 == 3 ) FitPtDistr->SetParameter(2, 200 * 0.277);  //2018+2015 no SPD
-    else                            FitPtDistr->SetParameter(2, 200);  //2018+2015 no SPD
-  }
+  // if        ( selectionFlag == 0 ) {
+  //   // FitPtDistr->SetParameter(2, 6531);  //2018
+  //   // FitPtDistr->SetParameter(2, 9035);  //2018+2015 with SPD
+  //   FitPtDistr->SetParameter(2, 11000);  //2018+2015 no SPD
+  // } else if ( selectionFlag == 1 ) {
+  //   // FitPtDistr->SetParameter(2, 5213);  //2018
+  //   // FitPtDistr->SetParameter(2, 7754);  //2018+2015 with SPD
+  //   FitPtDistr->SetParameter(2, 9000);  //2018+2015 no SPD
+  // } else if ( selectionFlag == 2 ) {
+  //   // FitPtDistr->SetParameter(2,  370);  //2018
+  //   // FitPtDistr->SetParameter(2,  439);  //2018+2015 with SPD
+  //   FitPtDistr->SetParameter(2,  550);  //2018+2015 no SPD
+  // } else if ( selectionFlag == 3 ) {
+  //   // FitPtDistr->SetParameter(2,  470);  //2018
+  //   // FitPtDistr->SetParameter(2,  543);  //2018+2015 with SPD
+  //   FitPtDistr->SetParameter(2,  700);  //2018+2015 no SPD
+  // } else if ( selectionFlag == 4 ) {
+  //   // FitPtDistr->SetParameter(2,  140);  //2018
+  //   // FitPtDistr->SetParameter(2,  145);  //2018+2015 with SPD
+  //   FitPtDistr->SetParameter(2,  200);  //2018+2015 no SPD
+  // }
 
   // FitPtDistr->FixParameter(2, 0);
-  FitPtDistr->SetParLimits(2, FitPtDistr->GetParameter(2)*0.95, FitPtDistr->GetParameter(2)*1.05);
-
-  // Unknown component
-  // if        ( selectionFlag == 0 ) {
-  //   // FitPtDistr->SetParameter(3, 743);
-  //   // FitPtDistr->SetParLimits(3, 720, 745);
-  //   FitPtDistr->SetParameter(3, 580);            // 2018+2015
-  //   FitPtDistr->SetParLimits(3, 550, 600);       // 2018+2015
-  // } else if ( selectionFlag == 1 ) {
-  //   // FitPtDistr->SetParameter(3, 125);
-  //   // FitPtDistr->SetParLimits(3, 100, 150);
-  //   FitPtDistr->SetParameter(3, 125);            // 2018+2015
-  //   FitPtDistr->SetParLimits(3, 120, 130);       // 2018+2015
-  // } else if ( selectionFlag == 2 ) {
-  //   FitPtDistr->SetParameter(3, 20);
-  //   FitPtDistr->SetParLimits(3, 0, 50);
-  // } else if ( selectionFlag == 3 ) {
-  //   // FitPtDistr->SetParameter(3, 540);
-  //   // FitPtDistr->SetParLimits(3, 500, 600);
-  //   FitPtDistr->SetParameter(3, 400);            // 2018+2015
-  //   FitPtDistr->SetParLimits(3, 380, 420);       // 2018+2015
-  // } else if ( selectionFlag == 4 ) {
-  //   // FitPtDistr->SetParameter(3, 40);
-  //   // FitPtDistr->SetParLimits(3, 0, 100);
-  //   FitPtDistr->SetParameter(3, 25);             // 2018+2015
-  //   FitPtDistr->SetParLimits(3, 0, 100);         // 2018+2015
-  // }
+  // FitPtDistr->SetParLimits(2, FitPtDistr->GetParameter(2)*0.95, FitPtDistr->GetParameter(2)*1.05);
 
   FitPtDistr->SetParameter(3, FitPtDistrPreliminary->GetParameter(0));
   FitPtDistr->SetParLimits(3, FitPtDistrPreliminary->GetParameter(0)*0.9, FitPtDistrPreliminary->GetParameter(0)*1.1);
@@ -494,13 +366,13 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   fTwoGammaToMuMediumC -> Scale( FitPtDistr->GetParameter(2) );
   fTwoGammaToMuHighC   -> Scale( FitPtDistr->GetParameter(2) );
   fHighPtTailC         -> Scale( FitPtDistr->GetParameter(3) );
-  fCohJpsiToMuC        -> Draw("HISTsame");
+  // fCohJpsiToMuC        -> Draw("same");
   // fCohPsi2sToMuC       -> Draw("same");
-  fCohPsi2sToMuPiC     -> Draw("HISTsame");
-  fIncohJpsiToMuC      -> Draw("HISTsame");
+  // fCohPsi2sToMuPiC     -> Draw("same");
+  fIncohJpsiToMuC      -> Draw("same");
   // fIncohPsi2sToMuC     -> Draw("same");
-  fIncohPsi2sToMuPiC   -> Draw("HISTsame");
-  fTwoGammaToMuMediumC -> Draw("HISTsame");
+  fIncohPsi2sToMuPiC   -> Draw("same");
+  fTwoGammaToMuMediumC -> Draw("same");
   // fTwoGammaToMuHighC   -> Draw("same");
   fHighPtTailC         -> Draw("Esame");
   // fCohJpsiToMu        -> Scale( FitPtDistr->GetParameter(0) );
@@ -521,28 +393,12 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   // fTwoGammaToMuHigh   -> Draw("same");
 
 
-  /* - COMPUTING $f_I$
-   * -
-   * - This snippet is for computing the
-   * - $f_I$ fraction for correcting the
-   * - cross sections later on.
-   * - Basically the idea is that
-   * -
-   * - f_I = ( Incoh + Incoh_Dissociative )/ Coherent
-   * -
-   */
-  Double_t int1c = fCohJpsiToMuC  ->Integral( 1/*fCohJpsiToMuC  ->GetXaxis()->FindBin(0.000001)*/, fCohJpsiToMuC  ->GetXaxis()->FindBin(0.2499999) );
-  Double_t int1i = fIncohJpsiToMuC->Integral( 1/*fIncohJpsiToMuC->GetXaxis()->FindBin(0.000001)*/, fIncohJpsiToMuC->GetXaxis()->FindBin(0.2499999) );
-  Double_t intun = fHighPtTailC   ->Integral( 1/*fHighPtTailC   ->GetXaxis()->FindBin(0.000001)*/, fHighPtTailC   ->GetXaxis()->FindBin(0.2499999) );
-  Double_t f_I   = (int1i + intun ) / int1c;
-
   TLatex* latex = new TLatex();
   latex->SetTextSize(0.05);
   latex->SetTextFont(42);
   latex->SetTextAlign(11);
   latex->SetNDC();
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->DrawLatex(0.17,0.86,Form("f_{I} = #frac{%.3f + %.3f}{%.3f} = %.3f ", int1i, intun, int1c, f_I));
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
   // latex->DrawLatex(0.55,0.84,"UPC, LHC18q+LHC18r data");
@@ -561,59 +417,34 @@ void fitPtDistr(const char* AnalysisName, const int selectionFlag, const int sel
   TLegend* l = new TLegend(0.45,0.55,0.98,0.85);
   l->SetMargin(0.1);
   l->SetBorderSize(0);
-  // l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018");
-  if      ( selectionFlag == 0 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2");
-  else if ( selectionFlag == 1 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2, 0N0N");
-  else if ( selectionFlag == 2 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2, 0NXN");
-  else if ( selectionFlag == 3 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2, XN0N");
-  else if ( selectionFlag == 4 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2, XNXN");
-  else                           l->AddEntry(  fDimuonPtDistributionDataH, "ALICE Run 2");
+  l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018");
+  if      ( selectionFlag == 0 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018");
+  else if ( selectionFlag == 1 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018 0N0N");
+  else if ( selectionFlag == 2 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018 0NXN");
+  else if ( selectionFlag == 3 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018 XN0N");
+  else if ( selectionFlag == 4 ) l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018 XNXN");
+  else                           l->AddEntry(  fDimuonPtDistributionDataH, "ALICE data 2018");
   l->AddEntry(  FitPtDistr, Form( "Fit: #chi^{2}/NDF = %.2f / %.2d = %.2f  ",
                                    FitPtDistr->GetChisquare(),
                                    FitPtDistr->GetNDF(),
                                    FitPtDistr->GetChisquare()/FitPtDistr->GetNDF()
                                    )
                                   );
-  l->AddEntry(  fCohJpsiToMuC,        "Coherent   J/#psi");
+  // l->AddEntry(  fCohJpsiToMuC,        "Coherent   J/#psi");
   l->AddEntry(  fIncohJpsiToMuC,      "Incoherent J/#psi");
   l->AddEntry(  fHighPtTailC,         "Incoherent dissociative J/#psi");
-  l->AddEntry(  fCohPsi2sToMuPiC,     "Coherent   #psi(2S) feeddown");
+  // l->AddEntry(  fCohPsi2sToMuPiC,     "Coherent   #psi(2S) feeddown");
   l->AddEntry(  fIncohPsi2sToMuPiC,   "Incoherent #psi(2S) feeddown");
   l->AddEntry(  fTwoGammaToMuMediumC, "Continuum  #gamma#gamma #rightarrow #mu#mu");
   l->Draw();
 
-  // gPad->SaveAs("pngResults/fitPtDistr.png", "RECREATE");
-  if        ( selectionFlag == 0 )  {
-       if      ( selectionFlag2 == 0 ) gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
-       else if ( selectionFlag2 == 1 ) gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
-       else if ( selectionFlag2 == 2 ) gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
-       else if ( selectionFlag2 == 3 ) gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
-       else                            gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
-  } else if ( selectionFlag == 1 )  {
-       if      ( selectionFlag2 == 0 ) gPad->SaveAs("pngResults/fitPtDistr0N0N.png",   "RECREATE");
-       else if ( selectionFlag2 == 1 ) gPad->SaveAs("pngResults/fitPtDistr0N0N_0.png", "RECREATE");
-       else if ( selectionFlag2 == 2 ) gPad->SaveAs("pngResults/fitPtDistr0N0N_1.png", "RECREATE");
-       else if ( selectionFlag2 == 3 ) gPad->SaveAs("pngResults/fitPtDistr0N0N_2.png", "RECREATE");
-       else                            gPad->SaveAs("pngResults/fitPtDistr0N0N.png",   "RECREATE");
-  } else if ( selectionFlag == 2 )  {
-       if      ( selectionFlag2 == 0 ) gPad->SaveAs("pngResults/fitPtDistr0NXN.png",   "RECREATE");
-       else if ( selectionFlag2 == 1 ) gPad->SaveAs("pngResults/fitPtDistr0NXN_0.png", "RECREATE");
-       else if ( selectionFlag2 == 2 ) gPad->SaveAs("pngResults/fitPtDistr0NXN_1.png", "RECREATE");
-       else if ( selectionFlag2 == 3 ) gPad->SaveAs("pngResults/fitPtDistr0NXN_2.png", "RECREATE");
-       else                            gPad->SaveAs("pngResults/fitPtDistr0NXN.png",   "RECREATE");
-  } else if ( selectionFlag == 3 )  {
-       if      ( selectionFlag2 == 0 ) gPad->SaveAs("pngResults/fitPtDistrXN0N.png",   "RECREATE");
-       else if ( selectionFlag2 == 1 ) gPad->SaveAs("pngResults/fitPtDistrXN0N_0.png", "RECREATE");
-       else if ( selectionFlag2 == 2 ) gPad->SaveAs("pngResults/fitPtDistrXN0N_1.png", "RECREATE");
-       else if ( selectionFlag2 == 3 ) gPad->SaveAs("pngResults/fitPtDistrXN0N_2.png", "RECREATE");
-       else                            gPad->SaveAs("pngResults/fitPtDistrXN0N.png",   "RECREATE");
-  } else if ( selectionFlag == 4 )  {
-       if      ( selectionFlag2 == 0 ) gPad->SaveAs("pngResults/fitPtDistrXNXN.png",   "RECREATE");
-       else if ( selectionFlag2 == 1 ) gPad->SaveAs("pngResults/fitPtDistrXNXN_0.png", "RECREATE");
-       else if ( selectionFlag2 == 2 ) gPad->SaveAs("pngResults/fitPtDistrXNXN_1.png", "RECREATE");
-       else if ( selectionFlag2 == 3 ) gPad->SaveAs("pngResults/fitPtDistrXNXN_2.png", "RECREATE");
-       else                            gPad->SaveAs("pngResults/fitPtDistrXN0N.png",   "RECREATE");
-  } else                               gPad->SaveAs("pngResults/fitPtDistrALL.png",    "RECREATE");
+  gPad->SaveAs("pngResults/fitPtDistr.png", "RECREATE");
+  if      ( selectionFlag == 0 ) gPad->SaveAs("pngResults/fitPtDistrALL.png",  "RECREATE");
+  else if ( selectionFlag == 1 ) gPad->SaveAs("pngResults/fitPtDistr0N0N.png", "RECREATE");
+  else if ( selectionFlag == 2 ) gPad->SaveAs("pngResults/fitPtDistr0NXN.png", "RECREATE");
+  else if ( selectionFlag == 3 ) gPad->SaveAs("pngResults/fitPtDistrXN0N.png", "RECREATE");
+  else if ( selectionFlag == 4 ) gPad->SaveAs("pngResults/fitPtDistrXNXN.png", "RECREATE");
+  else                           gPad->SaveAs("pngResults/fitPtDistrALL.png",  "RECREATE");
 
 
 }

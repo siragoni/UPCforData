@@ -287,7 +287,7 @@ void fitJPsiTemplateMC(const int selectionFlag = 0){
 /* - Fit function for the ZNC plots.
  * -
  */
-void fitJPsiTemplate(const int selectionFlag){
+void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
 
   // TH1F *fInvariantMassDistributionH = 0x0;
   fInvariantMassDistributionH = 0x0;
@@ -471,10 +471,48 @@ void fitJPsiTemplate(const int selectionFlag){
   Double_t numberOfTotalJPsiErr  = 0;
   Double_t numberOfTotalPsi2sErr = 0;
   Double_t numberOfTotalBkgErr   = 0;
-  numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
-  numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
-  numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
-  numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  // numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
+  // numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
+  // numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+  // numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+
+  if (        SignalRangeModeFlag == 0 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else if ( SignalRangeModeFlag == 1 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.85,3.35))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.85,3.35))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else if ( SignalRangeModeFlag == 2 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.8,3.35))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.8,3.35))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else if ( SignalRangeModeFlag == 3 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.9,3.35))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.9,3.35))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else if ( SignalRangeModeFlag == 4 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.85,3.4))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.85,3.4))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else if ( SignalRangeModeFlag == 5 ) {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.85,3.3))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.85,3.3))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  } else {
+    numberOfTotalJPsi     = (JPsiPeakFit    -> Integral(2.2,6))/0.05;  // USUAL FIT
+    numberOfTotalPsi2s    = (PsiPrimePeakFit-> Integral(2.2,6))/0.05;  // USUAL FIT
+    numberOfTotalJPsiErr  = numberOfTotalJPsi *fFitInvMass->GetParError(15)/fFitInvMass->GetParameter(15);
+    numberOfTotalPsi2sErr = numberOfTotalPsi2s*fFitInvMass->GetParError(16)/fFitInvMass->GetParameter(16);
+  }
+
 
   numberOfTotalBkg    = (GammaGammaFit-> Integral(2.2,6))/0.05;
   numberOfTotalBkgErr = numberOfTotalBkg*fFitInvMass->GetParError(17)/fFitInvMass->GetParameter(17);
@@ -510,7 +548,14 @@ void fitJPsiTemplate(const int selectionFlag){
 
 
 
-  gPad->SaveAs(Form("pngResults/PhiHe_%d.png", selectionFlag), "recreate");
+  // gPad->SaveAs(Form("pngResults/PhiHe_%d.png", selectionFlag), "recreate");
+  if      ( SignalRangeModeFlag == 0 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d.png",        selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 1 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d_Range1.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 2 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d_Range2.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 3 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d_Range3.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 4 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d_Range4.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 5 ) { gPad->SaveAs(Form("pngResults/PhiHe_%d_Range5.png", selectionFlag), "recreate"); }
+  else                                 { gPad->SaveAs(Form("pngResults/PhiHe_%d.png",        selectionFlag), "recreate"); }
 
 
 
@@ -521,8 +566,11 @@ void fitJPsiTemplate(const int selectionFlag){
  * - the values each time. After that I fill with a setbincontent
  * - and a setbinerror the
  * -
+ * - SignalRangeMode, selects the signal extraction range:
+ * - 0: standard
+ * - 1: ehm
  */
-void CreateCosThetaTh1(const char* AnalysisName){
+void CreateCosThetaTh1(const char* AnalysisName, Int_t SignalRangeMode = 0){
   fileMC[0] = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
   fileMC[1] = new TFile("MCtrainResults/2019-09-17/kCohPsi2sToMu/AnalysisResults.root");
   fileMC[2] = new TFile("MCtrainResults/2019-09-17/kCohPsi2sToMuPi/AnalysisResults.root");
@@ -595,7 +643,7 @@ void CreateCosThetaTh1(const char* AnalysisName){
       // } else {
       //   fitJPsiTemplateMC();
       // }
-      fitJPsiTemplate(iCosThetaBins);
+      fitJPsiTemplate(iCosThetaBins, SignalRangeMode);
       cout << "CHECKPOINT 3 " << endl << flush;
 
 
@@ -619,10 +667,67 @@ void CreateCosThetaTh1(const char* AnalysisName){
     // }
   }
 
-  TFile f("pngResults/PhiHeFrame.root", "recreate");
-  PhiAfterSignalExtractionH      ->Write();
-  PhiGammaGammaH                 ->Write();
-  PhiAfterSignalExtractionErrorsH->Write();
-  PhiGammaGammaErrorsH           ->Write();
-  f.Close();
+  // TFile f("pngResults/PhiHeFrame.root", "recreate");
+  // PhiAfterSignalExtractionH      ->Write();
+  // PhiGammaGammaH                 ->Write();
+  // PhiAfterSignalExtractionErrorsH->Write();
+  // PhiGammaGammaErrorsH           ->Write();
+  // f.Close();
+  if      ( SignalRangeMode == 0 ) {
+    TFile f("pngResults/PhiHeFrame.root",   "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else if ( SignalRangeMode == 1 ) {
+    TFile f("pngResults/PhiHeFrame_1.root", "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else if ( SignalRangeMode == 2 ) {
+    TFile f("pngResults/PhiHeFrame_2.root", "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else if ( SignalRangeMode == 3 ) {
+    TFile f("pngResults/PhiHeFrame_3.root", "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else if ( SignalRangeMode == 4 ) {
+    TFile f("pngResults/PhiHeFrame_4.root", "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else if ( SignalRangeMode == 5 ) {
+    TFile f("pngResults/PhiHeFrame_5.root", "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+  else                             {
+    TFile f("pngResults/PhiHeFrame.root",   "recreate");
+    PhiAfterSignalExtractionH      ->Write();
+    PhiGammaGammaH                 ->Write();
+    PhiAfterSignalExtractionErrorsH->Write();
+    PhiGammaGammaErrorsH           ->Write();
+    f.Close();
+  }
+
 }

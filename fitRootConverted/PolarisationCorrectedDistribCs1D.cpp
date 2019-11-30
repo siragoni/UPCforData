@@ -21,7 +21,7 @@ using namespace std;
 /* - Fit function for the ZNC plots.
  * -
  */
-void PolarisationCorrectedDistribCs1D(){
+void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
 
   TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
@@ -57,9 +57,43 @@ void PolarisationCorrectedDistribCs1D(){
   // TFile* fileDataRawPhi      = new TFile("pngResults/PhiCsFrame.root");
   // TFile* fileDataRawTildePhi = new TFile("pngResults/TildePhiCsFrame.root");
   TDatime d;
-  TFile* fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  TFile* fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  TFile* fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+
+  TFile* fileDataRawCosTheta = 0x0;
+  TFile* fileDataRawPhi      = 0x0;
+  TFile* fileDataRawTildePhi = 0x0;
+  if (        RangeSelectionMode == 0 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame.root",             d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 1 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame_1.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 2 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame_2.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 3 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame_3.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 4 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame_4.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 5 ) {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame_5.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else {
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaCS/CosThetaCSFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiCS/PhiCsFrame.root",             d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiCS/TildePhiCsFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  }
+
 
   TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();
@@ -118,15 +152,90 @@ void PolarisationCorrectedDistribCs1D(){
   // }
 
 
-  TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
-  acceptanceCosTheta->Write();
-  CorrCosThetaH     ->Write();
-  acceptancePhi     ->Write();
-  CorrPhiH          ->Write();
-  acceptanceTildePhi->Write();
-  CorrTildePhiH     ->Write();
-  // AccErrors         ->Write();
-  // EntErrors         ->Write();
-  // ReconTheta        ->Write();
-  f.Close();
+  // TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
+  if        ( RangeSelectionMode == 0 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 1 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D_1.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 2 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D_2.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 3 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D_3.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 4 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D_4.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 5 ) {
+    TFile f("pngResults/PolarisationCorrectedCs1D_5.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  } else {
+    TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
+    acceptanceCosTheta->Write();
+    CorrCosThetaH     ->Write();
+    acceptancePhi     ->Write();
+    CorrPhiH          ->Write();
+    acceptanceTildePhi->Write();
+    CorrTildePhiH     ->Write();
+    // AccErrors         ->Write();
+    // EntErrors         ->Write();
+    // ReconTheta        ->Write();
+    f.Close();
+  }
 }

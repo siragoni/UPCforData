@@ -242,14 +242,64 @@ void FcnForMinimisationV2(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
   cout << "ChiSquared = " << chi2 << endl;
 }
 //_____________________________________________________________________________
+void FcnForMinimisationV3(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, Int_t iflag)
+{
+  Int_t n = coords.size();
+  Double_t chi2 = 0;
+  Double_t tmp,x[2];
+  // cout << "SignalRangeModeFromBash = " << SignalRangeModeFromBash << endl;
+  // cout << "Counter = " << Counter << endl;
+  for ( Int_t i = 0; i < n; ++i ) {
+    if        ( i < 25 ) {
+      // x[0] = coords[i] + 4*TMath::Pi();
+      x[0] = coords[i] + 4*3.14;
+      x[1] = 0;
+    } else if ( i < 50 ) {
+      // x[0] = coords[i] + 8*TMath::Pi();
+      x[0] = coords[i] + 8*3.14;
+      x[1] = 0;
+    } else {
+      x[0] = coords[i];
+      x[1] = 0;
+    }
+    if ( values[i] != 0 ) {
+      tmp = ( values[i] - SimultaneousFitLastHopeComplete( x, p ) ) / errors[i];
+      // tmp = ( values[i] - SimultaneousFit( x, p ) ) / errors[i];
+    } else {
+      tmp = 0;
+    }
+    chi2 += tmp*tmp;
+  }
+  f = chi2;
+  cout << "ChiSquared = " << chi2 << endl;
+}
+//_____________________________________________________________________________
 /* - Fit function for the helicity case. It is basically a parabolic fit...
    -
  */
-void PolarisationCsMinuit1D(){
+void PolarisationCsMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeMode = 0 ){
 
+  // SignalRangeModeFromBash = SignalRangeSelectionMode;
   TDatime d;
-  TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  // TFile* file1D = new TFile("pngResults/2019-09-18/1Dresults/PolarisationCorrectedCs1D.root");  //
+  // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* file1D = 0x0;
+  if        ( SignalRangeSelectionMode == 0 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 1 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 2 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 3 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 4 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 5 ) {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else {
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  }
+
+
   TH1F* CorrectedCosTheta = (TH1F*) file1D->Get("CorrCosThetaH");
   TH1F* CorrectedPhi      = (TH1F*) file1D->Get("CorrPhiH");
   TH1F* CorrectedTildePhi = (TH1F*) file1D->Get("CorrTildePhiH");
@@ -276,11 +326,11 @@ void PolarisationCsMinuit1D(){
   values = std::vector<Double_t>();
   errors = std::vector<Double_t>();
   /// fill data structure
-  for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
-    coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
-    values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
-    errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
-  }
+  // for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
+  //   coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
+  //   values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
+  //   errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
+  // }
   for (Int_t iy = 1; iy <= nBinsPhi; ++iy) {
     coords.push_back( CorrectedPhi     ->GetXaxis()->GetBinCenter(iy) );
     values.push_back( CorrectedPhi     ->GetBinContent(iy)            );
@@ -291,16 +341,30 @@ void PolarisationCsMinuit1D(){
     values.push_back( CorrectedTildePhi->GetBinContent(iy)            );
     errors.push_back( CorrectedTildePhi->GetBinError(iy)              );
   }
+  for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
+    if        ( FitRangeMode == 1 ) {
+      if ( (ix == 6) || (ix == nBinsCosTheta-5) )  continue;
+    } else if ( FitRangeMode == 2 ) {
+      if ( (ix == 6) || (ix == 7) || (ix == nBinsCosTheta-6) || (ix == nBinsCosTheta-5) )  continue;
+    } else {
+    }
+    // Counter+=1;
+    coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
+    values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
+    errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
+  }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
 
   TMinuit *gMinuit = new TMinuit(6);
   // gMinuit->SetFCN(FcnForMinimisation);
-  gMinuit->SetFCN(FcnForMinimisationV2);
+  // gMinuit->SetFCN(FcnForMinimisationV2);
+  gMinuit->SetFCN(FcnForMinimisationV3);
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
   gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 2.8e+04);
   // gMinuit->DefineParameter(2, "NormalisPhi", 4137, 100,  4000, 4400);
@@ -369,7 +433,9 @@ void PolarisationCsMinuit1D(){
   Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
   Model->Draw("same");
-  gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
+  // gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
+  gPad->SaveAs(Form("pngResults/CosThetaCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
 
   TF1* Model2 = new TF1("Model2", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
@@ -409,7 +475,9 @@ void PolarisationCsMinuit1D(){
   Model2->SetParameter( 1, NormalisPhi );
   Model2->SetNpx(500);
   Model2->Draw("same");
-  gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
+  // gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
+  gPad->SaveAs(Form("pngResults/PhiCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
   TF1* Model3 = new TF1("Model3", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
   new TCanvas;
@@ -449,9 +517,30 @@ void PolarisationCsMinuit1D(){
   Model3->SetParameter( 1, NormalisTildePhi );
   Model3->SetNpx(500);
   Model3->Draw("same");
-  gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
+  // gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
+  gPad->SaveAs(Form("pngResults/TildePhiCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
 
+  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_CS.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
+  SavingParamH->SetBinContent( 0, LambdaTheta );
+  SavingParamH->SetBinContent( 1, LambdaPhi );
+  SavingParamH->SetBinContent( 2, LambdaThetaPhi );
+  SavingParamH->SetBinContent( 6, LambdaThetaErr );
+  SavingParamH->SetBinContent( 7, LambdaPhiErr );
+  SavingParamH->SetBinContent( 8, LambdaThetaPhiErr );
+  SavingParamH->SetBinError( 0, 0 );
+  SavingParamH->SetBinError( 1, 0 );
+  SavingParamH->SetBinError( 2, 0 );
+  SavingParamH->SetBinError( 6, 0 );
+  SavingParamH->SetBinError( 7, 0 );
+  SavingParamH->SetBinError( 8, 0 );
+  SavingParamH     ->Write();
+  CorrectedCosTheta->Write();
+  CorrectedPhi     ->Write();
+  CorrectedTildePhi->Write();
+  SavingFile.Close();
 
 }
 //_____________________________________________________________________________

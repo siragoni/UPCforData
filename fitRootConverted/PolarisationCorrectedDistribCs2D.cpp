@@ -20,7 +20,7 @@ using namespace std;
 /* - Fit function for the ZNC plots.
  * -
  */
-void PolarisationCorrectedDistribCs2D(){
+void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
 
   TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
@@ -45,7 +45,27 @@ void PolarisationCorrectedDistribCs2D(){
 
 
   TDatime d;
-  TFile* fileDataRaw = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRaw = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* fileDataRaw = 0x0;
+  if (        RangeSelectionMode == 0 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 1 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 2 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 3 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 4 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( RangeSelectionMode == 5 ) {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else {
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  }
+
+
+
+
   TH2F* helicity2DafterSignalExtractionErrors = (TH2F*)fileDataRaw->Get("helicity2DafterSignalExtractionErrors");
   helicity2DafterSignalExtractionErrors->Sumw2();
   TH2F* RawH = (TH2F*) helicity2DafterSignalExtractionErrors->Clone("RawH");
@@ -71,9 +91,53 @@ void PolarisationCorrectedDistribCs2D(){
   //   }
   // }
 
-  TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
-  acceptance->Write();
-  RawH      ->Write();
-  // AccErrors ->Write();
-  f.Close();
+  // TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+  // acceptance->Write();
+  // RawH      ->Write();
+  // // AccErrors ->Write();
+  // f.Close();
+  if        ( RangeSelectionMode == 0 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 1 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D_1.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 2 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D_2.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 3 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D_3.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 4 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D_4.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 5 ) {
+    TFile f("pngResults/PolarisationCorrectedCs2D_5.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else {
+    TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  }
+
 }

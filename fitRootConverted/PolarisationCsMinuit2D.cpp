@@ -27,7 +27,7 @@ Double_t GlobalChi = 0;
 
 
 //_____________________________________________________________________________
-/* - Codign in the fit functions.
+/* - Coding in the fit functions.
    - The fit is modelled as the sum of 3 different functions:
    - 1) CosTheta only
    - 2) Phi      only

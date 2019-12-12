@@ -532,15 +532,15 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
 
   TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
-  SavingParamH->SetBinContent( 0, LambdaTheta );
-  SavingParamH->SetBinContent( 1, LambdaPhi );
-  SavingParamH->SetBinContent( 2, LambdaThetaPhi );
+  SavingParamH->SetBinContent( 1, LambdaTheta );
+  SavingParamH->SetBinContent( 2, LambdaPhi );
+  SavingParamH->SetBinContent( 3, LambdaThetaPhi );
   SavingParamH->SetBinContent( 6, LambdaThetaErr );
   SavingParamH->SetBinContent( 7, LambdaPhiErr );
   SavingParamH->SetBinContent( 8, LambdaThetaPhiErr );
-  SavingParamH->SetBinError( 0, 0 );
   SavingParamH->SetBinError( 1, 0 );
   SavingParamH->SetBinError( 2, 0 );
+  SavingParamH->SetBinError( 3, 0 );
   SavingParamH->SetBinError( 6, 0 );
   SavingParamH->SetBinError( 7, 0 );
   SavingParamH->SetBinError( 8, 0 );

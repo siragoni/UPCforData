@@ -216,6 +216,7 @@ done
 echo "OK11"
 
 mv pngResults/*Minuit.png                         pngResults/$(date +%F)/1Dresults
+mv pngResults/*.png                               pngResults/$(date +%F)/1Dresults
 mv pngResults/Parameters_SigEx_*                  pngResults/$(date +%F)/1Dresults
 
 

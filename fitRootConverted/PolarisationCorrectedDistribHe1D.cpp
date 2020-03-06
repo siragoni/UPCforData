@@ -40,8 +40,12 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
    */
   TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsH");
   TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsH");
+  // fReconCosThetaH->Rebin(4);
+  // fGenerCosThetaH->Rebin(4);
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
+  // new TCanvas;
+  // fGenerCosThetaH->Draw();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
 
   TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsH");

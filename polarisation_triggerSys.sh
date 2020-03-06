@@ -22,3 +22,29 @@ echo "OK1"
 . polarisation_small.sh Polarisation_5.root 5
 . polarisation_small.sh Polarisation_6.root 6
 . polarisation_small.sh Polarisation_7.root 7
+
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTriggerSysErrorHE.cpp
+PolarisationTriggerSysErrorHE();
+EOF
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationTriggerSysErrorCS.cpp
+PolarisationTriggerSysErrorCS();
+EOF
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationSigExtrSysHE.cpp
+PolarisationSigExtrSystematicsHE();
+EOF
+
+aliroot -b -l <<EOF
+.L fitRootConverted/PolarisationSigExtrSysCS.cpp
+PolarisationSigExtrSystematicsCS();
+EOF
+
+
+
+mkdir -p pngResults/SystematicsPolarisation
+mv       pngResults/*.png                   pngResults/SystematicsPolarisation

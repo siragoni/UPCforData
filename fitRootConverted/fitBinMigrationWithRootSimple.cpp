@@ -125,7 +125,24 @@ void fitBinMigration( const char* MonteCarloName = "MCtrainResults/2019-06-24/kC
   gPad->SaveAs("pngResults/BinMigration.png", "RECREATE");
 
   new TCanvas;
+  // gPad->SetMargin(0.13,0.1,0.12,0.1);
   fBinMigration->Rebin2D(10, 10);
+  // fBinMigration->GetXaxis()->SetTitle("cos(#theta_{generated})");
+  // fBinMigration->GetYaxis()->SetTitle("cos(#theta_{reconstructed})");
+  // fBinMigration->GetXaxis()->SetTitleOffset(1.25);
+  // // fBinMigration->GetYaxis()->SetTitleOffset(1.25);
+  // fBinMigration->GetYaxis()->SetTitleOffset(1.45);
+  // fBinMigration->GetXaxis()->SetTitleSize(0.045);
+  // fBinMigration->GetYaxis()->SetTitleSize(0.045);
+  // fBinMigration->GetXaxis()->SetLabelSize(0.045);
+  // fBinMigration->GetYaxis()->SetLabelSize(0.045);
+  // fBinMigration->GetXaxis()->SetTitleFont(42);
+  // fBinMigration->GetYaxis()->SetTitleFont(42);
+  // fBinMigration->GetXaxis()->SetLabelFont(42);
+  // fBinMigration->GetYaxis()->SetLabelFont(42);
+  // // fBinMigration->GetXaxis()->SetNdivisions(408);
+  // fBinMigration->GetYaxis()->SetRangeUser(-1, 1);
+  // fBinMigration->GetXaxis()->SetRangeUser(-1, 1);
   fBinMigration->Draw("colZ");
   gPad->SetGrid();
   gPad->SaveAs("pngResults/BinMigration2D.png", "RECREATE");
@@ -168,6 +185,24 @@ void fitBinMigration( const char* MonteCarloName = "MCtrainResults/2019-06-24/kC
     }
   }
   new TCanvas;
+  gPad->SetMargin(0.13,0.1,0.12,0.1);
+  // gPad->SetTitle(  ";#cos(#theta_{generated}); #cos(#theta_{gen && rec in the same bin})/ #cos(#theta_{generated})");
+  PurityH->GetXaxis()->SetTitle("cos(#theta_{generated})");
+  PurityH->GetYaxis()->SetTitle("cos(#theta_{gen && rec in the same bin})/ cos(#theta_{generated})");
+  PurityH->GetXaxis()->SetTitleOffset(1.25);
+  // PurityH->GetYaxis()->SetTitleOffset(1.25);
+  PurityH->GetYaxis()->SetTitleOffset(1.45);
+  PurityH->GetXaxis()->SetTitleSize(0.045);
+  PurityH->GetYaxis()->SetTitleSize(0.045);
+  PurityH->GetXaxis()->SetLabelSize(0.045);
+  PurityH->GetYaxis()->SetLabelSize(0.045);
+  PurityH->GetXaxis()->SetTitleFont(42);
+  PurityH->GetYaxis()->SetTitleFont(42);
+  PurityH->GetXaxis()->SetLabelFont(42);
+  PurityH->GetYaxis()->SetLabelFont(42);
+  // PurityH->GetXaxis()->SetNdivisions(408);
+  PurityH->GetYaxis()->SetRangeUser(-0.15, 0.55);
+  PurityH->GetXaxis()->SetRangeUser(-0.66, 0.66);
   PurityH->Draw();
   new TCanvas;
   StabilityH->Draw();
@@ -264,6 +299,25 @@ void fitBinMigration( const char* MonteCarloName = "MCtrainResults/2019-06-24/kC
     }
   }
   new TCanvas;
+  // gPad->SetTitle(  ";#cos(#theta_{generated}); #cos(#theta_{gen && rec in the same bin})/ #cos(#theta_{generated})");
+  gPad->SetMargin(0.13,0.1,0.12,0.1);
+  PurityHv3->GetXaxis()->SetTitle("cos(#theta_{generated})");
+  PurityHv3->GetYaxis()->SetTitle("cos(#theta_{gen && rec in the same bin})/ cos(#theta_{generated})");
+  PurityHv3->GetXaxis()->SetTitleOffset(1.25);
+  // PurityHv3->GetYaxis()->SetTitleOffset(1.25);
+  PurityHv3->GetYaxis()->SetTitleOffset(1.45);
+  PurityHv3->GetXaxis()->SetTitleSize(0.045);
+  PurityHv3->GetYaxis()->SetTitleSize(0.045);
+  PurityHv3->GetXaxis()->SetLabelSize(0.045);
+  PurityHv3->GetYaxis()->SetLabelSize(0.045);
+  PurityHv3->GetXaxis()->SetTitleFont(42);
+  PurityHv3->GetYaxis()->SetTitleFont(42);
+  PurityHv3->GetXaxis()->SetLabelFont(42);
+  PurityHv3->GetYaxis()->SetLabelFont(42);
+  // PurityHv3->GetXaxis()->SetNdivisions(408);
+  PurityHv3->GetYaxis()->SetRangeUser( 0.60, 0.85);
+  PurityHv3->GetXaxis()->SetRangeUser(-0.7, 0.7);
+  PurityHv3->Draw();
   PurityHv3->Draw();
   new TCanvas;
   StabilityHv3->Draw();
@@ -275,5 +329,24 @@ void fitBinMigration( const char* MonteCarloName = "MCtrainResults/2019-06-24/kC
 
   new TCanvas;
   gStyle->SetOptStat("nemr");
+  gPad->SetMargin(0.13,0.1,0.12,0.1);
+  // fBinMigration->Rebin2D(10, 10);
+  fBinMigration->GetXaxis()->SetTitle("cos(#theta_{generated})");
+  fBinMigration->GetYaxis()->SetTitle("cos(#theta_{reconstructed})");
+  fBinMigration->GetXaxis()->SetTitleOffset(1.25);
+  // fBinMigration->GetYaxis()->SetTitleOffset(1.25);
+  fBinMigration->GetYaxis()->SetTitleOffset(1.45);
+  fBinMigration->GetXaxis()->SetTitleSize(0.045);
+  fBinMigration->GetYaxis()->SetTitleSize(0.045);
+  fBinMigration->GetXaxis()->SetLabelSize(0.045);
+  fBinMigration->GetYaxis()->SetLabelSize(0.045);
+  fBinMigration->GetXaxis()->SetTitleFont(42);
+  fBinMigration->GetYaxis()->SetTitleFont(42);
+  fBinMigration->GetXaxis()->SetLabelFont(42);
+  fBinMigration->GetYaxis()->SetLabelFont(42);
+  // fBinMigration->GetXaxis()->SetNdivisions(408);
+  fBinMigration->GetYaxis()->SetRangeUser(-1, 1);
+  fBinMigration->GetXaxis()->SetRangeUser(-1, 1);
+  // fBinMigration->Draw("text colZ");
   fBinMigration->Draw("text colZ");
 }

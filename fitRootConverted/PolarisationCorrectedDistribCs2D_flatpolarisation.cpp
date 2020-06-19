@@ -23,7 +23,7 @@ using namespace std;
 void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
 
   // TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("AnalysisResults_flatpolarisation_true_lumi.root");
+  TFile* fileList = new TFile("AnalysisResultsMC_flat2D.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -39,10 +39,17 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
    */
   // TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningH");
   // TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningH");
-  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiCsFrameMyBinningH");
-  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiCsFrameMyBinningH");
+  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiCsFrameMyBinningReweightingH");
+  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiCsFrameMyBinningReweightingH");
+  fReconH->Rebin2D(4,4);
+  fGenerH->Rebin2D(4,4);
   fReconH->Sumw2();
   fGenerH->Sumw2();
+  new TCanvas;
+  fReconH->Draw("colZ");
+  new TCanvas;
+  fGenerH->Draw("colZ");
+  new TCanvas;
 
 
   TDatime d;
@@ -98,7 +105,7 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
   // // AccErrors ->Write();
   // f.Close();
   if        ( RangeSelectionMode == 0 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedCs2D_flat.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();

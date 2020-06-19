@@ -79,7 +79,7 @@ void PolarisationTriggerSysErrorHE(){
   }
   for ( Int_t SigExBin = 0; SigExBin < 7; SigExBin++ ) {
       FitResultFile[SigExBin] = new TFile(
-            Form( "pngResults/PolTrigger%d/1Dresults/Parameters_SigEx_0_FitRange_0_HE.root",
+            Form( "pngResults/PolTrigger%d/1Dresults/Parameters_SigEx_0_FitRange_0_HE_trigger_differentAxE.root",
                   SigExBin+1
                   )
             );
@@ -194,7 +194,7 @@ void PolarisationTriggerSysErrorHE(){
   // Draw the graph on the canvas.
   // graph1->Draw("AP");
   graph1->Draw("Psame");
-  gPad->SaveAs("pngResults/CosThetaTriggerHE.png", "recreate");
+  gPad->SaveAs("pngResults/CosThetaTriggerHE_differentAxE.png", "recreate");
   // canvas1->Update();
 
 
@@ -251,7 +251,7 @@ void PolarisationTriggerSysErrorHE(){
   // Draw the graph on the canvas.
   // graph2->Draw("AP");
   graph2->Draw("Psame");
-  gPad->SaveAs("pngResults/PhiTriggerSysHE.png", "recreate");
+  gPad->SaveAs("pngResults/PhiTriggerSysHE_differentAxE.png", "recreate");
   // canvas1->Update();
 
 
@@ -313,7 +313,7 @@ void PolarisationTriggerSysErrorHE(){
 
   // Draw the graph on the canvas.
   graph3->Draw("Psame");
-  gPad->SaveAs("pngResults/TildeTriggerSysHE.png", "recreate");
+  gPad->SaveAs("pngResults/TildeTriggerSysHE_differentAxE.png", "recreate");
   // canvas1->Update();
 
 

@@ -138,99 +138,177 @@ void PolarisationTriggerSysErrorCS(){
   Double_t LambdaThetaPhiSysErr        = TMath::Abs( MaxLambdaThetaPhi - MinLambdaThetaPhi )*0.500;
 
 
-  Double_t PercentLambdaThetaSysErr    = LambdaTheta2[0]    != 0 ? LambdaThetaSysErr    / TMath::Abs(LambdaTheta2[0])    : 0 ;
-  Double_t PercentLambdaPhiSysErr      = LambdaPhi2[0]      != 0 ? LambdaPhiSysErr      / TMath::Abs(LambdaPhi2[0])      : 0 ;
-  Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhi2[0] != 0 ? LambdaThetaPhiSysErr / TMath::Abs(LambdaThetaPhi2[0]) : 0 ;
+  // Double_t PercentLambdaThetaSysErr    = LambdaTheta2[0]    != 0 ? LambdaThetaSysErr    / TMath::Abs(LambdaTheta2[0])    : 0 ;
+  // Double_t PercentLambdaPhiSysErr      = LambdaPhi2[0]      != 0 ? LambdaPhiSysErr      / TMath::Abs(LambdaPhi2[0])      : 0 ;
+  // Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhi2[0] != 0 ? LambdaThetaPhiSysErr / TMath::Abs(LambdaThetaPhi2[0]) : 0 ;
+
+  Double_t PercentLambdaThetaSysErr    = LambdaThetaSysErr    / 1.326 ;
+  Double_t PercentLambdaPhiSysErr      = LambdaPhiSysErr      / 0.052 ;
+  Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhiSysErr / 0.038 ;
+
 
   new TCanvas;
+  TCanvas* c1 = new TCanvas("c1","c1",1200,1100);
   TGraphErrors* graph1 = new TGraphErrors( 7, Xentries, LambdaTheta2, Zeroes, LambdaThetaErr2 );
 
-  graph1->SetName("LambdaTheta");
-  graph1->SetTitle(Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, LambdaTheta2[0], PercentLambdaThetaSysErr));
-  graph1->SetFillColor(1);
-  graph1->SetMarkerColor(4);
-  graph1->SetMarkerStyle(21);
-  graph1->SetMarkerSize(1.3);
+  //____________________________
+  /* -
+   * - COSMETICS
+   */
+  TString labels[7] = { "0.85", "0.90", "0.95", "1.00", "1.05", "1.10", "1.15" };
+  TH1F *h = new TH1F("h",Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.326, PercentLambdaThetaSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  for (Int_t i=1;i<=7;i++) h->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
+  h->SetMaximum(1.8);
+  h->SetMinimum(1.0);
+  gStyle->SetOptStat(0);
 
   // Define xAxis and yAxis. We're going to re-use these variables later.
   TAxis* xAxis = 0;
   TAxis* yAxis = 0;
 
   // Set the axis labels. Note the use of TLatex on the y-axis title.
-  xAxis = graph1->GetXaxis();
-  xAxis->SetTitle("Different modes");
-  xAxis->CenterTitle( kTRUE );
+  xAxis = h->GetXaxis();
+  xAxis->SetTitle("p_{T} threshold [GeV/#it{c}]");
+  // xAxis->CenterTitle( kTRUE );
   xAxis->SetTitleOffset( 1.2 );
 
-  yAxis = graph1->GetYaxis();
-  yAxis->SetTitle("#lambda{#theta}");
+  yAxis = h->GetYaxis();
+  yAxis->SetTitle("#lambda_{#theta}");
   yAxis->CenterTitle( kTRUE );
   yAxis->SetTitleOffset( 1.2 );
 
+  h->Draw();
+  // TGraph *gr = new TGraph(n,x,y);
+  // gr->Draw("CP");
+
+
+  graph1->SetName("LambdaTheta");
+  graph1->SetTitle(Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.326, PercentLambdaThetaSysErr));
+  graph1->SetFillColor(1);
+  graph1->SetMarkerColor(4);
+  graph1->SetMarkerStyle(21);
+  graph1->SetMarkerSize(1.3);
+
+
   // Draw the graph on the canvas.
-  graph1->Draw("AP");
+  // graph1->Draw("AP");
+  graph1->Draw("Psame");
   gPad->SaveAs("pngResults/CosThetaTriggerCS.png", "recreate");
   // canvas1->Update();
 
 
-  new TCanvas;
+  // new TCanvas;
+  TCanvas* c2 = new TCanvas("c2","c2",1200,1100);
   TGraphErrors* graph2 = new TGraphErrors( 7, Xentries, LambdaPhi2, Zeroes, LambdaPhiErr2 );
 
-  graph2->SetName("LambdaPhi");
-  graph2->SetTitle(Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, LambdaPhi2[0], PercentLambdaPhiSysErr));
-  graph2->SetFillColor(1);
-  graph2->SetMarkerColor(4);
-  graph2->SetMarkerStyle(21);
-  graph2->SetMarkerSize(1.3);
+  TH1F *h2 = new TH1F("h2",Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.052, PercentLambdaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  for (Int_t i=1;i<=7;i++) h2->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
+  h2->SetMaximum(0.15);
+  h2->SetMinimum(0.0);
+  gStyle->SetOptStat(0);
 
   // Define xAxis and yAxis. We're going to re-use these variables later.
   TAxis* xAxis2 = 0;
   TAxis* yAxis2 = 0;
 
   // Set the axis labels. Note the use of TLatex on the y-axis title.
-  xAxis2 = graph2->GetXaxis();
-  xAxis2->SetTitle("Different modes");
-  xAxis2->CenterTitle( kTRUE );
+  xAxis2 = h2->GetXaxis();
+  xAxis2->SetTitle("p_{T} threshold [GeV/#it{c}]");
+  // xAxis2->CenterTitle( kTRUE );
   xAxis2->SetTitleOffset( 1.2 );
 
-  yAxis2 = graph2->GetYaxis();
-  yAxis2->SetTitle("#lambda{#phi}");
+  yAxis2 = h2->GetYaxis();
+  yAxis2->SetTitle("#lambda_{#phi}");
   yAxis2->CenterTitle( kTRUE );
   yAxis2->SetTitleOffset( 1.2 );
 
+  h2->Draw();
+
+
+  graph2->SetName("LambdaPhi");
+  graph2->SetTitle(Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.052, PercentLambdaPhiSysErr));
+  graph2->SetFillColor(1);
+  graph2->SetMarkerColor(4);
+  graph2->SetMarkerStyle(21);
+  graph2->SetMarkerSize(1.3);
+
+  // // Define xAxis and yAxis. We're going to re-use these variables later.
+  // TAxis* xAxis2 = 0;
+  // TAxis* yAxis2 = 0;
+  //
+  // // Set the axis labels. Note the use of TLatex on the y-axis title.
+  // xAxis2 = graph2->GetXaxis();
+  // xAxis2->SetTitle("Different modes");
+  // xAxis2->CenterTitle( kTRUE );
+  // xAxis2->SetTitleOffset( 1.2 );
+  //
+  // yAxis2 = graph2->GetYaxis();
+  // yAxis2->SetTitle("#lambda{#phi}");
+  // yAxis2->CenterTitle( kTRUE );
+  // yAxis2->SetTitleOffset( 1.2 );
+
   // Draw the graph on the canvas.
-  graph2->Draw("AP");
+  // graph2->Draw("AP");
+  graph2->Draw("Psame");
   gPad->SaveAs("pngResults/PhiTriggerSysCS.png", "recreate");
   // canvas1->Update();
 
 
-  new TCanvas;
+  // new TCanvas;
+  TCanvas* c3 = new TCanvas("c3","c3",1200,1100);
   TGraphErrors* graph3 = new TGraphErrors( 7, Xentries, LambdaThetaPhi2, Zeroes, LambdaThetaPhiErr2 );
 
-  graph3->SetName("LambdaThetaPhi");
-  graph3->SetTitle(Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, LambdaThetaPhi2[0], PercentLambdaThetaPhiSysErr));
-  graph3->SetFillColor(1);
-  graph3->SetMarkerColor(4);
-  graph3->SetMarkerStyle(21);
-  graph3->SetMarkerSize(1.3);
+  TH1F *h3 = new TH1F("h3",Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.038, PercentLambdaThetaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  for (Int_t i=1;i<=7;i++) h3->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
+  h3->SetMaximum(0.08);
+  h3->SetMinimum(-0.1);
+  h3->SetMarkerColor(0);
+  h3->SetLineColor(0);
+  gStyle->SetOptStat(0);
 
   // Define xAxis and yAxis. We're going to re-use these variables later.
   TAxis* xAxis3 = 0;
   TAxis* yAxis3 = 0;
 
   // Set the axis labels. Note the use of TLatex on the y-axis title.
-  xAxis3 = graph3->GetXaxis();
-  xAxis3->SetTitle("Different modes");
-  xAxis3->CenterTitle( kTRUE );
+  xAxis3 = h3->GetXaxis();
+  xAxis3->SetTitle("p_{T} threshold [GeV/#it{c}]");
+  // xAxis3->CenterTitle( kTRUE );
   xAxis3->SetTitleOffset( 1.2 );
 
-  yAxis3 = graph3->GetYaxis();
-  yAxis3->SetTitle("#lambda{#theta#phi}");
+  yAxis3 = h3->GetYaxis();
+  yAxis3->SetTitle("#lambda_{#theta#phi}");
   yAxis3->CenterTitle( kTRUE );
   yAxis3->SetTitleOffset( 1.2 );
 
+  h3->Draw();
+
+
+
+  graph3->SetName("LambdaThetaPhi");
+  graph3->SetTitle(Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.038, PercentLambdaThetaPhiSysErr));
+  graph3->SetFillColor(1);
+  graph3->SetMarkerColor(4);
+  graph3->SetMarkerStyle(21);
+  graph3->SetMarkerSize(1.3);
+
+  // Define xAxis and yAxis. We're going to re-use these variables later.
+  // TAxis* xAxis3 = 0;
+  // TAxis* yAxis3 = 0;
+  //
+  // // Set the axis labels. Note the use of TLatex on the y-axis title.
+  // xAxis3 = graph3->GetXaxis();
+  // xAxis3->SetTitle("Different modes");
+  // xAxis3->CenterTitle( kTRUE );
+  // xAxis3->SetTitleOffset( 1.2 );
+  //
+  // yAxis3 = graph3->GetYaxis();
+  // yAxis3->SetTitle("#lambda{#theta#phi}");
+  // yAxis3->CenterTitle( kTRUE );
+  // yAxis3->SetTitleOffset( 1.2 );
+
   // Draw the graph on the canvas.
-  graph3->Draw("AP");
+  graph3->Draw("Psame");
   gPad->SaveAs("pngResults/TildeTriggerSysCS.png", "recreate");
   // canvas1->Update();
 

@@ -12,6 +12,7 @@ using namespace std;
 #include <math.h>
 #include <vector>
 
+
 #include "TDatime.h"
 
 #include "TH2.h"
@@ -20,10 +21,10 @@ using namespace std;
 /* - Fit function for the ZNC plots.
  * -
  */
-void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
+void PolarisationCorrectedDistribHe2D( Int_t RangeSelectionMode = 0 ){
 
   // TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("AnalysisResults_flatpolarisation_true_lumi.root");
+  TFile* fileList = new TFile("AnalysisResultsMC_flat2D.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -39,29 +40,30 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
    */
   // TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningH");
   // TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningH");
-  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiCsFrameMyBinningH");
-  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiCsFrameMyBinningH");
+  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningReweightingH");
+  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningReweightingH");
+  fReconH->Rebin2D(4,4);
+  fGenerH->Rebin2D(4,4);
   fReconH->Sumw2();
   fGenerH->Sumw2();
 
-
   TDatime d;
-  // TFile* fileDataRaw = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  // TFile* fileDataRaw = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* fileDataRaw = 0x0;
   if (        RangeSelectionMode == 0 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 1 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 2 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 3 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 4 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 5 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Polarisation2DHE.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   }
 
 
@@ -92,49 +94,49 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
   //   }
   // }
 
-  // TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+  // TFile f("pngResults/PolarisationCorrectedHe2D.root", "recreate");
   // acceptance->Write();
   // RawH      ->Write();
   // // AccErrors ->Write();
   // f.Close();
   if        ( RangeSelectionMode == 0 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_flat.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 1 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_1.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_1.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 2 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_2.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_2.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 3 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_3.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_3.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 4 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_4.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_4.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 5 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_5.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_5.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else {
-    TFile f("pngResults/PolarisationCorrectedCs2D.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();

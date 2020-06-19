@@ -51,15 +51,19 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
   if (        RangeSelectionMode == 0 ) {
     fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 1 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( "pngResults/PolTrigger1/2DCS/Polarisation2DCs.root" );
   } else if ( RangeSelectionMode == 2 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( "pngResults/PolTrigger2/2DCS/Polarisation2DCs.root" );
   } else if ( RangeSelectionMode == 3 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( "pngResults/PolTrigger3/2DCS/Polarisation2DCs.root" );
   } else if ( RangeSelectionMode == 4 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( "pngResults/PolTrigger4/2DCS/Polarisation2DCs.root" );
   } else if ( RangeSelectionMode == 5 ) {
-    fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRaw = new TFile( "pngResults/PolTrigger5/2DCS/Polarisation2DCs.root" );
+  } else if ( RangeSelectionMode == 6 ) {
+    fileDataRaw = new TFile( "pngResults/PolTrigger6/2DCS/Polarisation2DCs.root" );
+  } else if ( RangeSelectionMode == 7 ) {
+    fileDataRaw = new TFile( "pngResults/PolTrigger7/2DCS/Polarisation2DCs.root" );
   } else {
     fileDataRaw = new TFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Polarisation2DCs.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   }
@@ -104,31 +108,43 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 1 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_1.root", "recreate");
+    TFile f("pngResults/PolTrigger1/2DCS/PolarisationCorrectedCs2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 2 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_2.root", "recreate");
+    TFile f("pngResults/PolTrigger2/2DCS/PolarisationCorrectedCs2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 3 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_3.root", "recreate");
+    TFile f("pngResults/PolTrigger3/2DCS/PolarisationCorrectedCs2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 4 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_4.root", "recreate");
+    TFile f("pngResults/PolTrigger4/2DCS/PolarisationCorrectedCs2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();
     f.Close();
   } else if ( RangeSelectionMode == 5 ) {
-    TFile f("pngResults/PolarisationCorrectedCs2D_5.root", "recreate");
+    TFile f("pngResults/PolTrigger5/2DCS/PolarisationCorrectedCs2D.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 6 ) {
+    TFile f("pngResults/PolTrigger6/2DCS/PolarisationCorrectedCs2D.root", "recreate");
+    acceptance->Write();
+    RawH      ->Write();
+    // AccErrors ->Write();
+    f.Close();
+  } else if ( RangeSelectionMode == 7 ) {
+    TFile f("pngResults/PolTrigger7/2DCS/PolarisationCorrectedCs2D.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();

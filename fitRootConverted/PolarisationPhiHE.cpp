@@ -660,6 +660,10 @@ void CreateCosThetaTh1(const char* AnalysisName, Int_t SignalRangeMode = 0){
       PhiGammaGammaErrorsH->Fill(   -3.14 + 0.1256  + (Double_t)iCosThetaBins * 0.2512,
                                     BkgValue
                                     );
+      PhiGammaGammaErrorsH->SetBinError(  iCosThetaBins + 1 ,
+                                          // iPhiBins      + 1 ,
+                                          BkgValueError
+                                          );                              
       PhiAfterSignalExtractionErrorsH->SetBinError(   iCosThetaBins + 1 ,
                                                       JPsiPeakValueErr
                                                       );

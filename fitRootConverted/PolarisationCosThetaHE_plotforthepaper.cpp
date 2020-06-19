@@ -225,14 +225,14 @@ void fitJPsiTemplateMC(const int selectionFlag = 0){
   // } else {
   //   fCohJpsiToMu = (TH1F*)listingsMC[0]->FindObject("fInvariantMassDistributionH");
   // }
-  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject(Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", selectionFlag));
-  // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject(Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  fCohJpsiToMu        = (TH1F*)listingsMC[0]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  // fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
   fCohPsi2sToMu       = (TH1F*)listingsMC[1]->FindObject("fInvariantMassDistributionH");
   fCohPsi2sToMuPi     = (TH1F*)listingsMC[2]->FindObject("fInvariantMassDistributionH");
   fIncohJpsiToMu      = (TH1F*)listingsMC[3]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMu     = (TH1F*)listingsMC[4]->FindObject("fInvariantMassDistributionH");
   fIncohPsi2sToMuPi   = (TH1F*)listingsMC[5]->FindObject("fInvariantMassDistributionH");
-  // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject(Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", selectionFlag));
+  // fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject(Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag));
   fTwoGammaToMuMedium = (TH1F*)listingsMC[6]->FindObject("fInvariantMassDistributionH");
   fTwoGammaToMuHigh   = (TH1F*)listingsMC[7]->FindObject("fInvariantMassDistributionH");
   /* - Rebin
@@ -291,7 +291,7 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
 
   // TH1F *fInvariantMassDistributionH = 0x0;
   fInvariantMassDistributionH = 0x0;
-  fInvariantMassDistributionH = (TH1F*)listings->FindObject( Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", selectionFlag) );
+  fInvariantMassDistributionH = (TH1F*)listings->FindObject( Form("fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH_%d", selectionFlag) );
   fInvariantMassDistributionH->Rebin(5);
   // fInvariantMassDistributionH->Rebin(4);
   // if( selectionFlag < 16 || selectionFlag > 23 ) {
@@ -453,7 +453,7 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
   latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex->DrawLatex(0.55,0.78,Form("#color[2]{%.3f < #tilde{#phi} < %.3f}", 0 + (Double_t)selectionFlag * 0.2512, 0 + ((Double_t)selectionFlag + 1.00) * 0.2512));
+  latex->DrawLatex(0.55,0.78,Form("#color[2]{%.3f < cos(#theta) < %.3f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
   latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
 
@@ -518,7 +518,7 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   numberOfTotalBkgErr = numberOfTotalBkg*fFitInvMass->GetParError(17)/fFitInvMass->GetParameter(17);
   latex->DrawLatex(0.55,0.66,Form("N_{J/#psi} = %.0f #pm %.0f",        numberOfTotalJPsi,  numberOfTotalJPsiErr ));//fFitInvMass->GetParameter(0) *fFitInvMass->GetParError(15)/0.05 ) );
   latex->DrawLatex(0.55,0.60,Form("N_{#psi(2S)} = %.0f #pm %.0f",      numberOfTotalPsi2s, numberOfTotalPsi2sErr));//fFitInvMass->GetParameter(5) *fFitInvMass->GetParError(16)/0.05 ) );
-  latex->DrawLatex(0.55,0.54,Form("N_{#gamma#gamma} = %.0f #pm %.0f",  numberOfTotalBkg,   numberOfTotalBkgErr  ));//fFitInvMass->GetParameter(10)*fFitInvMass->GetParError(17)/0.05 ) );
+  // latex->DrawLatex(0.55,0.54,Form("N_{#gamma#gamma} = %.0f #pm %.0f",  numberOfTotalBkg,   numberOfTotalBkgErr  ));//fFitInvMass->GetParameter(10)*fFitInvMass->GetParError(17)/0.05 ) );
 
   /* - This part concerns the background of the two signals.
      - Here, we extrapolate the background and compute the significance maybe?
@@ -548,14 +548,13 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
 
 
 
-  // gPad->SaveAs(Form("pngResults/TildePhiHe_%d.png", selectionFlag), "recreate");
-  if      ( SignalRangeModeFlag == 0 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d.png",        selectionFlag), "recreate"); }
-  else if ( SignalRangeModeFlag == 1 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d_Range1.png", selectionFlag), "recreate"); }
-  else if ( SignalRangeModeFlag == 2 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d_Range2.png", selectionFlag), "recreate"); }
-  else if ( SignalRangeModeFlag == 3 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d_Range3.png", selectionFlag), "recreate"); }
-  else if ( SignalRangeModeFlag == 4 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d_Range4.png", selectionFlag), "recreate"); }
-  else if ( SignalRangeModeFlag == 5 ) { gPad->SaveAs(Form("pngResults/TildePhiHe_%d_Range5.png", selectionFlag), "recreate"); }
-  else                                 { gPad->SaveAs(Form("pngResults/TildePhiHe_%d.png",        selectionFlag), "recreate"); }
+  if      ( SignalRangeModeFlag == 0 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d.png",        selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 1 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range1.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 2 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range2.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 3 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range3.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 4 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range4.png", selectionFlag), "recreate"); }
+  else if ( SignalRangeModeFlag == 5 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range5.png", selectionFlag), "recreate"); }
+  else                                 { gPad->SaveAs(Form("pngResults/CosThetaHe_%d.png",        selectionFlag), "recreate"); }
 
 
 
@@ -603,33 +602,29 @@ void CreateCosThetaTh1(const char* AnalysisName, Int_t SignalRangeMode = 0){
   dir->GetObject("MyOutputContainer", listings);
 
 
-  TH1F* TildePhiAfterSignalExtractionH =
-            new TH1F( "TildePhiAfterSignalExtractionH",
-                      "TildePhiAfterSignalExtractionH",
-                      25, 0, 6.28
-                      // 10, -1, 1, 10, -4, 4
+  TH1F* CosThetaAfterSignalExtractionH =
+            new TH1F( "CosThetaAfterSignalExtractionH",
+                      "CosThetaAfterSignalExtractionH",
+                      25, -1, 1
                       );
-  TH1F* TildePhiGammaGammaH =
-            new TH1F( "TildePhiGammaGammaH",
-                      "TildePhiGammaGammaH",
-                      25, 0, 6.28
-                      // 10, -1, 1, 10, -4, 4
+  TH1F* CosThetaGammaGammaH =
+            new TH1F( "CosThetaGammaGammaH",
+                      "CosThetaGammaGammaH",
+                      25, -1, 1
                       );
 
-  TH1F* TildePhiAfterSignalExtractionErrorsH =
-            new TH1F( "TildePhiAfterSignalExtractionErrorsH",
-                      "TildePhiAfterSignalExtractionErrorsH",
-                      25, 0, 6.28
-                      // 10, -1, 1, 10, -4, 4
+  TH1F* CosThetaAfterSignalExtractionErrorsH =
+            new TH1F( "CosThetaAfterSignalExtractionErrorsH",
+                      "CosThetaAfterSignalExtractionErrorsH",
+                      25, -1, 1
                       );
-  TH1F* TildePhiGammaGammaErrorsH =
-            new TH1F( "TildePhiGammaGammaErrorsH",
-                      "TildePhiGammaGammaErrorsH",
-                      25, 0, 6.28
-                      // 10, -1, 1, 10, -4, 4
+  TH1F* CosThetaGammaGammaErrorsH =
+            new TH1F( "CosThetaGammaGammaErrorsH",
+                      "CosThetaGammaGammaErrorsH",
+                      25, -1, 1
                       );
 
-  for (size_t iCosThetaBins = 0; iCosThetaBins < 25; iCosThetaBins++) {
+  for (size_t iCosThetaBins = 5; iCosThetaBins < 20; iCosThetaBins++) {
     // for (size_t iPhiBins = 0; iPhiBins < 10; iPhiBins++) {
       JPsiPeakValue    = 0;
       JPsiPeakValueErr = 0;
@@ -647,95 +642,89 @@ void CreateCosThetaTh1(const char* AnalysisName, Int_t SignalRangeMode = 0){
       cout << "CHECKPOINT 3 " << endl << flush;
 
 
-      TildePhiAfterSignalExtractionH->Fill( 0 + 0.1256 + (Double_t)iCosThetaBins * 0.2512,
+      CosThetaAfterSignalExtractionH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
+                                            // -3.14 + 0.314 * ( 2.0 * (Double_t)iPhiBins + 1.0) ,
                                             JPsiPeakValue
                                             );
-      TildePhiGammaGammaH->Fill( 0 + 0.1256  + (Double_t)iCosThetaBins * 0.2512,
-                                 BkgValue
-                                 );
 
-      TildePhiAfterSignalExtractionErrorsH->Fill( 0 + 0.1256  + (Double_t)iCosThetaBins * 0.2512,
-                                                  JPsiPeakValue
-                                                  );
-      TildePhiGammaGammaErrorsH->Fill(  0 + 0.1256  + (Double_t)iCosThetaBins * 0.2512,
+      CosThetaAfterSignalExtractionErrorsH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
+                                                   JPsiPeakValue
+                                                   );
+      CosThetaGammaGammaErrorsH->Fill(  -0.96 + (Double_t)iCosThetaBins * 0.08,
                                         BkgValue
                                         );
-      TildePhiGammaGammaErrorsH->SetBinError(  iCosThetaBins + 1 ,
+      CosThetaAfterSignalExtractionErrorsH->SetBinError(  iCosThetaBins + 1 ,
+                                                          // iPhiBins      + 1 ,
+                                                          JPsiPeakValueErr
+                                                          );
+      CosThetaGammaGammaErrorsH->SetBinError(  iCosThetaBins + 1 ,
                                                // iPhiBins      + 1 ,
                                                BkgValueError
                                                );
-      TildePhiAfterSignalExtractionErrorsH->SetBinError(  iCosThetaBins + 1 ,
-                                                          JPsiPeakValueErr
-                                                          );
 
     // }
   }
 
-  // TFile f("pngResults/TildePhiHeFrame.root", "recreate");
-  // TildePhiAfterSignalExtractionH      ->Write();
-  // TildePhiGammaGammaH                 ->Write();
-  // TildePhiAfterSignalExtractionErrorsH->Write();
-  // TildePhiGammaGammaErrorsH           ->Write();
-  // f.Close();
+  // TFile f("pngResults/CosThetaHeFrame.root", "recreate");
   if      ( SignalRangeMode == 0 ) {
-    TFile f("pngResults/TildePhiHeFrame.root",   "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_false.root",   "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else if ( SignalRangeMode == 1 ) {
-    TFile f("pngResults/TildePhiHeFrame_1.root", "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_1.root", "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else if ( SignalRangeMode == 2 ) {
-    TFile f("pngResults/TildePhiHeFrame_2.root", "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_2.root", "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else if ( SignalRangeMode == 3 ) {
-    TFile f("pngResults/TildePhiHeFrame_3.root", "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_3.root", "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else if ( SignalRangeMode == 4 ) {
-    TFile f("pngResults/TildePhiHeFrame_4.root", "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_4.root", "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else if ( SignalRangeMode == 5 ) {
-    TFile f("pngResults/TildePhiHeFrame_5.root", "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame_5.root", "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
   else                             {
-    TFile f("pngResults/TildePhiHeFrame.root",   "recreate");
-    TildePhiAfterSignalExtractionH      ->Write();
-    TildePhiGammaGammaH                 ->Write();
-    TildePhiAfterSignalExtractionErrorsH->Write();
-    TildePhiGammaGammaErrorsH           ->Write();
+    TFile f("pngResults/CosThetaHeFrame.root",   "recreate");
+    CosThetaAfterSignalExtractionH      ->Write();
+    CosThetaGammaGammaH                 ->Write();
+    CosThetaAfterSignalExtractionErrorsH->Write();
+    CosThetaGammaGammaErrorsH           ->Write();
     f.Close();
   }
-  // PhiAfterSignalExtractionH      ->Write();
-  // PhiGammaGammaH                 ->Write();
-  // PhiAfterSignalExtractionErrorsH->Write();
-  // PhiGammaGammaErrorsH           ->Write();
+  // CosThetaAfterSignalExtractionH      ->Write();
+  // CosThetaGammaGammaH                 ->Write();
+  // CosThetaAfterSignalExtractionErrorsH->Write();
+  // CosThetaGammaGammaErrorsH           ->Write();
   // f.Close();
 }

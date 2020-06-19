@@ -103,10 +103,26 @@ void FcnForMinimisation(Int_t & /*nPar*/, Double_t * /*grad*/ , Double_t &fval, 
 /* - Fit function for the helicity case. It is basically a parabolic fit...
    -
  */
-void PolarisationCsMinuit2D(){
+void PolarisationCsMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeMode = 0 ){
 
   TDatime d;
-  TFile* file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* file2D = 0x0;
+  if        ( SignalRangeSelectionMode == 0 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 1 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 2 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 3 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 4 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else if ( SignalRangeSelectionMode == 5 ) {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  } else {
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  }
+
   TH2F* Distr2D = (TH2F*) file2D->Get("RawH");
   new TCanvas;
   Distr2D->Draw("ep");
@@ -130,7 +146,16 @@ void PolarisationCsMinuit2D(){
   /// fill data structure
   for (Int_t ix = 1; ix <= nBinsCosTheta; ++ix) {
     for (Int_t iy = 1; iy <= nBinsPhi; ++iy) {
-      // if( ((ix==0)&&(iy==18)) || ((ix==6)&&(iy==8))/*|| ((ix==7)&&(iy==9)) || ((ix==7)&&(iy==10))*/ ) continue;
+      // if(  ((ix==1)&&(iy==13)) || ((ix==1)&&(iy==11))  || ((ix==1)&&(iy==12)) ) continue;
+      if        ( FitRangeMode == 1 ) {
+        if (ix == 1)   continue;
+      } else if ( FitRangeMode == 2 ) {
+        if (ix == 7)   continue;
+      } else if ( FitRangeMode == 3 ) {
+        if ( (ix == 1) || (ix == 7) )  continue;
+      } else {
+      }
+
       coordsX.push_back( ((TAxis*) Distr2D->GetXaxis())->GetBinCenter( ix ) );
       coordsY.push_back( Distr2D->GetYaxis()->GetBinCenter( iy ) );
       values.push_back(  Distr2D->GetBinContent( ix, iy )        );
@@ -218,10 +243,31 @@ void PolarisationCsMinuit2D(){
   // Model->SetNpx(500);
   Model->Draw("same");
   gPad->SaveAs("pngResults/Cs2DMinuit.png", "recreate");
+  gPad->SaveAs(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Cs2DMinuit.png",                      d.GetYear(), d.GetMonth(), d.GetDay() ), "recreate");
+  gPad->SaveAs(Form("pngResults/%d-%2.2d-%2.2d/2DCS/Cs2DMinuit_SigEx_%d_FitRange_%d.png", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate");
   cout << "OK4" << endl << flush;
 
   new TCanvas;
   Model->Draw("surf1");
+
+
+  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/2DCS/Parameters_SigEx_%d_FitRange_%d_CS.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
+  SavingParamH->SetBinContent( 1, LambdaTheta );
+  SavingParamH->SetBinContent( 2, LambdaPhi );
+  SavingParamH->SetBinContent( 3, LambdaThetaPhi );
+  SavingParamH->SetBinContent( 6, LambdaThetaErr );
+  SavingParamH->SetBinContent( 7, LambdaPhiErr );
+  SavingParamH->SetBinContent( 8, LambdaThetaPhiErr );
+  SavingParamH->SetBinError( 1, 0 );
+  SavingParamH->SetBinError( 2, 0 );
+  SavingParamH->SetBinError( 3, 0 );
+  SavingParamH->SetBinError( 6, 0 );
+  SavingParamH->SetBinError( 7, 0 );
+  SavingParamH->SetBinError( 8, 0 );
+  SavingParamH->Write();
+  SavingFile.Close();
+
 
 
 }

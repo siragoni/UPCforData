@@ -71,7 +71,8 @@ void PolarisationCsFitWithRoot2D(){
   TFile* data = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   // TFile* data = new TFile("pngResults/2019-09-18/2DCS/PolarisationCorrectedCs2D.root");
   TH2F *fCorrectedShape = (TH2F*) data->Get("RawH");
-  TF2* ParabolicFit = new TF2("ParabolicFit",helicity2D,-0.3, 0.6, -3.1, 3.1, 4);
+  // TF2* ParabolicFit = new TF2("ParabolicFit",helicity2D,-0.3, 0.6, -3.1, 3.1, 4);
+  TF2* ParabolicFit = new TF2("ParabolicFit",helicity2D,-0.6, 0.6, -3.1, 3.1, 4);
   // TF2* ParabolicFit = new TF2("ParabolicFit",helicity2D,-0.9, 0.9, -2.7, 2.7, 4);
   ParabolicFit->SetNpx(60);
   ParabolicFit->SetParameter(0, 1);

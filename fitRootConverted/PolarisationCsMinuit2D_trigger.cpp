@@ -109,19 +109,23 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   TFile* file2D = 0x0;
   // TFile* file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   if        ( SignalRangeSelectionMode == 0 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolTrigger1/2DCS/PolarisationCorrectedCs2D.root");
   } else if ( SignalRangeSelectionMode == 2 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolTrigger2/2DCS/PolarisationCorrectedCs2D.root");
   } else if ( SignalRangeSelectionMode == 3 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolTrigger3/2DCS/PolarisationCorrectedCs2D.root");
   } else if ( SignalRangeSelectionMode == 4 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolTrigger4/2DCS/PolarisationCorrectedCs2D.root");
   } else if ( SignalRangeSelectionMode == 5 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolTrigger5/2DCS/PolarisationCorrectedCs2D.root");
+  } else if ( SignalRangeSelectionMode == 6 ) {
+    file2D = new TFile("pngResults/PolTrigger6/2DCS/PolarisationCorrectedCs2D.root");
+  } else if ( SignalRangeSelectionMode == 7 ) {
+    file2D = new TFile("pngResults/PolTrigger7/2DCS/PolarisationCorrectedCs2D.root");
   } else {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   }
 
   TH2F* Distr2D = (TH2F*) file2D->Get("RawH");
@@ -227,7 +231,7 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex->SetNDC();
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
   latex->DrawLatex(0.55,0.78,"Minuit 2D Fit");
   latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,      LambdaThetaErr   ));
   latex->DrawLatex(0.55,0.62,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,        LambdaPhiErr     ));
@@ -240,16 +244,16 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   cout << "OK3" << endl << flush;
   // Model->SetNpx(500);
   Model->Draw("same");
-  gPad->SaveAs("pngResults/He2DMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/%d-%2.2d-%2.2d/2DHE/He2DMinuit.png",                      d.GetYear(), d.GetMonth(), d.GetDay() ), "recreate");
-  gPad->SaveAs(Form("pngResults/%d-%2.2d-%2.2d/2DHE/He2DMinuit_SigEx_%d_FitRange_%d.png", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate");
+  gPad->SaveAs("pngResults/Cs2DMinuit.png", "recreate");
+  gPad->SaveAs(Form("pngResults/PolTrigger%d/2DCS/Cs2DMinuit.png",                      SignalRangeSelectionMode ), "recreate");
+  gPad->SaveAs(Form("pngResults/PolTrigger%d/2DHE/Cs2DMinuit_SigEx_%d_FitRange_%d.png", SignalRangeSelectionMode, SignalRangeSelectionMode, FitRangeMode), "recreate");
   cout << "OK4" << endl << flush;
 
   new TCanvas;
   Model->Draw("surf1");
 
 
-  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/2DHE/Parameters_SigEx_%d_FitRange_%d_HE.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TFile SavingFile( Form("pngResults/PolTrigger%d/2DCS/Parameters_SigEx_%d_FitRange_%d_CS.root", SignalRangeSelectionMode, SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
   SavingParamH->SetBinContent( 1, LambdaTheta );
   SavingParamH->SetBinContent( 2, LambdaPhi );

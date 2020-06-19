@@ -23,7 +23,7 @@ using namespace std;
  * - Compute the Fit Range Variation systematics.
  * -
  */
-void PolarisationTriggerSysErrorHE(){
+void PolarisationTriggerSysErrorCS(){
 
   /* - Open all files.
    * -
@@ -79,7 +79,7 @@ void PolarisationTriggerSysErrorHE(){
   }
   for ( Int_t SigExBin = 0; SigExBin < 7; SigExBin++ ) {
       FitResultFile[SigExBin] = new TFile(
-            Form( "pngResults/PolTrigger%d/1Dresults/Parameters_SigEx_0_FitRange_0_HE.root",
+            Form( "pngResults/PolTrigger%d/1Dresults/Parameters_SigEx_0_FitRange_0_CS_trigger_differentAxE.root",
                   SigExBin+1
                   )
             );
@@ -142,13 +142,12 @@ void PolarisationTriggerSysErrorHE(){
   // Double_t PercentLambdaPhiSysErr      = LambdaPhi2[0]      != 0 ? LambdaPhiSysErr      / TMath::Abs(LambdaPhi2[0])      : 0 ;
   // Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhi2[0] != 0 ? LambdaThetaPhiSysErr / TMath::Abs(LambdaThetaPhi2[0]) : 0 ;
 
-  Double_t PercentLambdaThetaSysErr    = LambdaThetaSysErr    / 1.208 ;
-  Double_t PercentLambdaPhiSysErr      = LambdaPhiSysErr      / 0.049 ;
-  Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhiSysErr / 0.032 ;
+  Double_t PercentLambdaThetaSysErr    = LambdaThetaSysErr    / 1.326 ;
+  Double_t PercentLambdaPhiSysErr      = LambdaPhiSysErr      / 0.052 ;
+  Double_t PercentLambdaThetaPhiSysErr = LambdaThetaPhiSysErr / 0.038 ;
 
 
-
-  // new TCanvas;
+  new TCanvas;
   TCanvas* c1 = new TCanvas("c1","c1",1200,1100);
   TGraphErrors* graph1 = new TGraphErrors( 7, Xentries, LambdaTheta2, Zeroes, LambdaThetaErr2 );
 
@@ -157,7 +156,7 @@ void PolarisationTriggerSysErrorHE(){
    * - COSMETICS
    */
   TString labels[7] = { "0.85", "0.90", "0.95", "1.00", "1.05", "1.10", "1.15" };
-  TH1F *h = new TH1F("h",Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.208, PercentLambdaThetaSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  TH1F *h = new TH1F("h",Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.326, PercentLambdaThetaSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
   for (Int_t i=1;i<=7;i++) h->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
   h->SetMaximum(1.8);
   h->SetMinimum(1.0);
@@ -184,7 +183,7 @@ void PolarisationTriggerSysErrorHE(){
 
 
   graph1->SetName("LambdaTheta");
-  graph1->SetTitle(Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.208, PercentLambdaThetaSysErr));
+  graph1->SetTitle(Form("LambdaThetaSys = %f / %f = %f", LambdaThetaSysErr, 1.326, PercentLambdaThetaSysErr));
   graph1->SetFillColor(1);
   graph1->SetMarkerColor(4);
   graph1->SetMarkerStyle(21);
@@ -194,7 +193,7 @@ void PolarisationTriggerSysErrorHE(){
   // Draw the graph on the canvas.
   // graph1->Draw("AP");
   graph1->Draw("Psame");
-  gPad->SaveAs("pngResults/CosThetaTriggerHE.png", "recreate");
+  gPad->SaveAs("pngResults/CosThetaTriggerCS.png", "recreate");
   // canvas1->Update();
 
 
@@ -202,7 +201,7 @@ void PolarisationTriggerSysErrorHE(){
   TCanvas* c2 = new TCanvas("c2","c2",1200,1100);
   TGraphErrors* graph2 = new TGraphErrors( 7, Xentries, LambdaPhi2, Zeroes, LambdaPhiErr2 );
 
-  TH1F *h2 = new TH1F("h2",Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.049, PercentLambdaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  TH1F *h2 = new TH1F("h2",Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.052, PercentLambdaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
   for (Int_t i=1;i<=7;i++) h2->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
   h2->SetMaximum(0.15);
   h2->SetMinimum(0.0);
@@ -227,7 +226,7 @@ void PolarisationTriggerSysErrorHE(){
 
 
   graph2->SetName("LambdaPhi");
-  graph2->SetTitle(Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.049, PercentLambdaPhiSysErr));
+  graph2->SetTitle(Form("LambdaPhiSys = %f / %f = %f", LambdaPhiSysErr, 0.052, PercentLambdaPhiSysErr));
   graph2->SetFillColor(1);
   graph2->SetMarkerColor(4);
   graph2->SetMarkerStyle(21);
@@ -251,7 +250,7 @@ void PolarisationTriggerSysErrorHE(){
   // Draw the graph on the canvas.
   // graph2->Draw("AP");
   graph2->Draw("Psame");
-  gPad->SaveAs("pngResults/PhiTriggerSysHE.png", "recreate");
+  gPad->SaveAs("pngResults/PhiTriggerSysCS.png", "recreate");
   // canvas1->Update();
 
 
@@ -259,7 +258,7 @@ void PolarisationTriggerSysErrorHE(){
   TCanvas* c3 = new TCanvas("c3","c3",1200,1100);
   TGraphErrors* graph3 = new TGraphErrors( 7, Xentries, LambdaThetaPhi2, Zeroes, LambdaThetaPhiErr2 );
 
-  TH1F *h3 = new TH1F("h3",Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.032, PercentLambdaThetaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
+  TH1F *h3 = new TH1F("h3",Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.038, PercentLambdaThetaPhiSysErr),7,Xentries[0]-0.5,Xentries[6]+0.5);
   for (Int_t i=1;i<=7;i++) h3->GetXaxis()->SetBinLabel(i,labels[i-1].Data());
   h3->SetMaximum(0.08);
   h3->SetMinimum(-0.1);
@@ -273,10 +272,7 @@ void PolarisationTriggerSysErrorHE(){
 
   // Set the axis labels. Note the use of TLatex on the y-axis title.
   xAxis3 = h3->GetXaxis();
-  // xAxis3->SetTitleSize(1.1);
   xAxis3->SetTitle("p_{T} threshold [GeV/#it{c}]");
-  // xAxis3->SetTitleSize(0.15);
-
   // xAxis3->CenterTitle( kTRUE );
   xAxis3->SetTitleOffset( 1.2 );
 
@@ -290,7 +286,7 @@ void PolarisationTriggerSysErrorHE(){
 
 
   graph3->SetName("LambdaThetaPhi");
-  graph3->SetTitle(Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.032, PercentLambdaThetaPhiSysErr));
+  graph3->SetTitle(Form("LambdaThetaPhiSys = %f / %f = %f", LambdaThetaPhiSysErr, 0.038, PercentLambdaThetaPhiSysErr));
   graph3->SetFillColor(1);
   graph3->SetMarkerColor(4);
   graph3->SetMarkerStyle(21);
@@ -313,7 +309,7 @@ void PolarisationTriggerSysErrorHE(){
 
   // Draw the graph on the canvas.
   graph3->Draw("Psame");
-  gPad->SaveAs("pngResults/TildeTriggerSysHE.png", "recreate");
+  gPad->SaveAs("pngResults/TildeTriggerSysCS.png", "recreate");
   // canvas1->Update();
 
 

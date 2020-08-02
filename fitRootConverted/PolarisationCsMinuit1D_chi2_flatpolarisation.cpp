@@ -289,7 +289,8 @@ void PolarisationCsMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* file1D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -373,10 +374,15 @@ void PolarisationCsMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
   gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 2.8e+04);
   // gMinuit->DefineParameter(2, "NormalisPhi", 4137, 100,  4000, 4400);
-  gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 4400);
   gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
+  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
   gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
+  // gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  8100, 8500);
+  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
+  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
+  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");

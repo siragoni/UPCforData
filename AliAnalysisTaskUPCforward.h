@@ -1540,6 +1540,14 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
         TH1F*                   fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsH[25];      //!
         TH1F*                   fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH[25];      //!
 
+        TH1F*                   fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsIncohH[25];      //!
+        TH1F*                   fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsIncohH[25]; //!
+        TH1F*                   fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsIncohH[25]; //!
+
+        TH1F*                   fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsIncohH[25];      //!
+        TH1F*                   fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsIncohH[25]; //!
+        TH1F*                   fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsIncohH[25]; //!
+
         TH1F*                   fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBins0N0NH[25];       //!
         TH1F*                   fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBins0N0NH[25];  //!
         TH1F*                   fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBins0N0NH[25];  //!
@@ -1547,6 +1555,17 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
         TH1F*                   fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBins0N0NH[25];       //!
         TH1F*                   fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBins0N0NH[25];  //!
         TH1F*                   fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBins0N0NH[25];  //!
+
+
+
+
+
+
+        TH2F*                   fCosThetaAndPhiHelicityFrameH;                       //!
+        TH2F*                   fCosThetaAndPhiCsFrameH;                             //!
+        TH2F*                   fCosThetaAndPhiHelicityFrameRapidityH[6];            //!
+        TH2F*                   fCosThetaAndPhiCsFrameRapidityH[6];                  //!
+
 
         //_______________________________
         // CUTS
@@ -1608,7 +1627,7 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
          * If I happen to encounter it again in the future, I will make sure to
          * record it!
          */
-        ClassDef(AliAnalysisTaskUPCforward, 45);
+        ClassDef(AliAnalysisTaskUPCforward, 47);
 };
 
 #endif

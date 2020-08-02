@@ -108,7 +108,8 @@ void PolarisationCsMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   TDatime d;
   TFile* file2D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_flat.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    // file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_flat.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_longitudinal.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DCS/PolarisationCorrectedCs2D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -178,7 +179,8 @@ void PolarisationCsMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   gMinuit->DefineParameter(0, "LambdaTheta",        1., 0.1,    -2, 2        );
   gMinuit->DefineParameter(1, "LambdaPhi",           0, 0.1,    -2, 2        );
   gMinuit->DefineParameter(2, "LambdaThetaPhi",      0, 0.1,    -2, 2        );
-  gMinuit->DefineParameter(3, "Normalisation",   48000, 100, 45000, 50000    );
+  // gMinuit->DefineParameter(3, "Normalisation",   48000, 100, 45000, 50000    );
+  gMinuit->DefineParameter(3, "Normalisation",   45000, 100, 35000, 50000    );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");

@@ -528,8 +528,9 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   Double_t Psi2JPsiPeakBkg    = 0;
   Double_t JPsiPeakSignal     = 0;
   Double_t Psi2JPsiPeakSignal = 0;
-  JPsiPeakBkg     = GammaGammaFit->Integral(2.75,3.45);
-  Psi2JPsiPeakBkg = GammaGammaFit->Integral(3.45,3.90);
+  // JPsiPeakBkg     = GammaGammaFit->Integral(2.75,3.45);
+  JPsiPeakBkg     = GammaGammaFit->Integral(2.4,2.8)/0.05;
+  Psi2JPsiPeakBkg = GammaGammaFit->Integral(3.45,3.90)/0.05;
 
   JPsiPeakValue    = numberOfTotalJPsi;
   JPsiPeakValueErr = numberOfTotalJPsiErr;
@@ -663,7 +664,7 @@ void CreateCosThetaTh1(const char* AnalysisName, Int_t SignalRangeMode = 0){
       PhiGammaGammaErrorsH->SetBinError(  iCosThetaBins + 1 ,
                                           // iPhiBins      + 1 ,
                                           BkgValueError
-                                          );                              
+                                          );
       PhiAfterSignalExtractionErrorsH->SetBinError(   iCosThetaBins + 1 ,
                                                       JPsiPeakValueErr
                                                       );

@@ -29,6 +29,7 @@ Int_t switchFlag = 0;
 Double_t ReducedChiSquare = 0;
 
 
+
 //_____________________________________________________________________________
 /* - Coding in the fit functions.
    - The fit is modelled as the sum of 3 different functions:
@@ -214,22 +215,16 @@ void FcnForMinimisation(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, In
   cout << "ChiSquared = " << chi2 << endl;
 }
 //_____________________________________________________________________________
-Int_t SignalRangeModeFromBash = 0;
-Int_t Counter = 0;
 void FcnForMinimisationV2(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, Int_t iflag)
 {
   Int_t n = coords.size();
   Double_t chi2 = 0;
   Double_t tmp,x[2];
-  // cout << "SignalRangeModeFromBash = " << SignalRangeModeFromBash << endl;
-  // cout << "Counter = " << Counter << endl;
   for ( Int_t i = 0; i < n; ++i ) {
     if        ( i < 15 ) {
-    // if        ( i < Counter ) {
       x[0] = coords[i];
       x[1] = 0;
     } else if ( i < 40 ) {
-    // } else if ( i < 25 + Counter ) {
       // x[0] = coords[i] + 4*TMath::Pi();
       x[0] = coords[i] + 4*3.14;
       x[1] = 0;
@@ -287,31 +282,53 @@ void FcnForMinimisationV3(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
 /* - Fit function for the helicity case. It is basically a parabolic fit...
    -
  */
-void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeMode = 0 ){
+void PolarisationCsMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeMode = 0 ){
 
-  SignalRangeModeFromBash = SignalRangeSelectionMode;
   TDatime d;
-  // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  TFile* file1D = 0x0;
-  if        ( SignalRangeSelectionMode == 0 ) {
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else if ( SignalRangeSelectionMode == 1 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else if ( SignalRangeSelectionMode == 2 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else if ( SignalRangeSelectionMode == 3 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_3.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else if ( SignalRangeSelectionMode == 4 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_4.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else if ( SignalRangeSelectionMode == 5 ) {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_5.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
-  } else {
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+  TFile* file1D = file1D = new TFile("pngResults/PolarisationCorrectedCs1D_closuretest.root" );
+
+
+  TH1F* CorrectedCosTheta = 0x0;
+  TH1F* CorrectedPhi      = 0x0;
+  TH1F* CorrectedTildePhi = 0x0;
+  if (      SignalRangeSelectionMode == 0 ){ // Full T MC, Full T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaFullT0");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiFullT0");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiFullT0");
+  } else if ( SignalRangeSelectionMode == 1 ){// Full T MC, Short T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaFullT1");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiFullT1");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiFullT1");
+  } else if ( SignalRangeSelectionMode == 2 ){// Full T MC, Short L AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaFullT2");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiFullT2");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiFullT2");
+  } else if ( SignalRangeSelectionMode == 3 ){ // Short T MC, Full T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortT0");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortT0");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortT0");
+  } else if ( SignalRangeSelectionMode == 4 ){// Short T  MC, Short T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortT1");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortT1");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortT1");
+  } else if ( SignalRangeSelectionMode == 5 ){// Short T MC, Short L AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortT2");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortT2");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortT2");
+  } else if ( SignalRangeSelectionMode == 6 ){ // Short L MC, Full T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortL0");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortL0");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortL0");
+  } else if ( SignalRangeSelectionMode == 7 ){// Short L  MC, Short T AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortL1");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortL1");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortL1");
+  } else if ( SignalRangeSelectionMode == 8 ){// Short L MC, Short L AxE
+    CorrectedCosTheta = (TH1F*) file1D->Get("DataThetaShortL2");
+    CorrectedPhi      = (TH1F*) file1D->Get("DataPhiShortL2");
+    CorrectedTildePhi = (TH1F*) file1D->Get("DataTildePhiShortL2");
   }
-  TH1F* CorrectedCosTheta = (TH1F*) file1D->Get("CorrCosThetaH");
-  TH1F* CorrectedPhi      = (TH1F*) file1D->Get("CorrPhiH");
-  TH1F* CorrectedTildePhi = (TH1F*) file1D->Get("CorrTildePhiH");
+
 
 
   Double_t CosThetaLowLimit   = -1;
@@ -335,15 +352,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   values = std::vector<Double_t>();
   errors = std::vector<Double_t>();
   /// fill data structure
-
   // for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
-  //   if        ( FitRangeMode == 1 ) {
-  //     if ( (ix == 6) || (ix == nBinsCosTheta-5) )  continue;
-  //   } else if ( FitRangeMode == 2 ) {
-  //     if ( (ix == 6) || (ix == 7) || (ix == nBinsCosTheta-6) || (ix == nBinsCosTheta-5) )  continue;
-  //   } else {
-  //   }
-  //   Counter+=1;
   //   coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
   //   values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
   //   errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
@@ -358,7 +367,6 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
     values.push_back( CorrectedTildePhi->GetBinContent(iy)            );
     errors.push_back( CorrectedTildePhi->GetBinError(iy)              );
   }
-
   for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
     if        ( FitRangeMode == 1 ) {
       if ( (ix == 6) || (ix == nBinsCosTheta-5) )  continue;
@@ -366,14 +374,15 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
       if ( (ix == 6) || (ix == 7) || (ix == nBinsCosTheta-6) || (ix == nBinsCosTheta-5) )  continue;
     } else {
     }
-    Counter+=1;
+    // Counter+=1;
     coords.push_back( CorrectedCosTheta->GetXaxis()->GetBinCenter(ix) );
     values.push_back( CorrectedCosTheta->GetBinContent(ix)            );
     errors.push_back( CorrectedCosTheta->GetBinError(ix)              );
   }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
@@ -382,13 +391,17 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // gMinuit->SetFCN(FcnForMinimisation);
   // gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->SetFCN(FcnForMinimisationV3);
+  // gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
+  // gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 2.8e+04);
+  // gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 4400);
+  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
+  // gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
+  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 3.0e+04);
-  // gMinuit->DefineParameter(1, "NormalTheta", 4.3e+04, 10,  4.2e+04, 4.4e+04);
-  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 4400);
+  gMinuit->DefineParameter(1, "NormalTheta", 4000000, 100,  2000, 80000000);
+  gMinuit->DefineParameter(2, "NormalisPhi",      1200000, 10,  2000, 40000000);
   gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 1200000, 10,  2000, 40000000);
   gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
@@ -443,8 +456,17 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex->SetNDC();
   latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.045);
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
+  // latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  if (      SignalRangeSelectionMode == 0 ) latex->DrawLatex(0.55,0.78,"Full  T / Full  T");
+  else if ( SignalRangeSelectionMode == 1 ) latex->DrawLatex(0.55,0.78,"Full  T / Short T");
+  else if ( SignalRangeSelectionMode == 2 ) latex->DrawLatex(0.55,0.78,"Full  T / Short L");
+  else if ( SignalRangeSelectionMode == 3 ) latex->DrawLatex(0.55,0.78,"Short T / Full  T");
+  else if ( SignalRangeSelectionMode == 4 ) latex->DrawLatex(0.55,0.78,"Short T / Short T");
+  else if ( SignalRangeSelectionMode == 5 ) latex->DrawLatex(0.55,0.78,"Short T / Short L");
+  else if ( SignalRangeSelectionMode == 6 ) latex->DrawLatex(0.55,0.78,"Short L / Full  T");
+  else if ( SignalRangeSelectionMode == 7 ) latex->DrawLatex(0.55,0.78,"Short L / Short T");
+  else if ( SignalRangeSelectionMode == 8 ) latex->DrawLatex(0.55,0.78,"Short L / Short L");
   latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   // latex->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   latex->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
@@ -457,8 +479,9 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
   Model->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/CosThetaHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  // gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
+  // if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaCsMinuit.png", "recreate");
+  // gPad->SaveAs(Form("pngResults/CosThetaCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
 
   TF1* Model2 = new TF1("Model2", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
@@ -488,8 +511,17 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex2->SetNDC();
   latex2->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex2->SetTextSize(0.045);
-  latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
+  // latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  if (      SignalRangeSelectionMode == 0 ) latex2->DrawLatex(0.55,0.78,"Full  T / Full  T");
+  else if ( SignalRangeSelectionMode == 1 ) latex2->DrawLatex(0.55,0.78,"Full  T / Short T");
+  else if ( SignalRangeSelectionMode == 2 ) latex2->DrawLatex(0.55,0.78,"Full  T / Short L");
+  else if ( SignalRangeSelectionMode == 3 ) latex2->DrawLatex(0.55,0.78,"Short T / Full  T");
+  else if ( SignalRangeSelectionMode == 4 ) latex2->DrawLatex(0.55,0.78,"Short T / Short T");
+  else if ( SignalRangeSelectionMode == 5 ) latex2->DrawLatex(0.55,0.78,"Short T / Short L");
+  else if ( SignalRangeSelectionMode == 6 ) latex2->DrawLatex(0.55,0.78,"Short L / Full  T");
+  else if ( SignalRangeSelectionMode == 7 ) latex2->DrawLatex(0.55,0.78,"Short L / Short T");
+  else if ( SignalRangeSelectionMode == 8 ) latex2->DrawLatex(0.55,0.78,"Short L / Short L");
   latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
   latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   // latex2->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
@@ -504,8 +536,9 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model2->SetParameter( 1, NormalisPhi );
   Model2->SetNpx(500);
   Model2->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/PhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  // gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
+  // if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiCsMinuit.png", "recreate");
+  // gPad->SaveAs(Form("pngResults/PhiCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
   TF1* Model3 = new TF1("Model3", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
   new TCanvas;
@@ -534,9 +567,17 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex3->SetNDC();
   latex3->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
   latex3->SetTextSize(0.045);
-  latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
-  // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
+  latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, CS");
+  // latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  if (      SignalRangeSelectionMode == 0 ) latex3->DrawLatex(0.55,0.78,"Full  T / Full  T");
+  else if ( SignalRangeSelectionMode == 1 ) latex3->DrawLatex(0.55,0.78,"Full  T / Short T");
+  else if ( SignalRangeSelectionMode == 2 ) latex3->DrawLatex(0.55,0.78,"Full  T / Short L");
+  else if ( SignalRangeSelectionMode == 3 ) latex3->DrawLatex(0.55,0.78,"Short T / Full  T");
+  else if ( SignalRangeSelectionMode == 4 ) latex3->DrawLatex(0.55,0.78,"Short T / Short T");
+  else if ( SignalRangeSelectionMode == 5 ) latex3->DrawLatex(0.55,0.78,"Short T / Short L");
+  else if ( SignalRangeSelectionMode == 6 ) latex3->DrawLatex(0.55,0.78,"Short L / Full  T");
+  else if ( SignalRangeSelectionMode == 7 ) latex3->DrawLatex(0.55,0.78,"Short L / Short T");
+  else if ( SignalRangeSelectionMode == 8 ) latex3->DrawLatex(0.55,0.78,"Short L / Short L");
   latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,    LambdaThetaErr));
   latex3->DrawLatex(0.55,0.62,Form("#lambda_{#theta#phi} = %.3f #pm %.3f", LambdaThetaPhi, LambdaThetaPhiErr));
   // latex3->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
@@ -551,28 +592,31 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model3->SetParameter( 1, NormalisTildePhi );
   Model3->SetNpx(500);
   Model3->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  // // gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
+  // if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiCsMinuit.png", "recreate");
+  // gPad->SaveAs(Form("pngResults/TildePhiCsMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
-  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
-  TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
-  SavingParamH->SetBinContent( 1, LambdaTheta );
-  SavingParamH->SetBinContent( 2, LambdaPhi );
-  SavingParamH->SetBinContent( 3, LambdaThetaPhi );
-  SavingParamH->SetBinContent( 6, LambdaThetaErr );
-  SavingParamH->SetBinContent( 7, LambdaPhiErr );
-  SavingParamH->SetBinContent( 8, LambdaThetaPhiErr );
-  SavingParamH->SetBinError( 1, 0 );
-  SavingParamH->SetBinError( 2, 0 );
-  SavingParamH->SetBinError( 3, 0 );
-  SavingParamH->SetBinError( 6, 0 );
-  SavingParamH->SetBinError( 7, 0 );
-  SavingParamH->SetBinError( 8, 0 );
-  SavingParamH     ->Write();
-  CorrectedCosTheta->Write();
-  CorrectedPhi     ->Write();
-  CorrectedTildePhi->Write();
-  SavingFile.Close();
+
+  // TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_CS.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  // TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
+  // SavingParamH->SetBinContent( 1, LambdaTheta );
+  // SavingParamH->SetBinContent( 2, LambdaPhi );
+  // SavingParamH->SetBinContent( 3, LambdaThetaPhi );
+  // SavingParamH->SetBinContent( 6, LambdaThetaErr );
+  // SavingParamH->SetBinContent( 7, LambdaPhiErr );
+  // SavingParamH->SetBinContent( 8, LambdaThetaPhiErr );
+  // SavingParamH->SetBinError( 1, 0 );
+  // SavingParamH->SetBinError( 2, 0 );
+  // SavingParamH->SetBinError( 3, 0 );
+  // SavingParamH->SetBinError( 6, 0 );
+  // SavingParamH->SetBinError( 7, 0 );
+  // SavingParamH->SetBinError( 8, 0 );
+  // SavingParamH     ->Write();
+  // CorrectedCosTheta->Write();
+  // CorrectedPhi     ->Write();
+  // CorrectedTildePhi->Write();
+  // SavingFile.Close();
+
 }
 //_____________________________________________________________________________
 /* - Fit function for the helicity case.

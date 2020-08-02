@@ -23,8 +23,8 @@ using namespace std;
  */
 void PolarisationCorrectedDistribHe2D( Int_t RangeSelectionMode = 0 ){
 
-  // TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("AnalysisResultsMC_flat2D.root");
+  // TFile* fileList = new TFile("AnalysisResultsMC_flat2D.root"); //reweighting
+  TFile* fileList = new TFile("AnalysisResultsMichal.root"); //longitudinal
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -38,12 +38,12 @@ void PolarisationCorrectedDistribHe2D( Int_t RangeSelectionMode = 0 ){
    *     OBJ: TH1F	  fRAbsMuonH	                fRAbsMuonH                  : 0 at: 0x5a3c0c0
    *     OBJ: TH1F	  fInvariantMassDistributionH	fInvariantMassDistributionH : 0 at: 0x5a3c720
    */
-  // TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningH");
-  // TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningH");
-  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningReweightingH");
-  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningReweightingH");
-  fReconH->Rebin2D(4,4);
-  fGenerH->Rebin2D(4,4);
+  TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningH");
+  TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningH");
+  // TH2F* fReconH = (TH2F*)listings->FindObject("fCosThetaAndPhiHelicityFrameMyBinningReweightingH");
+  // TH2F* fGenerH = (TH2F*)listings->FindObject("fMCCosThetaAndPhiHelicityFrameMyBinningReweightingH");
+  // fReconH->Rebin2D(4,4);
+  // fGenerH->Rebin2D(4,4);
   fReconH->Sumw2();
   fGenerH->Sumw2();
 
@@ -100,7 +100,8 @@ void PolarisationCorrectedDistribHe2D( Int_t RangeSelectionMode = 0 ){
   // // AccErrors ->Write();
   // f.Close();
   if        ( RangeSelectionMode == 0 ) {
-    TFile f("pngResults/PolarisationCorrectedHe2D_flat.root", "recreate");
+    // TFile f("pngResults/PolarisationCorrectedHe2D_flat.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedHe2D_longitudinal.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();

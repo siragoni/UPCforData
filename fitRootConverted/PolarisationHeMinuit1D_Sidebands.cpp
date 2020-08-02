@@ -294,8 +294,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* file1D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_Sidebands.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -359,7 +358,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
     errors.push_back( CorrectedTildePhi->GetBinError(iy)              );
   }
 
-  for (Int_t ix = 6; ix <= nBinsCosTheta-5; ++ix) {
+  for (Int_t ix = 7; ix <= nBinsCosTheta-6; ++ix) {
     if        ( FitRangeMode == 1 ) {
       if ( (ix == 6) || (ix == nBinsCosTheta-5) )  continue;
     } else if ( FitRangeMode == 2 ) {
@@ -373,7 +372,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
@@ -382,13 +381,12 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // gMinuit->SetFCN(FcnForMinimisation);
   // gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->SetFCN(FcnForMinimisationV3);
-  gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.58e+04, 3.0e+04);
-  // gMinuit->DefineParameter(1, "NormalTheta", 4.3e+04, 10,  4.2e+04, 4.4e+04);
-  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 4400);
+  gMinuit->DefineParameter(0, "LambdaTheta", 2., 0.05, 1, 3);
+  gMinuit->DefineParameter(1, "NormalTheta", 16000, 10,  12000, 20000);
+  // gMinuit->DefineParameter(2, "NormalisPhi", 4137, 100,  4000, 4400);
+  gMinuit->DefineParameter(2, "NormalisPhi",      19000,  100,  17000., 21000);
   gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 19000,  100,  17000., 21000);
   gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
@@ -412,6 +410,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Int_t nvpar,nparx,icstat;
   gMinuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
   gMinuit->mnprin(3,amin);
+  gMinuit->mnmatu(1);
 
 
   gStyle->SetOptStat(0);
@@ -457,8 +456,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
   Model->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/CosThetaHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit_GammaGamma.png", "recreate");
+  gPad->SaveAs(Form("pngResults/CosThetaHeMinuit_SigEx_%d_FitRange_%d_HE_GammaGamma.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
 
   TF1* Model2 = new TF1("Model2", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
@@ -504,8 +503,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model2->SetParameter( 1, NormalisPhi );
   Model2->SetNpx(500);
   Model2->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/PhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit_GammaGamma.png", "recreate");
+  gPad->SaveAs(Form("pngResults/PhiHeMinuit_SigEx_%d_FitRange_%d_HE_GammaGamma.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
   TF1* Model3 = new TF1("Model3", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
   new TCanvas;
@@ -551,10 +550,10 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model3->SetParameter( 1, NormalisTildePhi );
   Model3->SetNpx(500);
   Model3->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit_GammaGamma.png", "recreate");
+  gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE_GammaGamma.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
-  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/1Dresults/Parameters_SigEx_%d_FitRange_%d_HE_GammaGamma.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
   SavingParamH->SetBinContent( 1, LambdaTheta );
   SavingParamH->SetBinContent( 2, LambdaPhi );

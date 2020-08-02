@@ -24,14 +24,10 @@ using namespace std;
  */
 void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
 
-  // TFile* fileList = new TFile("AnalysisResultsLHC18l7_flatpol_LASTCHANCE.root");
-  TFile* fileList = new TFile("AnalysisResultsMichal.root");
+  TFile* fileList = new TFile("MCtrainResults/2020-06-25/kTwoGammaToMuMedium/AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
-  // TDirectory* dir2 = fileList2->GetDirectory("MyTask");
-  // TList* listings2;
-  // dir2->GetObject("MyOutputContainer", listings2);
   /* - We now do the same as before to ascertain if the TList was there and
    * - to try to retrieve the plots. Result:
    *   listings->ls()
@@ -42,9 +38,8 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
    *     OBJ: TH1F	  fRAbsMuonH	                fRAbsMuonH                  : 0 at: 0x5a3c0c0
    *     OBJ: TH1F	  fInvariantMassDistributionH	fInvariantMassDistributionH : 0 at: 0x5a3c720
    */
-  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsH");
-  // TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaCsFrameTwentyfiveBinsH");
-  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaHelicityFrameTwentyfiveBinsSidebandsH");
+  TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaHelicityFrameTwentyfiveBinsSidebandsH");
   // fReconCosThetaH->Rebin(4);
   // fGenerCosThetaH->Rebin(4);
   fReconCosThetaH->Sumw2();
@@ -53,13 +48,13 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
   // fGenerCosThetaH->Draw();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
 
-  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsH");
-  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconPhiH = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsSidebandsH");
+  TH1F* fGenerPhiH = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsSidebandsH");
   fReconPhiH->Sumw2();
   fGenerPhiH->Sumw2();
 
-  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiHelicityFrameTwentyfiveBinsH");
-  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiHelicityFrameTwentyfiveBinsH");
+  TH1F* fReconTildePhiH = (TH1F*)listings->FindObject("fTildePhiHelicityFrameTwentyfiveBinsSidebandsH");
+  TH1F* fGenerTildePhiH = (TH1F*)listings->FindObject("fMCTildePhiHelicityFrameTwentyfiveBinsSidebandsH");
   fReconTildePhiH->Sumw2();
   fGenerTildePhiH->Sumw2();
 
@@ -72,9 +67,9 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
   TFile* fileDataRawPhi      = 0x0;
   TFile* fileDataRawTildePhi = 0x0;
   if (        RangeSelectionMode == 0 ) {
-    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaHE/CosThetaHeFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiHE/PhiHeFrame.root",             d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiHE/TildePhiHeFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaHE/CosThetaHeFrameSidebands.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiHE/PhiHeFrameSidebands.root",             d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiHE/TildePhiHeFrameSidebands.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( RangeSelectionMode == 1 ) {
     fileDataRawCosTheta = new TFile( Form("pngResults/%d-%2.2d-%2.2d/CosThetaHE/CosThetaHeFrame_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
     fileDataRawPhi      = new TFile( Form("pngResults/%d-%2.2d-%2.2d/PhiHE/PhiHeFrame_1.root",           d.GetYear(), d.GetMonth(), d.GetDay() ) );
@@ -101,15 +96,19 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
     fileDataRawTildePhi = new TFile( Form("pngResults/%d-%2.2d-%2.2d/TildePhiHE/TildePhiHeFrame.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   }
 
-  TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaAfterSignalExtractionErrorsH");
+  TH1F* CosThetaAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawCosTheta->Get("CosThetaGammaGammaErrorsH");
+  CosThetaAfterSignalExtractionErrorsRawH->SetBinContent( 6,0);
+  CosThetaAfterSignalExtractionErrorsRawH->SetBinContent(20,0);
+  CosThetaAfterSignalExtractionErrorsRawH->SetBinError(   6,0);
+  CosThetaAfterSignalExtractionErrorsRawH->SetBinError(  20,0);
   CosThetaAfterSignalExtractionErrorsRawH->Sumw2();
   TH1F* RawCosThetaH = (TH1F*) CosThetaAfterSignalExtractionErrorsRawH->Clone("RawCosThetaH");
 
-  TH1F* PhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawPhi->Get("PhiAfterSignalExtractionErrorsH");
+  TH1F* PhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawPhi->Get("PhiGammaGammaErrorsH");
   PhiAfterSignalExtractionErrorsRawH->Sumw2();
   TH1F* RawPhiH = (TH1F*) PhiAfterSignalExtractionErrorsRawH->Clone("RawPhiH");
 
-  TH1F* TildePhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawTildePhi->Get("TildePhiAfterSignalExtractionErrorsH");
+  TH1F* TildePhiAfterSignalExtractionErrorsRawH = (TH1F*)fileDataRawTildePhi->Get("TildePhiGammaGammaErrorsH");
   TildePhiAfterSignalExtractionErrorsRawH->Sumw2();
   TH1F* RawTildePhiH = (TH1F*) TildePhiAfterSignalExtractionErrorsRawH->Clone("RawTildePhiH");
 
@@ -158,8 +157,7 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
   // }
 
   if        ( RangeSelectionMode == 0 ) {
-    // TFile f("pngResults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root", "recreate");
-    TFile f("pngResults/PolarisationCorrectedHe1D_longitudinalpolarisation.root", "recreate");
+    TFile f(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_Sidebands.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) , "recreate");
     acceptanceCosTheta->Write();
     CorrCosThetaH     ->Write();
     acceptancePhi     ->Write();

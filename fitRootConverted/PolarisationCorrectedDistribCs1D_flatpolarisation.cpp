@@ -23,12 +23,8 @@ using namespace std;
  */
 void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
 
-  // TFile* fileList = new TFile("MCtrainResults/2019-09-17/kCohJpsiToMu/AnalysisResults.root");
-  // TFile* fileList = new TFile("AnalysisResultsLHC18l7_flatpolarisation.root");
-  // TFile* fileList = new TFile("AnalysisResults_flatpolarisation.root");
-  // TFile* fileList = new TFile("AnalysisResults_flatpolarisation_true_lumi.root");
-  // TFile* fileList = new TFile("AnalysisResultsMC_flatpolarisation_even_CS.root");
-  TFile* fileList = new TFile("AnalysisResultsMC_flatpolarisation_ULTIMATE.root");
+  // TFile* fileList = new TFile("AnalysisResultsMC_flatpolarisation_ULTIMATE.root"); // reweighting
+  TFile* fileList = new TFile("AnalysisResultsMichal.root"); // trial longitudinal
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -44,8 +40,8 @@ void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
    */
   TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fCosThetaCsFrameTwentyfiveBinsH");
   TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCCosThetaCsFrameTwentyfiveBinsH");
-  fReconCosThetaH->Rebin(4);
-  fGenerCosThetaH->Rebin(4);
+  // fReconCosThetaH->Rebin(4);
+  // fGenerCosThetaH->Rebin(4);
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");
@@ -161,7 +157,8 @@ void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
 
   // TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
   if        ( RangeSelectionMode == 0 ) {
-    TFile f("pngResults/PolarisationCorrectedCs1D_flatpolarisation_evenCS.root", "recreate");
+    // TFile f("pngResults/PolarisationCorrectedCs1D_flatpolarisation_evenCS.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedCs1D_longitudinalpolarisation.root", "recreate");
     acceptanceCosTheta->Write();
     CorrCosThetaH     ->Write();
     acceptancePhi     ->Write();

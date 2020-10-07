@@ -110,7 +110,8 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   if        ( SignalRangeSelectionMode == 0 ) {
     // file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_flat.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_longitudinal.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    // file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_longitudinal.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_flatpolarisation_final.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {

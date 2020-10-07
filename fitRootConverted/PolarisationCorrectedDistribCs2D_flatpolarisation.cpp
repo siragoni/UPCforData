@@ -23,7 +23,8 @@ using namespace std;
 void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
 
   // TFile* fileList = new TFile("AnalysisResultsMC_flat2D.root"); // reweighting
-  TFile* fileList = new TFile("AnalysisResultsMichal.root"); // longitudinal
+  // TFile* fileList = new TFile("AnalysisResultsMichal.root"); // longitudinal
+  TFile* fileList = new TFile("AnalysisResultsLHC18l7_NOPOLARISATION.root"); // trial longitudinal
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -106,7 +107,8 @@ void PolarisationCorrectedDistribCs2D( Int_t RangeSelectionMode = 0 ){
   // f.Close();
   if        ( RangeSelectionMode == 0 ) {
     // TFile f("pngResults/PolarisationCorrectedCs2D_flat.root", "recreate");
-    TFile f("pngResults/PolarisationCorrectedCs2D_longitudinal.root", "recreate");
+    // TFile f("pngResults/PolarisationCorrectedCs2D_longitudinal.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedCs2D_flatpolarisation_final.root", "recreate");
     acceptance->Write();
     RawH      ->Write();
     // AccErrors ->Write();

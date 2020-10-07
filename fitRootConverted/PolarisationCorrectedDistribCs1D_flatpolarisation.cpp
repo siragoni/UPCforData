@@ -24,7 +24,8 @@ using namespace std;
 void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
 
   // TFile* fileList = new TFile("AnalysisResultsMC_flatpolarisation_ULTIMATE.root"); // reweighting
-  TFile* fileList = new TFile("AnalysisResultsMichal.root"); // trial longitudinal
+  // TFile* fileList = new TFile("AnalysisResultsMichal.root"); // trial longitudinal
+  TFile* fileList = new TFile("AnalysisResultsLHC18l7_NOPOLARISATION.root"); // trial longitudinal
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -158,7 +159,8 @@ void PolarisationCorrectedDistribCs1D( Int_t RangeSelectionMode = 0 ){
   // TFile f("pngResults/PolarisationCorrectedCs1D.root", "recreate");
   if        ( RangeSelectionMode == 0 ) {
     // TFile f("pngResults/PolarisationCorrectedCs1D_flatpolarisation_evenCS.root", "recreate");
-    TFile f("pngResults/PolarisationCorrectedCs1D_longitudinalpolarisation.root", "recreate");
+    // TFile f("pngResults/PolarisationCorrectedCs1D_longitudinalpolarisation.root", "recreate");
+    TFile f("pngResults/PolarisationCorrectedCs1D_flatpolarisation_final.root", "recreate");
     acceptanceCosTheta->Write();
     CorrCosThetaH     ->Write();
     acceptancePhi     ->Write();

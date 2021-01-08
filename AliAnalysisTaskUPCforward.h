@@ -198,6 +198,8 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
                                  * Pseudorapidity distribution of the many muons.
                                  */
         TH1F*                   fEtaMuonH;          //!
+        TH1F*                   fThetaMuonH;        //!
+        TH1F*                   fPhiMuonH;          //!
 
                                 /**
                                  * Pt distribution of the many muons.
@@ -1627,7 +1629,7 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
          * If I happen to encounter it again in the future, I will make sure to
          * record it!
          */
-        ClassDef(AliAnalysisTaskUPCforward, 47);
+        ClassDef(AliAnalysisTaskUPCforward, 48);
 };
 
 #endif

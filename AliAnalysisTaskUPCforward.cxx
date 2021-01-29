@@ -3764,7 +3764,7 @@ void AliAnalysisTaskUPCforward::UserExec(Option_t *)
     if( controlFlagPt1 == 1) break;
     if( (CosThetaHelicityFrameValuePt + 1.) < 2.*((Double_t)iCosThetaBinsPt + 1.)/25. ) {
       // fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBinsPt]->Fill(possibleJPsiCopyMag);
-      fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins]->Fill(possibleJPsiCopy.Pt());
+      fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBinsPt]->Fill(possibleJPsiCopy.Pt());
       controlFlagPt1 = 1;
     }
   }

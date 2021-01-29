@@ -1537,6 +1537,7 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
         TH1F*                   fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsH[25];           //!
         TH1F*                   fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH[25];      //!
         TH1F*                   fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH[25];      //!
+        TH1F*                   fPtOnlyCosThetaHeFrameTwentyfiveBinsH[25];      //!
 
         TH1F*                   fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsH[25];           //!
         TH1F*                   fInvariantMassDistributionOnlyCosThetaCsFrameTwentyfiveBinsH[25];      //!
@@ -1629,7 +1630,7 @@ class AliAnalysisTaskUPCforward : public AliAnalysisTaskSE
          * If I happen to encounter it again in the future, I will make sure to
          * record it!
          */
-        ClassDef(AliAnalysisTaskUPCforward, 48);
+        ClassDef(AliAnalysisTaskUPCforward, 49);
 };
 
 #endif

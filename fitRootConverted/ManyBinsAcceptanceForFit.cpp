@@ -100,9 +100,8 @@ Double_t fTripleParabolicToCheck(Double_t* x,Double_t* par)
  */
 void ManyBinsAcceptanceForFit(){
 
-  // TFile* fileList = new TFile("AnalysisResultsMC08072019.root");
-  // TFile* fileList = new TFile("MCtrainResults/2019-06-08/kCohJpsiToMu/AnalysisResults.root");
-  TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
+  TFile* fileList = new TFile("AnalysisResultsCohJpsiLocal.root");
+  // TFile* fileList = new TFile("MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -118,6 +117,8 @@ void ManyBinsAcceptanceForFit(){
    */
   TH1F* fReconCosThetaH = (TH1F*)listings->FindObject("fAngularDistribOfPositiveMuonRestFrameJPsiH");
   TH1F* fGenerCosThetaH = (TH1F*)listings->FindObject("fMCthetaDistribOfPositiveMuonRestFrameJPsiGeneratedTruthH");
+  fReconCosThetaH->Rebin(20);
+  fGenerCosThetaH->Rebin(20);
   fReconCosThetaH->Sumw2();
   fGenerCosThetaH->Sumw2();
   TH1F* ReconTheta = (TH1F*) fReconCosThetaH->Clone("ReconTheta");

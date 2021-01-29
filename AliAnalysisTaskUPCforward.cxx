@@ -380,7 +380,11 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward()
       fCosThetaAndPhiHelicityFrameH(0),
       fCosThetaAndPhiCsFrameH(0),
       fCosThetaAndPhiHelicityFrameRapidityH{0,0,0,0,0,0},
-      fCosThetaAndPhiCsFrameRapidityH{0,0,0,0,0,0}
+      fCosThetaAndPhiCsFrameRapidityH{0,0,0,0,0,0},
+      fPtOnlyCosThetaHeFrameTwentyfiveBinsH{  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0, 0, 0, 0, 0 }
+
 {
     // default constructor, don't allocate memory here!
     // this is used by root for IO purposes, it needs to remain empty
@@ -691,7 +695,10 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward( const char* name, Int_t _f
       fCosThetaAndPhiHelicityFrameH(0),
       fCosThetaAndPhiCsFrameH(0),
       fCosThetaAndPhiHelicityFrameRapidityH{0,0,0,0,0,0},
-      fCosThetaAndPhiCsFrameRapidityH{0,0,0,0,0,0}
+      fCosThetaAndPhiCsFrameRapidityH{0,0,0,0,0,0},
+      fPtOnlyCosThetaHeFrameTwentyfiveBinsH{  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0, 0, 0, 0, 0 }
 {
     // FillGoodRunVector(fVectorGoodRunNumbers);
 
@@ -1992,6 +1999,22 @@ void AliAnalysisTaskUPCforward::UserCreateOutputObjects()
   }
 
 
+
+
+
+
+
+
+
+
+  for(Int_t iCosThetaBins = 0; iCosThetaBins < 25; iCosThetaBins++ ){
+    fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins] = new TH1F(
+                Form("fPtOnlyCosThetaHeFrameTwentyfiveBinsH_%d", iCosThetaBins),
+                Form("fPtOnlyCosThetaHeFrameTwentyfiveBinsH_%d", iCosThetaBins),
+                4000, 0, 20
+                );
+    fOutputList->Add(fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins]);
+  }
 
 
 
@@ -3723,6 +3746,37 @@ void AliAnalysisTaskUPCforward::UserExec(Option_t *)
         }
   }
 
+
+
+
+
+
+
+  /* -
+   * - Pt check for Daniel!
+   */
+  Bool_t controlFlagPt1 = 0;
+  // Bool_t controlFlagPt2 = 0;
+  // Bool_t controlFlagPt3 = 0;
+  // Bool_t controlFlagPt4 = 0;
+  Double_t CosThetaHelicityFrameValuePt = CosThetaHelicityFrame( muonsCopy2[0], muonsCopy2[1], possibleJPsiCopy );
+  for(Int_t iCosThetaBinsPt = 0; iCosThetaBinsPt < 25; iCosThetaBinsPt++) {
+    if( controlFlagPt1 == 1) break;
+    if( (CosThetaHelicityFrameValuePt + 1.) < 2.*((Double_t)iCosThetaBinsPt + 1.)/25. ) {
+      // fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBinsPt]->Fill(possibleJPsiCopyMag);
+      fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins]->Fill(possibleJPsiCopy.Pt());
+      controlFlagPt1 = 1;
+    }
+  }
+
+
+
+
+
+
+
+
+
   /* - NEW: Final analysis
      -
    */
@@ -3766,6 +3820,7 @@ void AliAnalysisTaskUPCforward::UserExec(Option_t *)
           if( controlFlag13 == 1) break;
           if( (CosThetaHelicityFrameValue7 + 1.) < 2.*((Double_t)iCosThetaBins + 1.)/25. ) {
             fInvariantMassDistributionOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins]->Fill(possibleJPsiCopyMag);
+            // fPtOnlyCosThetaHeFrameTwentyfiveBinsH[iCosThetaBins]->Fill(possibleJPsiCopyMag);
             controlFlag13 = 1;
           }
         }

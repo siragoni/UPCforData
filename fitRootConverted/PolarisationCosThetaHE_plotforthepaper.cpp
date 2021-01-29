@@ -404,7 +404,8 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   fInvariantMassDistributionH->GetXaxis()->SetLabelFont(42);
   fInvariantMassDistributionH->GetYaxis()->SetLabelFont(42);
   fInvariantMassDistributionH->GetXaxis()->SetNdivisions(408);
-  fInvariantMassDistributionH->GetYaxis()->SetRangeUser(0.0000000000001, fInvariantMassDistributionH->GetMaximum()*1.3);
+  // fInvariantMassDistributionH->GetYaxis()->SetRangeUser(0.0000000000001, fInvariantMassDistributionH->GetMaximum()*1.3);
+  fInvariantMassDistributionH->GetYaxis()->SetRangeUser(0.0000000000001, fInvariantMassDistributionH->GetMaximum()*1.15);
   fInvariantMassDistributionH->GetXaxis()->SetRangeUser(2, 6);
   // gPad ->SetLogy();
   fInvariantMassDistributionH->Draw("PEsame");
@@ -449,13 +450,25 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   latex->SetTextFont(42);
   latex->SetTextAlign(11);
   latex->SetNDC();
-  latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->SetTextSize(0.045);
+  // latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.5,0.93,"ALICE Public");
+  latex->DrawLatex(0.5,0.87,"PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->SetTextSize(0.042);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex->DrawLatex(0.55,0.78,Form("#color[2]{%.3f < cos(#theta) < %.3f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  // latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  latex->DrawLatex(0.5,0.78,Form("#color[2]{%.2f < cos(#theta) < %.2f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  latex->DrawLatex(0.5,0.72,"#color[4]{p_{T} < 0.25 GeV/#it{c}}");
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
-  latex->DrawLatex(0.55,0.72,Form("%.1f < y < %.1f",-4.0,-2.5));
+  latex->DrawLatex(0.5,0.66,Form("%.1f < y < %.1f",-4.0,-2.5));
+  TLegend *leg_phi = new TLegend(0.5,0.35,0.95,0.6);
+  leg_phi->SetFillStyle(0);
+  leg_phi->SetBorderSize(0);
+  leg_phi->SetTextSize(0.038);
+  leg_phi->AddEntry(fInvariantMassDistributionH,"ALICE data", "lep");
+  leg_phi->AddEntry("JPsiPeakFit","J/#psi fit", "l");
+  leg_phi->AddEntry("PsiPrimePeakFit","#psi(2S) fit", "L");
+  leg_phi->AddEntry("GammaGammaFit","Background", "L");
+  leg_phi->Draw();
 
   /* - This is the part where we obtain the actual number of J/Psi, PsiPrime
      - and the background. This is still Kay's original code. I will modify it.
@@ -516,8 +529,8 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
 
   numberOfTotalBkg    = (GammaGammaFit-> Integral(2.2,6))/0.05;
   numberOfTotalBkgErr = numberOfTotalBkg*fFitInvMass->GetParError(17)/fFitInvMass->GetParameter(17);
-  latex->DrawLatex(0.55,0.66,Form("N_{J/#psi} = %.0f #pm %.0f",        numberOfTotalJPsi,  numberOfTotalJPsiErr ));//fFitInvMass->GetParameter(0) *fFitInvMass->GetParError(15)/0.05 ) );
-  latex->DrawLatex(0.55,0.60,Form("N_{#psi(2S)} = %.0f #pm %.0f",      numberOfTotalPsi2s, numberOfTotalPsi2sErr));//fFitInvMass->GetParameter(5) *fFitInvMass->GetParError(16)/0.05 ) );
+  // latex->DrawLatex(0.55,0.66,Form("N_{J/#psi} = %.0f #pm %.0f",        numberOfTotalJPsi,  numberOfTotalJPsiErr ));//fFitInvMass->GetParameter(0) *fFitInvMass->GetParError(15)/0.05 ) );
+  // latex->DrawLatex(0.55,0.60,Form("N_{#psi(2S)} = %.0f #pm %.0f",      numberOfTotalPsi2s, numberOfTotalPsi2sErr));//fFitInvMass->GetParameter(5) *fFitInvMass->GetParError(16)/0.05 ) );
   // latex->DrawLatex(0.55,0.54,Form("N_{#gamma#gamma} = %.0f #pm %.0f",  numberOfTotalBkg,   numberOfTotalBkgErr  ));//fFitInvMass->GetParameter(10)*fFitInvMass->GetParError(17)/0.05 ) );
 
   /* - This part concerns the background of the two signals.
@@ -539,16 +552,16 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
 
   // latex->DrawLatex(0.55,0.42,Form("N_{BG J/#psi} = %.0f #pm %.0f",   JPsiPeakBkg,     JPsiPeakBkg     * fFitInvMass->GetParError(17) / numberOfTotalJPsi ));
   // latex->DrawLatex(0.55,0.36,Form("N_{BG #psi(2s)} = %.0f #pm %.0f", Psi2JPsiPeakBkg, Psi2JPsiPeakBkg * fFitInvMass->GetParError(17) / numberOfTotalPsi2s));
-  latex->DrawLatex(0.55,0.18,Form("      #tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
-                                     fFitInvMass->GetChisquare(),
-                                     fFitInvMass->GetNDF(),
-                                     fFitInvMass->GetChisquare()/fFitInvMass->GetNDF()
-                                     )
-                                    );
+  // latex->DrawLatex(0.55,0.18,Form("      #tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
+  //                                    fFitInvMass->GetChisquare(),
+  //                                    fFitInvMass->GetNDF(),
+  //                                    fFitInvMass->GetChisquare()/fFitInvMass->GetNDF()
+  //                                    )
+  //                                   );
 
 
 
-  if      ( SignalRangeModeFlag == 0 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d.png",        selectionFlag), "recreate"); }
+  if      ( SignalRangeModeFlag == 0 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d.pdf",        selectionFlag), "recreate"); }
   else if ( SignalRangeModeFlag == 1 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range1.png", selectionFlag), "recreate"); }
   else if ( SignalRangeModeFlag == 2 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range2.png", selectionFlag), "recreate"); }
   else if ( SignalRangeModeFlag == 3 ) { gPad->SaveAs(Form("pngResults/CosThetaHe_%d_Range3.png", selectionFlag), "recreate"); }

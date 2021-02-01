@@ -3751,7 +3751,7 @@ void AliAnalysisTaskUPCforward::UserExec(Option_t *)
 
 
 
-
+if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
   /* -
    * - Pt check for Daniel!
    */
@@ -3768,7 +3768,7 @@ void AliAnalysisTaskUPCforward::UserExec(Option_t *)
       controlFlagPt1 = 1;
     }
   }
-
+}
 
 
 

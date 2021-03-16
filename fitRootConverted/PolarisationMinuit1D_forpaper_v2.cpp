@@ -294,9 +294,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* file1D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_final.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -310,9 +308,23 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   } else {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   }
+  TFile* file1DCS = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedCs1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+
   TH1F* CorrectedCosTheta = (TH1F*) file1D->Get("CorrCosThetaH");
   TH1F* CorrectedPhi      = (TH1F*) file1D->Get("CorrPhiH");
   TH1F* CorrectedTildePhi = (TH1F*) file1D->Get("CorrTildePhiH");
+  TH1F* CorrectedCosThetaCS = (TH1F*) file1DCS->Get("CorrCosThetaH");
+  TH1F* CorrectedPhiCS      = (TH1F*) file1DCS->Get("CorrPhiH");
+  TH1F* CorrectedTildePhiCS = (TH1F*) file1DCS->Get("CorrTildePhiH");
+
+
+  CorrectedCosTheta->SetName("CorrectedCosTheta");
+  CorrectedPhi->SetName("CorrectedPhi");
+  CorrectedTildePhi->SetName("CorrectedTildePhi");
+
+  CorrectedCosThetaCS->SetName("CorrectedCosThetaCS");
+  CorrectedPhiCS->SetName("CorrectedPhiCS");
+  CorrectedTildePhiCS->SetName("CorrectedTildePhiCS");
 
 
   Double_t CosThetaLowLimit   = -1;
@@ -374,7 +386,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
@@ -384,19 +396,12 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->SetFCN(FcnForMinimisationV3);
   gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  1.e+04, 3.0e+04);
-  // gMinuit->DefineParameter(1, "NormalTheta", 4.3e+04, 10,  4.2e+04, 4.4e+04);
-  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
-  // gMinuit->DefineParameter(2, "NormalisPhi",      7000, 10,  5000, 8000);
+  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.2e+04, 3.2e+04);
+  // gMinuit->DefineParameter(2, "NormalisPhi", 4137, 100,  4000, 4400);
+  gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  7700, 8700);
   gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 7000, 10,  6500, 7500);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  7700, 8700);
   gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");
@@ -419,149 +424,322 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Int_t nvpar,nparx,icstat;
   gMinuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
   gMinuit->mnprin(3,amin);
+  gMinuit->mnmatu(1);
 
 
   gStyle->SetOptStat(0);
 
+
+  // TFile* SavedCS = new TFile( Form("pngResults/%d-%2.2d-%2.2d/1Dresults/Parameters_SigEx_%d_FitRange_%d_CS.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode) );
+  // TH1F* SavedCSHisto = (TH1F*) SavedCS->Get("SavingParamH");
+
+
   TF1* Model = new TF1("Model", "[1]*(1+[0]*x*x)/(3+[0])", -0.6 ,0.6 );
+  TF1* ModelCS = new TF1("ModelCS", "[1]*(1+[0]*x*x)/(3+[0])", -0.6 ,0.6 );
   new TCanvas;
+  // gPad->SetMargin(0.13,0.01,0.12,0.01);
   gPad->SetMargin(0.13,0.01,0.12,0.01);
-  CorrectedCosTheta->GetXaxis()->SetTitleOffset(1.15);
-  // CorrectedCosTheta->GetYaxis()->SetTitleOffset(1.25);
-  CorrectedCosTheta->GetYaxis()->SetTitleOffset(1.55);
-  CorrectedCosTheta->GetXaxis()->SetTitleSize(0.045);
-  CorrectedCosTheta->GetYaxis()->SetTitleSize(0.045);
-  CorrectedCosTheta->GetXaxis()->SetLabelSize(0.045);
-  CorrectedCosTheta->GetYaxis()->SetLabelSize(0.045);
+  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.12);
+  gPad->SetTopMargin(0.075);
+  gPad->SetTickx(1);
+  gPad->SetTicky(1);
+  // CorrectedCosTheta->GetXaxis()->SetTitleOffset(1.15);
+  // CorrectedCosTheta->GetYaxis()->SetTitleOffset(1.55);
+  // CorrectedCosTheta->GetXaxis()->SetTitleSize(0.045);
+  // CorrectedCosTheta->GetYaxis()->SetTitleSize(0.045);
+  CorrectedCosTheta->GetYaxis()->SetMaxDigits(2);
+  CorrectedCosTheta->GetXaxis()->SetTitleSize(0.055);
+  CorrectedCosTheta->GetYaxis()->SetTitleSize(0.055);
+  // CorrectedCosTheta->GetXaxis()->SetLabelSize(0.045);
+  // CorrectedCosTheta->GetYaxis()->SetLabelSize(0.045);
+  CorrectedCosTheta->GetXaxis()->SetLabelSize(0.05);
+  CorrectedCosTheta->GetYaxis()->SetLabelSize(0.05);
   CorrectedCosTheta->GetXaxis()->SetTitleFont(42);
   CorrectedCosTheta->GetYaxis()->SetTitleFont(42);
   CorrectedCosTheta->GetXaxis()->SetLabelFont(42);
   CorrectedCosTheta->GetYaxis()->SetLabelFont(42);
-  CorrectedCosTheta->GetXaxis()->SetNdivisions(408);
-  CorrectedCosTheta->GetYaxis()->SetRangeUser(0., CorrectedCosTheta->GetMaximum()*2);
-  // CorrectedCosTheta->GetXaxis()->SetRangeUser(2, 6);
-  CorrectedCosTheta->SetTitle(  Form(  ";cos(#theta); ACCxEFF Corrected Counts / %.3f",
-                           CorrectedCosTheta->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedCosTheta->Draw();
+  // CorrectedCosTheta->GetXaxis()->SetNdivisions(408);
+  // CorrectedCosTheta->GetXaxis()->SetNdivisions(10);
+  CorrectedCosTheta->SetMarkerStyle(kFullCircle);
+  // CorrectedCosTheta->GetYaxis()->SetRangeUser(0., CorrectedCosTheta->GetMaximum()*4.5);
+  CorrectedCosTheta->GetYaxis()->SetRangeUser(0., CorrectedCosTheta->GetMaximum()*4.);
+  CorrectedCosTheta->GetXaxis()->SetRangeUser(-0.7, 0.7);
+  // CorrectedCosTheta->SetTitle(  Form(  ";cos(#theta); ACCxEFF Corrected Counts / %.3f",
+  //                          CorrectedCosTheta->GetXaxis()->GetBinWidth(1)  )  );
+  CorrectedCosTheta->SetTitle(  ";cos(#theta); Corrected dN/dcos#theta" );
+  // CorrectedCosTheta->GetXaxis()->SetTitleSize(1.15);
+  // CorrectedCosTheta->GetYaxis()->SetTitleSize(1.15);
+  // CorrectedCosTheta->GetXaxis()->SetTitleOffset(0.65);
+  // CorrectedCosTheta->GetYaxis()->SetTitleOffset(1.);
+  CorrectedCosTheta->Draw("PLC PMC");
+  CorrectedCosThetaCS->Sumw2();
+  CorrectedCosThetaCS->SetMarkerStyle(kOpenCircle);
+  CorrectedCosThetaCS->Scale(1.6);
+  CorrectedCosThetaCS->Draw("PLC PMC same");
   TLatex* latex = new TLatex();
-  latex->SetTextSize(0.05);
+  latex->SetTextSize(0.055);
   latex->SetTextFont(42);
   latex->SetTextAlign(11);
   latex->SetNDC();
-  latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->SetTextSize(0.045);
-  latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
-  latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
-  // latex->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
-  latex->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
-                                     ReducedChiSquare,
-                                     65 - gMinuit->GetNumFreePars(),
-                                     ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
-                                     )
-                                    );
+  // latex->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.2,0.81,"ALICE Public");
+  latex->DrawLatex(0.2,0.74,"PbPb");
+  latex->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
+  latex->SetTextSize(0.055);
+  // latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  // latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  // latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // // latex->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // latex->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
+  //                                    ReducedChiSquare,
+  //                                    65 - gMinuit->GetNumFreePars(),
+  //                                    ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
+  //                                    )
+  //                                   );
   Model->SetParameter( 0, LambdaTheta );
   Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
-  Model->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/CosThetaHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  Model->SetLineColor(kRed);
+  Model->Draw("PLC PMC same");
+  Model->Draw(" same");
+  ModelCS->SetParameter( 0, 1.32606 );
+  ModelCS->SetParameter( 1, (2.68954e+04) * 1.6 );
+  ModelCS->SetNpx(500);
+  ModelCS->SetLineColor(kMagenta);
+  ModelCS->Draw("PLC PMC same");
+  ModelCS->Draw(" same");
+  // TLegend *leg_costheta = new TLegend(0.6,0.45,0.95,0.79);
+  TLegend *leg_costheta = new TLegend(0.5,0.65,0.95,0.85);
+  leg_costheta->SetFillStyle(0);
+  leg_costheta->SetBorderSize(0);
+  leg_costheta->SetTextSize(0.055);
+  leg_costheta->AddEntry("CorrectedCosTheta","Helicity", "ep");
+  leg_costheta->AddEntry("CorrectedCosThetaCS","Collins-Soper #times 1.6", "ep");
+  leg_costheta->AddEntry("Model","Helicity fit", "L");
+  leg_costheta->AddEntry("ModelCS","Collins-Soper fit #times 1.6", "L");
+  leg_costheta->Draw();
+
+
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit.pdf", "recreate");
+  gPad->SaveAs(Form("pngResults/CosThetaHeMinuit_SigEx_%d_FitRange_%d_HE.pdf", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
 
   TF1* Model2 = new TF1("Model2", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
+  TF1* Model2CS = new TF1("Model2CS", "[1]*(1+2*[2]*cos(2*x)/(3+[0]))", -3.1 ,3.1 );
   new TCanvas;
+  // gPad->SetMargin(0.13,0.01,0.12,0.01);
   gPad->SetMargin(0.13,0.01,0.12,0.01);
-  CorrectedPhi->GetXaxis()->SetTitleOffset(1.15);
-  // CorrectedPhi->GetYaxis()->SetTitleOffset(1.25);
-  CorrectedPhi->GetYaxis()->SetTitleOffset(1.55);
-  CorrectedPhi->GetXaxis()->SetTitleSize(0.045);
-  CorrectedPhi->GetYaxis()->SetTitleSize(0.045);
-  CorrectedPhi->GetXaxis()->SetLabelSize(0.045);
-  CorrectedPhi->GetYaxis()->SetLabelSize(0.045);
+  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.12);
+  gPad->SetTopMargin(0.075);
+  gPad->SetTickx(1);
+  gPad->SetTicky(1);
+  // CorrectedPhi->GetXaxis()->SetTitleOffset(1.15);
+  // CorrectedPhi->GetYaxis()->SetTitleOffset(1.55);
+  // CorrectedPhi->GetXaxis()->SetTitleSize(0.045);
+  // CorrectedPhi->GetYaxis()->SetTitleSize(0.045);
+  CorrectedPhi->GetYaxis()->SetMaxDigits(2);
+  CorrectedPhi->GetXaxis()->SetTitleSize(0.055);
+  CorrectedPhi->GetYaxis()->SetTitleSize(0.055);
+  // CorrectedPhi->GetXaxis()->SetLabelSize(0.045);
+  // CorrectedPhi->GetYaxis()->SetLabelSize(0.045);
+  CorrectedPhi->GetXaxis()->SetLabelSize(0.05);
+  CorrectedPhi->GetYaxis()->SetLabelSize(0.05);
   CorrectedPhi->GetXaxis()->SetTitleFont(42);
   CorrectedPhi->GetYaxis()->SetTitleFont(42);
   CorrectedPhi->GetXaxis()->SetLabelFont(42);
   CorrectedPhi->GetYaxis()->SetLabelFont(42);
+  // CorrectedPhi->GetXaxis()->SetTitleOffset(1.15);
+  // // CorrectedPhi->GetYaxis()->SetTitleOffset(1.25);
+  // CorrectedPhi->GetYaxis()->SetTitleOffset(1.55);
+  // CorrectedPhi->GetYaxis()->SetMaxDigits(2);
+  // CorrectedPhi->GetXaxis()->SetTitleSize(0.045);
+  // CorrectedPhi->GetYaxis()->SetTitleSize(0.045);
+  // CorrectedPhi->GetXaxis()->SetLabelSize(0.045);
+  // CorrectedPhi->GetYaxis()->SetLabelSize(0.045);
+  // CorrectedPhi->GetXaxis()->SetTitleFont(42);
+  // CorrectedPhi->GetYaxis()->SetTitleFont(42);
+  // CorrectedPhi->GetXaxis()->SetLabelFont(42);
+  // CorrectedPhi->GetYaxis()->SetLabelFont(42);
   CorrectedPhi->GetXaxis()->SetNdivisions(408);
-  CorrectedPhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*2);
+  CorrectedPhi->SetMarkerStyle(kFullCircle);
+  // CorrectedPhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*2);
+  // CorrectedPhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*4.5);
+  CorrectedPhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*3.4);
   // CorrectedPhi->GetXaxis()->SetRangeUser(2, 6);
-  CorrectedPhi->SetTitle(  Form(  ";#phi; ACCxEFF Corrected Counts / %.3f",
-                           CorrectedPhi->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedPhi->Draw();
+  // CorrectedPhi->SetTitle(  Form(  ";#phi; ACCxEFF Corrected Counts / %.3f",
+  //                          CorrectedPhi->GetXaxis()->GetBinWidth(1)  )  );
+  CorrectedPhi->SetTitle( ";#varphi; Corrected dN/d#varphi" );
+  // CorrectedPhi->Draw();
+  CorrectedPhi->Draw("PLC PMC");
+  CorrectedPhiCS->Sumw2();
+  CorrectedPhiCS->SetMarkerStyle(kOpenCircle);
+  CorrectedPhiCS->Scale(1.6);
+  CorrectedPhiCS->Draw("PLC PMC same");
   TLatex* latex2 = new TLatex();
-  latex2->SetTextSize(0.05);
+  latex2->SetTextSize(0.055);
   latex2->SetTextFont(42);
   latex2->SetTextAlign(11);
   latex2->SetNDC();
-  latex2->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex2->SetTextSize(0.045);
-  latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
-  latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
-  latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
-  // latex2->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
-  latex2->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
-                                     ReducedChiSquare,
-                                     65 - gMinuit->GetNumFreePars(),
-                                     ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
-                                     )
-                                    );
+  // latex2->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex2->DrawLatex(0.2,0.81,"ALICE Public");
+  latex2->DrawLatex(0.2,0.74,"PbPb");
+  latex2->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
+  latex2->SetTextSize(0.055);
+  // latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  // latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  // latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
+  // latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // // latex2->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // latex2->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
+  //                                    ReducedChiSquare,
+  //                                    65 - gMinuit->GetNumFreePars(),
+  //                                    ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
+  //                                    )
+  //                                   );
   Model2->SetParameter( 0, LambdaTheta );
   Model2->SetParameter( 2, LambdaPhi );
   Model2->SetParameter( 1, NormalisPhi );
   Model2->SetNpx(500);
-  Model2->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/PhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  Model2->SetLineColor(kRed);
+  Model2->Draw("PLC PMC same");
+  Model2->Draw(" same");
+  Model2CS->SetParameter( 0, 1.32606 );
+  Model2CS->SetParameter( 2, (5.15687e-02) );
+  Model2CS->SetParameter( 1, (8.28218e+03) * 1.6 );
+  Model2CS->SetNpx(500);
+  Model2CS->SetLineColor(kMagenta);
+  Model2CS->Draw("PLC PMC same");
+  Model2CS->Draw(" same");
+  // TLegend *leg_costheta = new TLegend(0.6,0.45,0.95,0.79);
+  // TLegend *leg_phi = new TLegend(0.5,0.55,0.95,0.79);
+  TLegend *leg_phi = new TLegend(0.5,0.65,0.95,0.85);
+  leg_phi->SetFillStyle(0);
+  leg_phi->SetBorderSize(0);
+  leg_phi->SetTextSize(0.055);
+  leg_phi->AddEntry("CorrectedPhi","Helicity", "ep");
+  leg_phi->AddEntry("CorrectedPhiCS","Collins-Soper #times 1.6", "ep");
+  leg_phi->AddEntry("Model2","Helicity fit", "L");
+  leg_phi->AddEntry("Model2CS","Collins-Soper fit #times 1.6", "L");
+  leg_phi->Draw();
+
+
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit.pdf", "recreate");
+  gPad->SaveAs(Form("pngResults/PhiHeMinuit_SigEx_%d_FitRange_%d_HE.pdf", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
   TF1* Model3 = new TF1("Model3", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
+  TF1* Model3CS = new TF1("Model3CS", "[1]*(1+TMath::Sqrt(2)*[2]*cos(2*x)/(3+[0]))", 0 ,6.2 );
   new TCanvas;
+  // gPad->SetMargin(0.13,0.01,0.12,0.01);
   gPad->SetMargin(0.13,0.01,0.12,0.01);
-  CorrectedTildePhi->GetXaxis()->SetTitleOffset(1.15);
-  // CorrectedTildePhi->GetYaxis()->SetTitleOffset(1.25);
-  CorrectedTildePhi->GetYaxis()->SetTitleOffset(1.55);
-  CorrectedTildePhi->GetXaxis()->SetTitleSize(0.045);
-  CorrectedTildePhi->GetYaxis()->SetTitleSize(0.045);
-  CorrectedTildePhi->GetXaxis()->SetLabelSize(0.045);
-  CorrectedTildePhi->GetYaxis()->SetLabelSize(0.045);
+  gPad->SetLeftMargin(0.15);
+  gPad->SetBottomMargin(0.12);
+  gPad->SetTopMargin(0.075);
+  gPad->SetTickx(1);
+  gPad->SetTicky(1);
+  // CorrectedTildePhi->GetXaxis()->SetTitleOffset(1.15);
+  // CorrectedTildePhi->GetYaxis()->SetTitleOffset(1.55);
+  // CorrectedTildePhi->GetXaxis()->SetTitleSize(0.045);
+  // CorrectedTildePhi->GetYaxis()->SetTitleSize(0.045);
+  CorrectedTildePhi->GetYaxis()->SetMaxDigits(2);
+  CorrectedTildePhi->GetXaxis()->SetTitleSize(0.055);
+  CorrectedTildePhi->GetYaxis()->SetTitleSize(0.055);
+  // CorrectedTildePhi->GetXaxis()->SetLabelSize(0.045);
+  // CorrectedTildePhi->GetYaxis()->SetLabelSize(0.045);
+  CorrectedTildePhi->GetXaxis()->SetLabelSize(0.05);
+  CorrectedTildePhi->GetYaxis()->SetLabelSize(0.05);
   CorrectedTildePhi->GetXaxis()->SetTitleFont(42);
   CorrectedTildePhi->GetYaxis()->SetTitleFont(42);
   CorrectedTildePhi->GetXaxis()->SetLabelFont(42);
   CorrectedTildePhi->GetYaxis()->SetLabelFont(42);
+
+  // gPad->SetMargin(0.13,0.01,0.12,0.01);
+  // gPad->SetTickx(1);
+  // gPad->SetTicky(1);
+  // CorrectedTildePhi->GetXaxis()->SetTitleOffset(1.15);
+  // // CorrectedTildePhi->GetYaxis()->SetTitleOffset(1.25);
+  // CorrectedTildePhi->GetYaxis()->SetTitleOffset(1.55);
+  // CorrectedTildePhi->GetYaxis()->SetMaxDigits(2);
+  // CorrectedTildePhi->GetXaxis()->SetTitleSize(0.045);
+  // CorrectedTildePhi->GetYaxis()->SetTitleSize(0.045);
+  // CorrectedTildePhi->GetXaxis()->SetLabelSize(0.045);
+  // CorrectedTildePhi->GetYaxis()->SetLabelSize(0.045);
+  // CorrectedTildePhi->GetXaxis()->SetTitleFont(42);
+  // CorrectedTildePhi->GetYaxis()->SetTitleFont(42);
+  // CorrectedTildePhi->GetXaxis()->SetLabelFont(42);
+  // CorrectedTildePhi->GetYaxis()->SetLabelFont(42);
   CorrectedTildePhi->GetXaxis()->SetNdivisions(408);
-  CorrectedTildePhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*2);
+  CorrectedTildePhi->SetMarkerStyle(kFullCircle);
+  CorrectedTildePhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*0.9);
+  // CorrectedTildePhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*1.5);
+  // CorrectedTildePhi->GetYaxis()->SetRangeUser(0., CorrectedPhi->GetMaximum()*4.5);
   // CorrectedTildePhi->GetXaxis()->SetRangeUser(2, 6);
-  CorrectedTildePhi->SetTitle(  Form(  ";#tilde{#phi}; ACCxEFF Corrected Counts / %.3f",
-                           CorrectedTildePhi->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedTildePhi->Draw();
+  // CorrectedTildePhi->SetTitle(  Form(  ";#tilde{#phi}; ACCxEFF Corrected Counts / %.3f",
+  //                          CorrectedTildePhi->GetXaxis()->GetBinWidth(1)  )  );
+  CorrectedTildePhi->SetTitle( ";#tilde{#varphi}; Corrected dN/d#tilde{#varphi}" );
+  // CorrectedTildePhi->Draw();
+  CorrectedTildePhi->Draw("PLC PMC");
+  CorrectedTildePhiCS->Sumw2();
+  CorrectedTildePhiCS->SetMarkerStyle(kOpenCircle);
+  CorrectedTildePhiCS->Scale(1.6);
+  CorrectedTildePhiCS->Draw("PLC PMC same");
   TLatex* latex3 = new TLatex();
-  latex3->SetTextSize(0.05);
+  latex3->SetTextSize(0.055);
   latex3->SetTextFont(42);
   latex3->SetTextAlign(11);
   latex3->SetNDC();
-  latex3->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex3->SetTextSize(0.045);
-  latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
-  // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
-  latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,    LambdaThetaErr));
-  latex3->DrawLatex(0.55,0.62,Form("#lambda_{#theta#phi} = %.3f #pm %.3f", LambdaThetaPhi, LambdaThetaPhiErr));
-  // latex3->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
-  latex3->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
-                                     ReducedChiSquare,
-                                     65 - gMinuit->GetNumFreePars(),
-                                     ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
-                                     )
-                                    );
+  // latex3->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex3->DrawLatex(0.2,0.81,"ALICE Public");
+  latex3->DrawLatex(0.2,0.74,"PbPb");
+  latex3->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
+  latex3->SetTextSize(0.055);
+  // latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
+  // latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
+  // // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
+  // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,    LambdaThetaErr));
+  // latex3->DrawLatex(0.55,0.62,Form("#lambda_{#theta#phi} = %.3f #pm %.3f", LambdaThetaPhi, LambdaThetaPhiErr));
+  // // latex3->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // latex3->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
+  //                                    ReducedChiSquare,
+  //                                    65 - gMinuit->GetNumFreePars(),
+  //                                    ReducedChiSquare/((Double_t)  (65 - gMinuit->GetNumFreePars()))
+  //                                    )
+  //                                   );
   Model3->SetParameter( 0, LambdaTheta      );
   Model3->SetParameter( 2, LambdaThetaPhi   );
   Model3->SetParameter( 1, NormalisTildePhi );
   Model3->SetNpx(500);
-  Model3->Draw("same");
-  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
-  gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
+  // Model3->Draw("same");
+  Model3->SetLineColor(kRed);
+  Model3->Draw("PLC PMC same");
+  Model3->Draw(" same");
+  Model3CS->SetParameter( 0, 1.32606 );
+  Model3CS->SetParameter( 2, (-3.81701e-02) );
+  Model3CS->SetParameter( 1, (8.33267e+03) * 1.6 );
+  Model3CS->SetNpx(500);
+  Model3CS->SetLineColor(kMagenta);
+  Model3CS->Draw("PLC PMC same");
+  Model3CS->Draw(" same");
+  // TLegend *leg_tildephi = new TLegend(0.5,0.55,0.95,0.79);
+  TLegend *leg_tildephi = new TLegend(0.5,0.65,0.95,0.85);
+  leg_tildephi->SetFillStyle(0);
+  leg_tildephi->SetBorderSize(0);
+  leg_tildephi->SetTextSize(0.055);
+  // leg_tildephi->SetFillStyle(0);
+  // leg_tildephi->SetBorderSize(0);
+  // leg_tildephi->SetTextSize(0.04);
+  leg_tildephi->AddEntry("CorrectedTildePhi","Helicity", "ep");
+  leg_tildephi->AddEntry("CorrectedTildePhiCS","Collins-Soper #times 1.6", "ep");
+  leg_tildephi->AddEntry("Model3","Helicity fit", "L");
+  leg_tildephi->AddEntry("Model3CS","Collins-Soper fit #times 1.6", "L");
+  leg_tildephi->Draw();
 
-  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+
+  if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.pdf", "recreate");
+  gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.pdf", SignalRangeSelectionMode, FitRangeMode), "recreate");
+
+  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/1Dresults/Parameters_SigEx_%d_FitRange_%d_HE.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
   SavingParamH->SetBinContent( 1, LambdaTheta );
   SavingParamH->SetBinContent( 2, LambdaPhi );

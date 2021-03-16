@@ -330,6 +330,12 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward()
       fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0 },
       fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                0, 0, 0, 0, 0 },
@@ -339,6 +345,12 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward()
       fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0 },
       fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBins0N0NH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                    0, 0, 0, 0, 0 },
@@ -645,6 +657,12 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward( const char* name, Int_t _f
       fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0 },
       fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                0, 0, 0, 0, 0 },
@@ -654,6 +672,12 @@ AliAnalysisTaskUPCforward::AliAnalysisTaskUPCforward( const char* name, Int_t _f
       fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                     0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, 0, 0, 0, 0 },
+      fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                      0, 0, 0, 0, 0 },
       fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBins0N0NH{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                                    0, 0, 0, 0, 0 },
@@ -1806,12 +1830,31 @@ void AliAnalysisTaskUPCforward::UserCreateOutputObjects()
   }
 
   for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
+    fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2[iPhiBins] = new TH1F(
+                Form("fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                Form("fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                2000, 0, 20
+                );
+    fOutputList->Add(fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2[iPhiBins]);
+  }
+
+
+  for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
     fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH[iPhiBins] = new TH1F(
                 Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", iPhiBins),
                 Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH_%d", iPhiBins),
                 2000, 0, 20
                 );
     fOutputList->Add(fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH[iPhiBins]);
+  }
+
+  for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
+    fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2[iPhiBins] = new TH1F(
+                Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                Form("fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                2000, 0, 20
+                );
+    fOutputList->Add(fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2[iPhiBins]);
   }
 
   for(Int_t iCosThetaBins = 0; iCosThetaBins < 25; iCosThetaBins++ ){
@@ -1833,6 +1876,15 @@ void AliAnalysisTaskUPCforward::UserCreateOutputObjects()
   }
 
   for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
+    fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2[iPhiBins] = new TH1F(
+                Form("fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                Form("fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                2000, 0, 20
+                );
+    fOutputList->Add(fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2[iPhiBins]);
+  }
+
+  for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
     fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH[iPhiBins] = new TH1F(
                 Form("fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH_%d", iPhiBins),
                 Form("fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH_%d", iPhiBins),
@@ -1841,6 +1893,14 @@ void AliAnalysisTaskUPCforward::UserCreateOutputObjects()
     fOutputList->Add(fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH[iPhiBins]);
   }
 
+  for(Int_t iPhiBins = 0; iPhiBins < 25; iPhiBins++ ){
+    fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2[iPhiBins] = new TH1F(
+                Form("fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                Form("fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2_%d", iPhiBins),
+                2000, 0, 20
+                );
+    fOutputList->Add(fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2[iPhiBins]);
+  }
 
   // INCOHERENT CHECK
   for(Int_t iCosThetaBins = 0; iCosThetaBins < 25; iCosThetaBins++ ){
@@ -3782,10 +3842,14 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
    */
   Bool_t controlFlag13 = 0;
   Bool_t controlFlag14 = 0;
+  Bool_t controlFlag14a= 0;
   Bool_t controlFlag15 = 0;
+  Bool_t controlFlag15a= 0;
   Bool_t controlFlag16 = 0;
   Bool_t controlFlag17 = 0;
+  Bool_t controlFlag17a= 0;
   Bool_t controlFlag18 = 0;
+  Bool_t controlFlag18a= 0;
   if ( possibleJPsiCopy.Pt() < 0.25 ) {
         Double_t CosThetaHelicityFrameValue7 = CosThetaHelicityFrame( muonsCopy2[0], muonsCopy2[1], possibleJPsiCopy );
         Double_t PhiHelicityFrameValue7      =   CosPhiHelicityFrame( muonsCopy2[0], muonsCopy2[1], possibleJPsiCopy );
@@ -3793,11 +3857,15 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
         // Double_t TildePhiNegativeCosTheta    = CosThetaHelicityFrameValue7 - 0.75 * TMath::Pi();
         Double_t TildePhiPositiveCosTheta    = PhiHelicityFrameValue7 - 0.25 * 3.14;
         Double_t TildePhiNegativeCosTheta    = PhiHelicityFrameValue7 - 0.75 * 3.14;
+        Double_t TildePhiPositiveCosThetav2  = PhiHelicityFrameValue7 - 0.25 * TMath::Pi();
+        Double_t TildePhiNegativeCosThetav2  = PhiHelicityFrameValue7 - 0.75 * TMath::Pi();
 
         Double_t CosThetaCollinsSoperValue   = CosThetaCollinsSoper(  muonsCopy2[0], muonsCopy2[1], possibleJPsiCopy );
         Double_t PhiCollinsSoperValue        =   CosPhiCollinsSoper(  muonsCopy2[0], muonsCopy2[1], possibleJPsiCopy );
         Double_t TildePhiPositiveCosThetaCS  = PhiCollinsSoperValue - 0.25 * 3.14;
         Double_t TildePhiNegativeCosThetaCS  = PhiCollinsSoperValue - 0.75 * 3.14;
+        Double_t TildePhiPositiveCosThetaCSv2= PhiCollinsSoperValue - 0.25 * TMath::Pi();
+        Double_t TildePhiNegativeCosThetaCSv2= PhiCollinsSoperValue - 0.75 * TMath::Pi();
 
         if( TildePhiPositiveCosTheta < 0. ) {
           TildePhiPositiveCosTheta += 2. * TMath::Pi();
@@ -3812,6 +3880,23 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
         if( TildePhiNegativeCosThetaCS < 0. ) {
           TildePhiNegativeCosThetaCS += 2. * TMath::Pi();
         }
+
+
+
+        if( TildePhiPositiveCosThetav2 < 0. ) {
+          TildePhiPositiveCosThetav2 += 2. * TMath::Pi();
+        }
+        if( TildePhiNegativeCosThetav2 < 0. ) {
+          TildePhiNegativeCosThetav2 += 2. * TMath::Pi();
+        }
+
+        if( TildePhiPositiveCosThetaCSv2 < 0. ) {
+          TildePhiPositiveCosThetaCSv2 += 2. * TMath::Pi();
+        }
+        if( TildePhiNegativeCosThetaCSv2 < 0. ) {
+          TildePhiNegativeCosThetaCSv2 += 2. * TMath::Pi();
+        }
+
 
         /* - HELICITY FRAME ANALYSIS
          * -
@@ -3831,6 +3916,13 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
             controlFlag14 = 1;
           }
         }
+        for(Int_t iPhiBinsV2 = 0; iPhiBinsV2 < 25; iPhiBinsV2++) {
+          if( controlFlag14a == 1) break;
+          if( (PhiHelicityFrameValue7 + TMath::Pi()) < 2.*TMath::Pi()*((Double_t)iPhiBinsV2 + 1.)/25. ){
+            fInvariantMassDistributionOnlyPhiHeFrameTwentyfiveBinsHv2[iPhiBinsV2]->Fill(possibleJPsiCopyMag);
+            controlFlag14a = 1;
+          }
+        }
         if( (CosThetaHelicityFrameValue7 > 0) || (CosThetaHelicityFrameValue7 == 0) ){
           for(Int_t iTildePhiBins = 0; iTildePhiBins < 25; iTildePhiBins++) {
             if( controlFlag15 == 1) break;
@@ -3839,12 +3931,26 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
               controlFlag15 = 1;
             }
           }
+          for(Int_t iTildePhiBinsV2 = 0; iTildePhiBinsV2 < 25; iTildePhiBinsV2++) {
+            if( controlFlag15a == 1) break;
+            if( (TildePhiPositiveCosThetav2) < 2.*TMath::Pi()*((Double_t)iTildePhiBinsV2 + 1.)/25. ){
+              fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2[iTildePhiBinsV2]->Fill(possibleJPsiCopyMag);
+              controlFlag15a = 1;
+            }
+          }
         } else if ( CosThetaHelicityFrameValue7 < 0 ){
           for(Int_t iTildePhiBins = 0; iTildePhiBins < 25; iTildePhiBins++) {
             if( controlFlag15 == 1) break;
             if( (TildePhiNegativeCosTheta) < 6.28*((Double_t)iTildePhiBins + 1.)/25. ){
               fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsH[iTildePhiBins]->Fill(possibleJPsiCopyMag);
               controlFlag15 = 1;
+            }
+          }
+          for(Int_t iTildePhiBinsV2 = 0; iTildePhiBinsV2 < 25; iTildePhiBinsV2++) {
+            if( controlFlag15a == 1) break;
+            if( (TildePhiNegativeCosThetav2) < 2.*TMath::Pi()*((Double_t)iTildePhiBinsV2 + 1.)/25. ){
+              fInvariantMassDistributionOnlyTildePhiHeFrameTwentyfiveBinsHv2[iTildePhiBinsV2]->Fill(possibleJPsiCopyMag);
+              controlFlag15a = 1;
             }
           }
         }
@@ -3866,6 +3972,13 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
             controlFlag17 = 1;
           }
         }
+        for(Int_t iPhiBinsV2 = 0; iPhiBinsV2 < 25; iPhiBinsV2++) {
+          if( controlFlag17a == 1) break;
+          if( (PhiCollinsSoperValue + TMath::Pi()) < 2.*TMath::Pi()*((Double_t)iPhiBinsV2 + 1.)/25. ){
+            fInvariantMassDistributionOnlyPhiCsFrameTwentyfiveBinsHv2[iPhiBinsV2]->Fill(possibleJPsiCopyMag);
+            controlFlag17a = 1;
+          }
+        }
         if( (CosThetaCollinsSoperValue > 0) || (CosThetaCollinsSoperValue == 0) ){
           for(Int_t iTildePhiBins = 0; iTildePhiBins < 25; iTildePhiBins++) {
             if( controlFlag18 == 1) break;
@@ -3874,12 +3987,26 @@ if ( (possibleJPsiCopy.Mag() > 2.8) && (possibleJPsiCopy.Mag() < 3.3) ) {
               controlFlag18 = 1;
             }
           }
+          for(Int_t iTildePhiBinsV2 = 0; iTildePhiBinsV2 < 25; iTildePhiBinsV2++) {
+            if( controlFlag18a == 1) break;
+            if( (TildePhiPositiveCosThetaCSv2) < 2.*TMath::Pi()*((Double_t)iTildePhiBinsV2 + 1.)/25. ){
+              fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2[iTildePhiBinsV2]->Fill(possibleJPsiCopyMag);
+              controlFlag18a = 1;
+            }
+          }
         } else if ( CosThetaCollinsSoperValue < 0 ){
           for(Int_t iTildePhiBins = 0; iTildePhiBins < 25; iTildePhiBins++) {
             if( controlFlag18 == 1) break;
             if( (TildePhiNegativeCosThetaCS) < 6.28*((Double_t)iTildePhiBins + 1.)/25. ){
               fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsH[iTildePhiBins]->Fill(possibleJPsiCopyMag);
               controlFlag18 = 1;
+            }
+          }
+          for(Int_t iTildePhiBinsV2 = 0; iTildePhiBinsV2 < 25; iTildePhiBinsV2++) {
+            if( controlFlag18a == 1) break;
+            if( (TildePhiNegativeCosThetaCSv2) < 2.*TMath::Pi()*((Double_t)iTildePhiBinsV2 + 1.)/25. ){
+              fInvariantMassDistributionOnlyTildePhiCsFrameTwentyfiveBinsHv2[iTildePhiBinsV2]->Fill(possibleJPsiCopyMag);
+              controlFlag18a = 1;
             }
           }
         }

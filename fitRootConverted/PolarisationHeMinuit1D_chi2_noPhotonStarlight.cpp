@@ -43,8 +43,9 @@ Double_t ReducedChiSquare = 0;
  */
 Double_t CosTheta(Double_t *x, Double_t *par) {
   Double_t CosSquaredTheta = x[0] * x[0];
-  Double_t returnValue     = 1 + par[0] * CosSquaredTheta;
-  returnValue              = par[1] * returnValue / ( 3 + par[0] );
+  Double_t returnValue     = 1. + par[0] * CosSquaredTheta;
+  // returnValue              = par[1] * returnValue / ( 3. + par[0] );
+  returnValue              = par[4] * 3. * returnValue / ( 3. + par[0] );
   return   returnValue;
 }
 //______________________________________________
@@ -52,8 +53,9 @@ Double_t CosTheta(Double_t *x, Double_t *par) {
  * - Phi's distribution
  */
 Double_t Phi(Double_t *x, Double_t *par) {
-  Double_t CosOfTwoPhi = TMath::Cos( 2 * x[1] );
-  Double_t returnValue = par[2] * ( 1 + 2 * par[3] * CosOfTwoPhi / ( 3 + par[0] ) );
+  Double_t CosOfTwoPhi = TMath::Cos( 2. * x[1] );
+  // Double_t returnValue = par[2] * ( 1. + 2. * par[3] * CosOfTwoPhi / ( 3. + par[0] ) );
+  Double_t returnValue = par[4] * ( 1. + 2. * par[3] * CosOfTwoPhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //______________________________________________
@@ -61,26 +63,27 @@ Double_t Phi(Double_t *x, Double_t *par) {
  * - Phi's distribution but taken along the same axis as CosTheta
  */
 Double_t PhiV2(Double_t *x, Double_t *par) {
-  Double_t CosOfTwoPhi = TMath::Cos( 2 * x[0] );
-  Double_t returnValue = par[2] * ( 1 + 2 * par[3] * CosOfTwoPhi / ( 3 + par[0] ) );
+  Double_t CosOfTwoPhi = TMath::Cos( 2. * x[0] );
+  // Double_t returnValue = par[2] * ( 1. + 2. * par[3] * CosOfTwoPhi / ( 3. + par[0] ) );
+  Double_t returnValue = par[4] * ( 1. + 2. * par[3] * CosOfTwoPhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //______________________________________________
 Double_t DummyPhi(Double_t *x, Double_t *par) {
-  Double_t CosOfTwoPhi = TMath::Cos( 2 * x[1] );
-  Double_t returnValue = par[0] * ( 1 + 2 * par[1] * CosOfTwoPhi / ( 3 + 1.13220 ) );
+  Double_t CosOfTwoPhi = TMath::Cos( 2. * x[1] );
+  Double_t returnValue = par[0] * ( 1. + 2. * par[1] * CosOfTwoPhi / ( 3. + 1.13220 ) );
   return   returnValue;
 }
 //______________________________________________
 Double_t MixWithPositiveCosTheta(Double_t *x, Double_t *par) {
-  Double_t CosTwoTildePhi = TMath::Cos( 2 * x[1] - 0.50 * TMath::Pi() );
-  Double_t returnValue    = par[4] * ( 1 + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3 + par[0] ) );
+  Double_t CosTwoTildePhi = TMath::Cos( 2. * x[1] - 0.50 * TMath::Pi() );
+  Double_t returnValue    = par[4] * ( 1. + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //______________________________________________
 Double_t MixWithNegativeCosTheta(Double_t *x, Double_t *par) {
-  Double_t CosTwoTildePhi = TMath::Cos( 2 * x[1] - 1.50 * TMath::Pi() );
-  Double_t returnValue    = par[4] * ( 1 + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3 + par[0] ) );
+  Double_t CosTwoTildePhi = TMath::Cos( 2. * x[1] - 1.50 * TMath::Pi() );
+  Double_t returnValue    = par[4] * ( 1. + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //______________________________________________
@@ -88,8 +91,8 @@ Double_t MixWithNegativeCosTheta(Double_t *x, Double_t *par) {
  * - TildePhi's distribution.
  */
 Double_t TildePhi(Double_t *x, Double_t *par) {
-  Double_t CosTwoTildePhi = TMath::Cos( 2 * x[2] );
-  Double_t returnValue    = par[4] * ( 1 + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3 + par[0] ) );
+  Double_t CosTwoTildePhi = TMath::Cos( 2. * x[2] );
+  Double_t returnValue    = par[4] * ( 1. + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //______________________________________________
@@ -97,8 +100,8 @@ Double_t TildePhi(Double_t *x, Double_t *par) {
  * - TildePhi's distribution but along the same axis as x[0]
  */
 Double_t TildePhiV2(Double_t *x, Double_t *par) {
-  Double_t CosTwoTildePhi = TMath::Cos( 2 * x[0] );
-  Double_t returnValue    = par[4] * ( 1 + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3 + par[0] ) );
+  Double_t CosTwoTildePhi = TMath::Cos( 2. * x[0] );
+  Double_t returnValue    = par[4] * ( 1. + TMath::Sqrt(2) * par[5] * CosTwoTildePhi / ( 3. + par[0] ) );
   return   returnValue;
 }
 //_____________________________________________________________________________
@@ -294,9 +297,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* file1D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_final.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file1D = new TFile("pngResults/PolarisationCorrectedHe1D_noPhotonStarlight.root");
   } else if ( SignalRangeSelectionMode == 1 ) {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -374,7 +376,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
@@ -383,20 +385,16 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // gMinuit->SetFCN(FcnForMinimisation);
   // gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->SetFCN(FcnForMinimisationV3);
-  gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  1.e+04, 3.0e+04);
-  // gMinuit->DefineParameter(1, "NormalTheta", 4.3e+04, 10,  4.2e+04, 4.4e+04);
-  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
-  // gMinuit->DefineParameter(2, "NormalisPhi",      7000, 10,  5000, 8000);
-  gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 7000, 10,  6500, 7500);
-  gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
+  gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.01, -2, 2);
+  // gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.2e+04, 3.2e+04);
+  gMinuit->DefineParameter(1, "NormalTheta", 0, 0,  -1., 3.2e+04);
+  // gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  7700, 8700);
+  gMinuit->DefineParameter(2, "NormalisPhi",      0, 0,  0, 8700);
+  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.01,    -2, 2   );
+  gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.0,    -2, 2   );
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  7700, 8700);
+  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.01,    -2, 2   );
+  gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.0,    -2, 2   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");
@@ -419,6 +417,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Int_t nvpar,nparx,icstat;
   gMinuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
   gMinuit->mnprin(3,amin);
+  gMinuit->mnmatu(1);
 
 
   gStyle->SetOptStat(0);
@@ -461,7 +460,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
                                      )
                                     );
   Model->SetParameter( 0, LambdaTheta );
-  Model->SetParameter( 1, NormalTheta );
+  Model->SetParameter( 1, NormalisTildePhi*3. );
+  // Model->SetParameter( 1, NormalTheta );
   Model->SetNpx(500);
   Model->Draw("same");
   if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/CosThetaHeMinuit.png", "recreate");
@@ -508,7 +508,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
                                     );
   Model2->SetParameter( 0, LambdaTheta );
   Model2->SetParameter( 2, LambdaPhi );
-  Model2->SetParameter( 1, NormalisPhi );
+  // Model2->SetParameter( 1, NormalisPhi );
+  Model2->SetParameter( 1, NormalisTildePhi );
   Model2->SetNpx(500);
   Model2->Draw("same");
   if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/PhiHeMinuit.png", "recreate");
@@ -561,7 +562,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
   gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
-  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/1Dresults/Parameters_SigEx_%d_FitRange_%d_HE.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
   SavingParamH->SetBinContent( 1, LambdaTheta );
   SavingParamH->SetBinContent( 2, LambdaPhi );

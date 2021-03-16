@@ -185,6 +185,7 @@ void FcnForMinimisation(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, In
   // Int_t n = 40;
   Double_t chi2 = 0;
   Double_t tmp,x[3];
+  // Double_t residual[3] = {0,0,0};
   for ( Int_t i = 0; i < n; ++i ) {
     if        ( i < 15 ) {
       x[0] = coords[i];
@@ -202,7 +203,8 @@ void FcnForMinimisation(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, In
 
     // cout << "HI2" << flush << endl;
     if ( values[i] != 0 ) {
-      tmp = ( values[i] - SimultaneousFit( x, p ) ) / errors[i];
+      tmp         = ( values[i] - SimultaneousFit( x, p ) ) / errors[i];
+      // residual[0] =
       // tmp = ( values[i] - DummyFitCosTheta( x, p ) ) / errors[i];
       // tmp = ( values[i] - DummyFitPhi( x, p ) ) / errors[i];
     } else {
@@ -255,6 +257,7 @@ void FcnForMinimisationV3(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
   Int_t n = coords.size();
   Double_t chi2 = 0;
   Double_t tmp,x[2];
+  Double_t residual[6] = {0,0,0,0,0,0};
   // cout << "SignalRangeModeFromBash = " << SignalRangeModeFromBash << endl;
   // cout << "Counter = " << Counter << endl;
   for ( Int_t i = 0; i < n; ++i ) {
@@ -272,14 +275,189 @@ void FcnForMinimisationV3(Int_t &npar, Double_t *gin, Double_t &f, Double_t *p, 
     }
     if ( values[i] != 0 ) {
       tmp = ( values[i] - SimultaneousFitLastHopeComplete( x, p ) ) / errors[i];
+      // // LambdaTheta positivity
+      // residual[0]   = p[0] - 1.;
+      // // residual[0]   = -0.001;
+      // // cout << "Residual 0" << endl;
+      // if( p[3] >= 0. ){
+      //   residual[1] = 2. * p[3] - p[0] - 1.;
+      //   // cout << "Residual 1a" << endl;
+      // } else {
+      //   residual[1] = -2. * p[3] - p[0] - 1.;
+      //   // cout << "Residual 1b" << endl;
+      // }
+      // // residual[1]   = -0.001;
+      // // LambdaPhi positivity
+      // residual[2]   = p[3] - 1.;
+      // // residual[2]   = -0.001;
+      // // cout << "Residual 2" << endl;
+      // residual[3]   = - p[3] - 1.;
+      // // residual[3]   = -0.001;
+      // // cout << "Residual 3" << endl;
+      // // LambdaThetaPhi positivity
+      // // residual[4]   = -0.5*TMath::Sqrt( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] ) - p[5];
+      // residual[4]   = -0.001;
+      // // residual[4]   = 4.*p[5]*p[5] - ( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] );
+      // // cout << "Residual 4" << endl;
+      // // residual[5]   = -0.5*TMath::Sqrt( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] ) + p[5];
+      // residual[5]   = -0.001;
+      // // residual[5]   = 4.*p[5]*p[5] - ( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] );
+      // // cout << "Residual 5" << endl;
+      // if (        residual[0] > 0 ){
+      //   // tmp = 1000000*residual[0]*residual[0];
+      //   tmp = 1000*residual[0];
+      //   // tmp = 1000000;
+      // } else if ( residual[1] > 0 ){
+      //   // tmp = 1000000*residual[1]*residual[1];
+      //   tmp = 1000*residual[1];
+      //   // tmp = 1000000;
+      // } else if ( residual[2] > 0 ){
+      //   // tmp = 1000000*residual[2]*residual[2];
+      //   tmp = 1000*residual[2];
+      //   // tmp = 1000000;
+      // } else if ( residual[3] > 0 ){
+      //   // tmp = 1000000*residual[3]*residual[3];
+      //   tmp = 1000*residual[3];
+      //   // tmp = 1000000;
+      // } else if ( residual[4] > 0 ){
+      //   // tmp = 1000000*residual[4]*residual[4];
+      //   // tmp = 1000000*residual[4];
+      //   tmp = 1000*TMath::Sqrt(residual[4]);
+      //   // tmp = 1000000;
+      // } else if ( residual[5] > 0 ){
+      //   // tmp = 1000000*residual[5]*residual[5];
+      //   // tmp = 1000000*residual[5];
+      //   tmp = 1000*TMath::Sqrt(residual[5]);
+      //   // tmp = 1000000;
+      // }
+
       // tmp = ( values[i] - SimultaneousFit( x, p ) ) / errors[i];
     } else {
       tmp = 0;
     }
+    // cout << "ChiSquared OLD = " << chi2    << endl;
+    // cout << "TmpTmp         = " << tmp*tmp << endl;
     chi2 += tmp*tmp;
+    // cout << "ChiSquared NEW = " << chi2    << endl;
+
   }
+
+
+
+
+
+
+  // LambdaTheta positivity
+  residual[0]   = p[0] - 1.;
+  // residual[0]   = -0.001;
+  // cout << "Residual 0" << endl;
+  if( p[3] >= 0. ){
+    residual[1] = 2. * p[3] - p[0] - 1.;
+    // cout << "Residual 1a" << endl;
+  } else {
+    residual[1] = -2. * p[3] - p[0] - 1.;
+    // cout << "Residual 1b" << endl;
+  }
+  // residual[1]   = -0.001;
+  // LambdaPhi positivity
+  residual[2]   = p[3] - 1.;
+  // residual[2]   = -0.001;
+  // cout << "Residual 2" << endl;
+  residual[3]   = - p[3] - 1.;
+  // residual[3]   = -0.001;
+  // cout << "Residual 3" << endl;
+  // LambdaThetaPhi positivity
+  // residual[4]   = -0.5*TMath::Sqrt( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] ) - p[5];
+  // residual[4]   = -0.001;
+  residual[4]   = 4.*p[5]*p[5] - ( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] );
+  // cout << "Residual 4" << endl;
+  // residual[5]   = -0.5*TMath::Sqrt( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] ) + p[5];
+  // residual[5]   = -0.001;
+  residual[5]   = 4.*p[5]*p[5] - ( 1. - 2*p[3] + 2*p[3]*p[0] - p[0]*p[0] );
+  // cout << "Residual 5" << endl;
+  if (        residual[0] > 0 || residual[1] > 0  || residual[2] > 0  || residual[3] > 0  || residual[4] > 0  || residual[5] > 0 ){
+    if (        residual[0] > 0 ){
+      // tmp = 1000000*residual[0]*residual[0];
+      tmp += 1000*residual[0];
+      // tmp = 1000000;
+    }
+    if ( residual[1] > 0 ){
+      // tmp = 1000000*residual[1]*residual[1];
+      tmp += 1000*residual[1];
+      // tmp = 1000000;
+    }
+    if ( residual[2] > 0 ){
+      // tmp = 1000000*residual[2]*residual[2];
+      tmp += 1000*residual[2];
+      // tmp = 1000000;
+    }
+    if ( residual[3] > 0 ){
+      // tmp = 1000000*residual[3]*residual[3];
+      tmp += 1000*residual[3];
+      // tmp = 1000000;
+    }
+    if ( residual[4] > 0 ){
+      // tmp = 1000000*residual[4]*residual[4];
+      // tmp = 1000000*residual[4];
+      tmp += 1000*TMath::Sqrt(residual[4]);
+      // tmp = 1000000;
+    }
+    if ( residual[5] > 0 ){
+      // tmp = 1000000*residual[5]*residual[5];
+      // tmp = 1000000*residual[5];
+      tmp += 1000*TMath::Sqrt(residual[5]);
+      // tmp = 1000000;
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+  // if (        residual[0] > 0 ){
+  //   // tmp = 1000000*residual[0]*residual[0];
+  //   tmp = 1000*residual[0];
+  //   // tmp = 1000000;
+  // } else if ( residual[1] > 0 ){
+  //   // tmp = 1000000*residual[1]*residual[1];
+  //   tmp = 1000*residual[1];
+  //   // tmp = 1000000;
+  // } else if ( residual[2] > 0 ){
+  //   // tmp = 1000000*residual[2]*residual[2];
+  //   tmp = 1000*residual[2];
+  //   // tmp = 1000000;
+  // } else if ( residual[3] > 0 ){
+  //   // tmp = 1000000*residual[3]*residual[3];
+  //   tmp = 1000*residual[3];
+  //   // tmp = 1000000;
+  // } else if ( residual[4] > 0 ){
+  //   // tmp = 1000000*residual[4]*residual[4];
+  //   // tmp = 1000000*residual[4];
+  //   tmp = 1000*TMath::Sqrt(residual[4]);
+  //   // tmp = 1000000;
+  // } else if ( residual[5] > 0 ){
+  //   // tmp = 1000000*residual[5]*residual[5];
+  //   // tmp = 1000000*residual[5];
+  //   tmp = 1000*TMath::Sqrt(residual[5]);
+  //   // tmp = 1000000;
+  // }
+
+
+  // cout << "ChiSquared OLD, LambdaThetaStar   = " << chi2 << ", " << p[0] << endl;
+  // cout << "TmpTmp        , LambdaPhi      = " << tmp*tmp << ", " << p[3]  << endl;
+  chi2 += tmp*tmp;
+  // cout << "ChiSquared NEW, LambdaThetaPhi = " << chi2  << ", " << p[5]  << endl;
+
   f = chi2;
-  cout << "ChiSquared = " << chi2 << endl;
+  // f = chi2 + tmp*tmp;
+  // cout << "ChiSquared = " << chi2 << endl;
+  // cout << "TmpTmp     = " << tmp*tmp << endl;
   ReducedChiSquare = chi2;
 
 }
@@ -294,9 +472,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // TFile* file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   TFile* file1D = 0x0;
   if        ( SignalRangeSelectionMode == 0 ) {
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_evenCS.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    // file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_longitudinalpolarisation.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
-    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_flatpolarisation_final.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
     file1D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/1Dresults/PolarisationCorrectedHe1D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 2 ) {
@@ -374,7 +550,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   }
 
 
-  for( Int_t i = 0; i < 65; i++ ){
+  for( Int_t i = 0; i < 50; i++ ){
     cout << i << "  " << coords[i] << "  " << values[i] << endl;
   }
 
@@ -383,20 +559,16 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // gMinuit->SetFCN(FcnForMinimisation);
   // gMinuit->SetFCN(FcnForMinimisationV2);
   gMinuit->SetFCN(FcnForMinimisationV3);
-  gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
-  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  1.e+04, 3.0e+04);
-  // gMinuit->DefineParameter(1, "NormalTheta", 4.3e+04, 10,  4.2e+04, 4.4e+04);
-  gMinuit->DefineParameter(2, "NormalisPhi",      4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 4400);
-  // gMinuit->DefineParameter(2, "NormalisPhi",      7000, 10,  5000, 8000);
-  gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.1,    -2, 2   );
-  gMinuit->DefineParameter(4, "NormalisTildePhi", 4130, 10,  2000, 9000);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 7000, 10,  6500, 7500);
-  gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
-  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  8100, 8500);
-  // gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.1,    -2, 2   );
+  // gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.1, -2, 2);
+  gMinuit->DefineParameter(0, "LambdaTheta", 1., 0.01, -1, 1);
+  // gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.2e+04, 3.2e+04);
+  gMinuit->DefineParameter(1, "NormalTheta", 2.60e+04, 100,  2.e+04, 4.e+04);
+  // gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  7700, 8700);
+  gMinuit->DefineParameter(2, "NormalisPhi",      8300, 100,  1000, 20000);
+  gMinuit->DefineParameter(3, "LambdaPhi",           0, 0.00,    -1., 1.   );
+  // gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  7700, 8700);
+  gMinuit->DefineParameter(4, "NormalisTildePhi", 8300, 100,  1000, 20000);
+  gMinuit->DefineParameter(5, "LambdaThetaPhi",      0, 0.00,    -1., 1.   );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");
@@ -419,7 +591,26 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Int_t nvpar,nparx,icstat;
   gMinuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
   gMinuit->mnprin(3,amin);
-
+  gMinuit->mnmatu(1);
+  cout << ".... SCANNING" << endl;
+  // gMinuit->mnscan();
+  Int_t ierflg;
+  gMinuit->mncomd("scan 1",ierflg);
+  new TCanvas;
+  TGraph* gr = (TGraph*)gMinuit->GetPlot();
+  gr->Draw("al");
+  Double_t ERRORonTheta = -999.;
+  for (size_t i = 0; i < 1200; i++) {
+    if ( gr->Eval(1.-(Double_t)i*0.0003) < (ReducedChiSquare + 1. ) ){
+      continue;
+    } else {
+      ERRORonTheta = i*0.0003;
+      break;
+    }
+  }
+  cout << "#############################"   << endl;
+  cout << "ERRORonTheta = " << ERRORonTheta << endl;
+  cout << "#############################"   << endl;
 
   gStyle->SetOptStat(0);
 
@@ -452,7 +643,8 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex->SetTextSize(0.045);
   latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
-  latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  // latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f_{%.3f}", LambdaTheta, ERRORonTheta));
   // latex->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   latex->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
                                      ReducedChiSquare,
@@ -498,7 +690,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
-  latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
+  latex2->DrawLatex(0.55,0.62,Form("#lambda_{#theta} = %.3f_{%.3f}", LambdaTheta, ERRORonTheta));
   // latex2->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   latex2->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
                                      ReducedChiSquare,
@@ -544,7 +736,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
-  latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f",     LambdaTheta,    LambdaThetaErr));
+  latex3->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f_{%.3f}", LambdaTheta, ERRORonTheta));
   latex3->DrawLatex(0.55,0.62,Form("#lambda_{#theta#phi} = %.3f #pm %.3f", LambdaThetaPhi, LambdaThetaPhiErr));
   // latex3->DrawLatex(0.55,0.62,Form("#tilde{#chi} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
   latex3->DrawLatex(0.55,0.18,Form(   "#tilde{#chi}^{2} = %.2f / %.2d = %.2f  ",
@@ -561,7 +753,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   if ( SignalRangeSelectionMode == 0 || FitRangeMode == 0 ) gPad->SaveAs("pngResults/TildePhiHeMinuit.png", "recreate");
   gPad->SaveAs(Form("pngResults/TildePhiHeMinuit_SigEx_%d_FitRange_%d_HE.png", SignalRangeSelectionMode, FitRangeMode), "recreate");
 
-  TFile SavingFile( Form("pngResults/Parameters_SigEx_%d_FitRange_%d_HE.root", SignalRangeSelectionMode, FitRangeMode), "recreate" );
+  TFile SavingFile( Form("pngResults/%d-%2.2d-%2.2d/1Dresults/Parameters_SigEx_%d_FitRange_%d_HE.root", d.GetYear(), d.GetMonth(), d.GetDay(), SignalRangeSelectionMode, FitRangeMode), "recreate" );
   TH1F* SavingParamH = new TH1F( "SavingParamH", "SavingParamH", 10, 0, 10 );
   SavingParamH->SetBinContent( 1, LambdaTheta );
   SavingParamH->SetBinContent( 2, LambdaPhi );

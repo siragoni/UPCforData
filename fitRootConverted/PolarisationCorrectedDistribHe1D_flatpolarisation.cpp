@@ -26,7 +26,8 @@ void PolarisationCorrectedDistribHe1D( Int_t RangeSelectionMode = 0 ){
 
   // TFile* fileList = new TFile("AnalysisResultsLHC18l7_flatpol_LASTCHANCE.root");
   // TFile* fileList = new TFile("AnalysisResultsMichal.root");
-  TFile* fileList = new TFile("AnalysisResultsLHC18l7_NOPOLARISATION.root"); // trial longitudinal
+  // TFile* fileList = new TFile("AnalysisResultsLHC18l7_NOPOLARISATION.root"); // trial longitudinal
+  TFile* fileList = new TFile("AnalysisResultsLHC18l7_longitunalpol_17022021.root"); // trial longitudinal
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);

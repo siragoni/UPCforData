@@ -208,6 +208,7 @@ void runAnalysis(Int_t opt)
 
         TString LHC18q("LHC18q");
         TString LHC18r("LHC18r");
+        TString LHC15o("LHC15o");
         // define the output folders
         // alienHandler->SetGridWorkingDir("myWorkingDir");
         // alienHandler->SetGridWorkingDir("CheckAD_null");
@@ -220,6 +221,7 @@ void runAnalysis(Int_t opt)
         // alienHandler->SetGridOutputDir("myOutputDir");
         if (opt == 0) alienHandler->SetGridOutputDir(LHC18q.Data());
         if (opt == 1) alienHandler->SetGridOutputDir(LHC18r.Data());
+        if (opt == 2) alienHandler->SetGridOutputDir(LHC15o.Data());
 
 
 

@@ -23,8 +23,13 @@ using namespace std;
    -
  */
 void fitBinMigration( const char* MonteCarloName = "MCtrainResults/2019-06-24/kCohJpsiToMu/AnalysisResults.root" ){
-  TFile* mcList = new TFile(MonteCarloName);
-  // TFile* mcList = new TFile("AnalysisResultsLHC1815o15072019.root");
+  // TFile* mcList = new TFile(MonteCarloName);
+  // TFile* mcList = new TFile("AnalysisResultsLHC18l7_trans_30032021.root");
+  // TFile* mcList = new TFile("AnalysisResultsLHC18l7_long_rapidity_30032021.root");
+  // TFile* mcList = new TFile("AnalysisResultsLHC18l7_nonpol_rapidity_30032021.root");
+  // TFile* mcList = new TFile("AnalysisResultsLHC18l7_long_niceevents_31032021.root");
+  TFile* mcList = new TFile("AnalysisResultsLHC18l7_long_rapcut_partial_22042021.root");
+  // TFile* mcList = new TFile("AnalysisResultsLHC18l7_long_faultyevents_31032021.root");
   TDirectory* dirMC = mcList->GetDirectory("MyTask");
   /* - At this level you could check if everything was okay.
    * - We do a dir->ls() to find out! We get:

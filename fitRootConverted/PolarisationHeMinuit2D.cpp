@@ -111,7 +111,8 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   if        ( SignalRangeSelectionMode == 0 ) {
     file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D.root",   d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 1 ) {
-    file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_1.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    // file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_long.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
+    file2D = new TFile("pngResults/PolarisationCorrectedHe2D_long.root");
   } else if ( SignalRangeSelectionMode == 2 ) {
     file2D = new TFile(Form("pngResults/%d-%2.2d-%2.2d/2DHE/PolarisationCorrectedHe2D_2.root", d.GetYear(), d.GetMonth(), d.GetDay() ) );
   } else if ( SignalRangeSelectionMode == 3 ) {
@@ -176,7 +177,9 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   gMinuit->DefineParameter(0, "LambdaTheta",        1., 0.1,    -2, 2        );
   gMinuit->DefineParameter(1, "LambdaPhi",           0, 0.1,    -2, 2        );
   gMinuit->DefineParameter(2, "LambdaThetaPhi",      0, 0.1,    -2, 2        );
-  gMinuit->DefineParameter(3, "Normalisation",   50000, 100, 45000, 55000    );
+  // gMinuit->DefineParameter(3, "Normalisation",   50000, 100, 45000, 55000    );
+  gMinuit->DefineParameter(3, "Normalisation",   35000, 100, 27000, 55000    );
+  // gMinuit->DefineParameter(3, "Normalisation",   1.8*105558.*0.75*(1./TMath::Pi()), 0, 105558.*0.5*(1./TMath::Pi()), 105558.*(1./TMath::Pi())    );
   gMinuit->Command("SIMPLEX");
   gMinuit->Command("MIGRAD");
   gMinuit->Command("MIGRAD");

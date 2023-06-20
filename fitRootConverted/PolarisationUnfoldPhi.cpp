@@ -61,8 +61,8 @@ int testUnfold1()
   gStyle->SetOptFit(1111);
 
   // TFile* fileList = new TFile("AnalysisResultsLHC18l7_19032021.root");
-  TFile* fileList = new TFile("AnalysisResultsLHC18l7_coherent_30112021.root");
-  // TFile* fileList = new TFile("AnalysisResults.root");
+  // TFile* fileList = new TFile("AnalysisResultsLHC18l7_coherent_30112021.root");
+  TFile* fileList = new TFile("AnalysisResults.root");
   TDirectory* dir = fileList->GetDirectory("MyTask");
   TList* listings;
   dir->GetObject("MyOutputContainer", listings);
@@ -71,33 +71,59 @@ int testUnfold1()
   //
   TH1F *histMgenMC    = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsHv2_restrict");
   TH1F *histMdetMC    = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsHv2_restrict");
+  // TH1F *histMgenMC    = (TH1F*)listings->FindObject("fMCPhiHelicityFrameTwentyfiveBinsHv2");
+  // TH1F *histMdetMC    = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsHv2");
   TH2F *histMdetGenMC = (TH2F*)listings->FindObject("fPhiRecVsGenHelicityH");
+  // TH2F *histMdetGenMC = new TH2F("mat", "mat", 25, 0., 2.*TMath::Pi(), 24, 0., 2.*TMath::Pi() );
+  histMgenMC->ClearUnderflowAndOverflow();
+  histMdetMC->ClearUnderflowAndOverflow();
   // generate data distribution
   //
   // TH1D *histMgenData = new TH1D("MgenData",";mass(gen)",nGen,xminGen,xmaxGen);
   TFile* fileDataRawPhi = new TFile("pngResults/2021-09-21/PhiHEv2/PhiHeFrameV2.root");
   // TH1F *histMdetData    = (TH1F*)fileDataRawPhi->Get("PhiAfterSignalExtractionErrorsH");
   TH1F *histMdetData    = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsHv2_restrict");
+  // TH1F *histMdetData    = (TH1F*)listings->FindObject("fPhiHelicityFrameTwentyfiveBinsHv2");
+  histMdetData->ClearUnderflowAndOverflow();
 
-  histMdetGenMC->Rebin2D(1,2);
+
+  // histMdetGenMC->Rebin2D(1,2);
   // histMdetGenMC->Rebin2D(1,3);
+  histMdetGenMC->Rebin2D(25,25);
   Double_t integral_data = 0;
   for (size_t i = 0; i < 25; i++) {
     integral_data += histMdetData->GetBinContent(i+1);
   }
-  histMdetGenMC->Scale(integral_data/histMdetGenMC->GetEntries());
+  Double_t Ngen = histMgenMC->GetEntries();
+  Double_t Ndet = histMdetMC->GetEntries();
+  // histMdetGenMC->Scale(integral_data/histMdetGenMC->GetEntries());
+  // histMdetGenMC->Scale(integral_data/histMdetGenMC->GetEntries());
+  histMdetGenMC->Scale(Ngen/Ndet);
   for (size_t i = 0; i < 25; i++) {
-    for (size_t j = 0; j < 24; j++) {
-      histMdetGenMC->SetBinContent(i+1, j+1, histMdetGenMC->GetBinContent(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
-      histMdetGenMC->SetBinError(i+1, j+1, histMdetGenMC->GetBinError(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
+    // for (size_t j = 0; j < 24; j++) {
+    for (size_t j = 0; j < 25; j++) {
+      histMdetGenMC->SetBinContent(i+1, j+1, (Ngen/Ndet)* histMdetGenMC->GetBinContent(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
+      histMdetGenMC->SetBinError(i+1, j+1, (Ngen/Ndet)* histMdetGenMC->GetBinError(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
+      // histMdetGenMC->SetBinContent(i+1, j+1,  histMdetGenMC->GetBinContent(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
+      // histMdetGenMC->SetBinError(i+1, j+1,  histMdetGenMC->GetBinError(i+1, j+1)*integral_data/histMdetGenMC->GetEntries());
     }
   }
+  // histMdetGenMC->Rebin2D(1,2);
+  cout << "Total entries " << endl;
+  cout << "Ngen 1D = " << Ngen << endl;
+  cout << "Ndet 1D = " << Ndet << endl;
+  cout << "N 2D    = " << histMdetGenMC->GetEntries() << endl;
+  cout << "N data integral = " << integral_data << endl;
+  cout << "N data          = " << histMdetData->GetEntries()  << endl;
+
+
   //=========================================================================
   // divide by bin withd to get density distributions
   // TH1D *histDensityGenData=new TH1D("DensityGenData",";mass(gen)",
   //                                   nGen,xminGen,xmaxGen);
   TH1F *histDensityGenMC=new TH1F("DensityGenMC",";mass(gen)",
-                                    25, 0., 2.*TMath::Pi() );
+  25, 0., 2.*TMath::Pi() );
+                                    // 24, 0., 2.*TMath::Pi() );
   for(Int_t i=1;i<=25;i++) {
      // histDensityGenData->SetBinContent(i,histMgenData->GetBinContent(i)/
      //                                   histMgenData->GetBinWidth(i));
@@ -150,7 +176,8 @@ int testUnfold1()
                                  25, 0., 2.*TMath::Pi(), 24, 0., 2.*TMath::Pi() );
   for(Int_t i=0;i<=25+1;i++) {
      if(histMdetData->GetBinCenter(i)>=SYS_ERROR1_MSTART) {
-        for(Int_t j=0;j<=24+1;j++) {
+       for(Int_t j=0;j<=25+1;j++) {
+        // for(Int_t j=0;j<=12+1;j++) {
            histMdetGenSys1->SetBinContent(i,j,SYS_ERROR1_SIZE);
         }
      }
@@ -224,14 +251,16 @@ int testUnfold1()
   //   unfolded data (blue)
   output.cd(2);
   // histTotalError->GetYaxis()->SetRangeUser(-20000, 20000);
-  histTotalError->GetYaxis()->SetRangeUser(100000, 500000);
+  histTotalError->GetYaxis()->SetRangeUser(100000, 50000000);
   histTotalError->SetLineColor(kBlue);
-  histTotalError->Draw("E");
+  // histTotalError->Draw("E");
+  histMunfold->GetYaxis()->SetRangeUser(1000, 1000000);
+  // histMunfold->GetYaxis()->SetRangeUser(-1000, 10000);
   histMunfold->SetLineColor(kGreen);
   histMunfold->Draw("SAME E1");
   // histDensityGenData->SetLineColor(kRed);
   // histDensityGenData->Draw("SAME");
-  // histDensityGenMC->SetLineColor(kRed);
+  // histDensityGenMC->SetLineColor(kYellow);
   // histDensityGenMC->Draw("SAME HIST");
   histMgenMC->SetLineColor(kRed);
   histMgenMC->Draw("SAME HIST");

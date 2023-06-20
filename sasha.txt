@@ -1,0 +1,43 @@
+Hi Simone,
+
+Sorry, I didn't answer you right away.
+
+I also did a similar thing by modifying Stefan's example (not sure about its number however, as it was rather long ago)
+
+I will manage to have a more close look at your script on Monday morning, as I am a bit busy over the weekend...
+
+To answer some of your questions:
+4) I normalized my histograms by number of entries - but that is because of the distribution I was unfolding.
+If you would rather unfold the cross section and correct by AxE during the unfolding, I would not do it I think.
+
+Sorry, I didn't completely understand your issue with the number of bins...
+For me, it looks essential that the unfolded data has the same number of bins as the generated one - as you try to get the true distribution from your unfolding...
+
+Sorry, I can't share my code fully, but the part of initializing the histograms for unfolding, I see that I have exactly the same number of bins everywhere...
+  Int_t const nDet=nqtbins;
+  Int_t const nGen=nqtbins;
+  TH1D *histMgenMC=new TH1D("MgenMC",";mass(gen)",nGen,xminGen,xmaxGen);
+  TH1D *histMdetMC=new TH1D("MdetMC",";mass(det)",nDet,xminDet,xmaxDet);
+  TH2D *histMdetGenMC=new TH2D("MdetgenMC",";mass(det);mass(gen)", nDet,xminDet,xmaxDet,nGen,xminGen,xmaxGen);
+  TH1D *histMgenData=new TH1D("MgenData",";mass(gen)",nGen,xminGen,xmaxGen);
+  TH1D *histMdetData=new TH1D("MdetData",";mass(det)",nDet,xminDet,xmaxDet);
+  TH1D *histMData=new TH1D("MData",";mass(det)",nDet,xminDet,xmaxDet);
+
+About the reasonable choice - it depends on the two factors 
+1. The statistics
+2. The migrations between the bins.
+
+If you have too small bins, the migrations between the bins will become too large and thus the procedure will become not reliable.
+To understand this you have to look at the unfolding errors and perform the closure test, but it is not the number you can't take from me without looking at the actual data...
+
+About the documentation:
+I used only this:
+https://arxiv.org/abs/1205.6201
+https://www.desy.de/~sschmitt/tunfold.html
+https://root.cern.ch/doc/master/classTUnfold.html
+
+I had to use TUnfold in my recent analysis because I had to perform the regularization due to rather large migrations between the bins.
+
+In my other analysis where I had to just correct the data by AxE, I was using the Bayesian unfolding from RooUnfold. For me it looked a bit easier to deal with.
+
+Cheers, Sasha

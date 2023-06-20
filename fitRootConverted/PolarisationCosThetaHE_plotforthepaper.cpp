@@ -13,7 +13,7 @@ using namespace std;
 #include <vector>
 
 
-
+// CreateCosThetaTh1("AnalysisResultsLHC18qr15o22092019.root")
 //_____________________________________________________________________________
 /* - Histograms to be used for the fit.
  * - What happens is that we will interpolate the many points together...
@@ -306,8 +306,8 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   fInvariantMassDistributionH->SetMarkerStyle(kFullCircle);
   fInvariantMassDistributionH->SetMarkerColor(kBlue);
   fInvariantMassDistributionH->SetMarkerSize(1);
-  fInvariantMassDistributionH->GetXaxis()->SetTitle("M_{#mu#mu} [GeV/#it{c}^{2}]");
-  fInvariantMassDistributionH->GetYaxis()->SetTitle( Form( "Counts / (%.3f GeV/#it{c})",
+  fInvariantMassDistributionH->GetXaxis()->SetTitle("#it{M}_{#mu#mu} (GeV/#it{c}^{2})");
+  fInvariantMassDistributionH->GetYaxis()->SetTitle( Form( "Counts / (%.3f GeV/#it{c}^{2})",
                                                           fInvariantMassDistributionH->GetXaxis()->GetBinWidth(1)
                                                         )
                                                     );
@@ -378,6 +378,8 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   fFitInvMass->SetParLimits(16, 0.001, 9999999999);
   fFitInvMass->SetParLimits(17, 0.001, 9999999999);
   fFitInvMass->Print();
+  fFitInvMass->SetLineColor(kBlue);
+  fFitInvMass->SetLineWidth(3);
   for(Int_t i = 0; i < 18; i++) cout << fFitInvMass->GetParameter(i) << endl << flush;
 
 
@@ -387,7 +389,7 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   // gPad->SetLogy();
   gStyle->SetOptFit(0);
   gStyle->SetOptStat(0);
-  gPad->SetTitle(  Form(  ";M_{#mu#mu} (GeV/c^{2});Counts / (%.0f MeV/c^{2})",
+  gPad->SetTitle(  Form(  ";#it{M}_{#mu#mu} (GeV/c^{2});Counts / (%.0f MeV/c^{2})",
                            fInvariantMassDistributionH->GetXaxis()->GetBinWidth(1)*1000.  )  );
   /* - Beautifying is starting now.
      -
@@ -408,6 +410,8 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   fInvariantMassDistributionH->GetYaxis()->SetRangeUser(0.0000000000001, fInvariantMassDistributionH->GetMaximum()*1.15);
   fInvariantMassDistributionH->GetXaxis()->SetRangeUser(2, 6);
   // gPad ->SetLogy();
+  fInvariantMassDistributionH->SetLineColor(kBlack);
+  fInvariantMassDistributionH->SetMarkerColor(kBlack);
   fInvariantMassDistributionH->Draw("PEsame");
   JPsiPeakFit    ->SetLineColor(kRed);
   PsiPrimePeakFit->SetLineColor(kMagenta);
@@ -451,22 +455,26 @@ void fitJPsiTemplate(const int selectionFlag, Int_t SignalRangeModeFlag = 0){
   latex->SetTextAlign(11);
   latex->SetNDC();
   // latex->DrawLatex(0.17,0.94,"ALICE Performance, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->DrawLatex(0.5,0.93,"ALICE Public");
-  latex->DrawLatex(0.5,0.87,"PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.5,0.93,"ALICE");
+  latex->DrawLatex(0.5,0.87,"Pb#font[122]{-}Pb #sqrt{#it{s}_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.042);
   // latex->DrawLatex(0.55,0.84,"UPC, #it{L} = 235 ub^{-1}");
   // latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
-  latex->DrawLatex(0.5,0.78,Form("#color[2]{%.2f < cos(#theta) < %.2f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
-  latex->DrawLatex(0.5,0.72,"#color[4]{p_{T} < 0.25 GeV/#it{c}}");
+  // latex->DrawLatex(0.5,0.78,Form("#color[2]{%.2f < cos(#theta) < %.2f}", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  // latex->DrawLatex(0.5,0.72,"#color[4]{p_{T} < 0.25 GeV/#it{c}}");
+  latex->DrawLatex(0.5,0.78,Form("%.2f < cos(#it{#theta}) < %.2f", -1 + (Double_t)selectionFlag * 0.08, -1 + ((Double_t)selectionFlag + 1.00) * 0.08));
+  latex->DrawLatex(0.5,0.72,"#it{p}_{T} < 0.25 GeV/#it{c}");
   // latex->DrawLatex(0.55,0.78,"#it{p}_{T} < 0.25 GeV/#it{c}");
-  latex->DrawLatex(0.5,0.66,Form("%.1f < y < %.1f",-4.0,-2.5));
-  TLegend *leg_phi = new TLegend(0.5,0.35,0.95,0.6);
+  latex->DrawLatex(0.5,0.66,Form("%.1f < #it{y} < %.1f",-4.0,-2.5));
+  // TLegend *leg_phi = new TLegend(0.5,0.35,0.95,0.6);
+  TLegend *leg_phi = new TLegend(0.5,0.35,0.75,0.6);
   leg_phi->SetFillStyle(0);
   leg_phi->SetBorderSize(0);
   leg_phi->SetTextSize(0.038);
-  leg_phi->AddEntry(fInvariantMassDistributionH,"ALICE data", "lep");
+  // leg_phi->AddEntry(fInvariantMassDistributionH,"ALICE data", "lep");
+  leg_phi->AddEntry(fInvariantMassDistributionH,"ALICE data", "ep");
   leg_phi->AddEntry("JPsiPeakFit","J/#psi fit", "l");
-  leg_phi->AddEntry("PsiPrimePeakFit","#psi(2S) fit", "L");
+  leg_phi->AddEntry("PsiPrimePeakFit","#psi' fit", "L");
   leg_phi->AddEntry("GammaGammaFit","Background", "L");
   leg_phi->Draw();
 

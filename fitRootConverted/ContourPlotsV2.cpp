@@ -223,6 +223,7 @@ void ContourPlots(){
 
       smallpad->cd(m);
       gPad->SetRightMargin(0.05);
+      // gPad->SetRightMargin(0.10);
       histo->Draw();
   }
 
@@ -264,19 +265,14 @@ void ContourPlots(){
   c_super ->cd(1);
   smallpad->cd(1);
   // gPad->SetLeftMargin(0.2);
-  gPad->SetLeftMargin(0.2);
-  // gPad->SetLeftMargin(0.12);
-  // gPad->SetRightMargin(0.1);
+  gPad->SetLeftMargin(0.28);
+  gPad->SetTopMargin(0.1);
   gPad->SetRightMargin(0.01);
   // gPad->SetBottomMargin(0.1);
   gPad->SetTickx(1);
   gPad->SetTicky(1);
   gPad->SetGridx();
   gPad->SetGridy();
-  // TLine *line = new TLine(0.4947579,0.002894678,2.484597,0.0003370599);
-  // line->SetLineWidth(2);
-  // line->SetLineColor(kGray);
-  // line->Draw();
   LThetaVsLTPtwoHe->SetTitle("");
   LThetaVsLTPtwoHe->GetXaxis()->SetTitle("#lambda_{#theta}");
   LThetaVsLTPtwoHe->GetYaxis()->SetTitle("#lambda_{#theta#varphi}");
@@ -286,30 +282,21 @@ void ContourPlots(){
   // LThetaVsLTPtwoHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLTPtwoHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPtwoHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPtwoHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPtwoHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPtwoHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPtwoHe->GetXaxis()->SetTitleSize(0.1);
   TAxis *axis1 = LThetaVsLTPtwoHe->GetXaxis();
-  // axis1->SetLimits(0.6,2.0);                 // along X
-  // axis1->SetLimits(-1.,2.0);                 // along X
-  // axis1->SetLimits(0.5,2.5);                 // along X // OFFICIAL
-  axis1->SetLimits(0.5,1.5);                 // along X
-  // LThetaVsLTPtwoHe->GetHistogram()->SetMaximum( 0.19);   // along
-  // LThetaVsLTPtwoHe->GetHistogram()->SetMinimum(-0.19);  //   Y
-  // LThetaVsLTPtwoHe->GetHistogram()->SetMaximum( 0.95);   // along
-  // LThetaVsLTPtwoHe->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LThetaVsLTPtwoHe->GetHistogram()->SetMaximum( 0.35);   // along
-  LThetaVsLTPtwoHe->GetHistogram()->SetMinimum(-0.35);  //   Y
+  // axis1->SetLimits(0.5,1.5);                 // along X
+  axis1->SetLimits(0.7,1.23);                 // along X
+  // LThetaVsLTPtwoHe->GetHistogram()->SetMaximum( 0.35);   // along
+  // LThetaVsLTPtwoHe->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LThetaVsLTPtwoHe->GetHistogram()->SetMaximum( 0.18);   // along
+  LThetaVsLTPtwoHe->GetHistogram()->SetMinimum(-0.18);  //   Y
   LThetaVsLTPtwoHe->SetLineWidth(3);
+  LThetaVsLTPtwoHe->SetLineStyle(2);
   LThetaVsLTPtwoHe->SetLineColor(4);
   LThetaVsLTPtwoHe->Draw("AL");
-  // TLatex* latex5 = new TLatex();
-  // latex5->SetTextSize(0.045);
-  // latex5->SetTextFont(24);
-  // latex5->SetTextAlign(11);
-  // latex5->SetNDC();
-  // latex5->DrawLatex(0.25,0.94,"ALICE Public");
-  // latex5->DrawLatex(0.25,0.86,"PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  auto texA = new TLatex(0.7665754,0.1546582,"(a)");
+  // auto texA = new TLatex(0.7665754,0.1546582,"(a) HE");
+  auto texA = new TLatex(0.7665754,0.12,"(a) HE");
   texA->SetTextSize(0.08);
   texA->SetLineWidth(2);
   texA->Draw();
@@ -325,9 +312,10 @@ void ContourPlots(){
   // LThetaVsLTPoneHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLTPoneHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPoneHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPoneHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPoneHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPoneHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPoneHe->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLTPoneHe->SetLineWidth(3);
+  LThetaVsLTPoneHe->SetLineStyle(1);
   // LThetaVsLTPoneHe->SetMarkerStyle(21);
   LThetaVsLTPoneHe->SetLineColor(2);
   LThetaVsLTPoneHe->Draw("Lsame");
@@ -341,9 +329,10 @@ void ContourPlots(){
   // LThetaVsLTPthreeHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLTPthreeHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPthreeHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPthreeHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPthreeHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPthreeHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPthreeHe->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLTPthreeHe->SetLineWidth(3);
+  LThetaVsLTPthreeHe->SetLineStyle(9);
   // LThetaVsLTPthreeHe->SetMarkerStyle(21);
   LThetaVsLTPthreeHe->SetLineColor(kBlack);
   LThetaVsLTPthreeHe->Draw("Lsame");
@@ -353,11 +342,12 @@ void ContourPlots(){
   pmThetaVsLTPHe->SetMarkerColor(kBlack);
   pmThetaVsLTPHe->SetMarkerSize(1.0);
   pmThetaVsLTPHe->Draw("same");
-  // TLine *line = new TLine(0.5,0.,2.5,0.); // OFFICIAL
-  TLine *line = new TLine(0.5,0.,1.5,0.);
-  line->SetLineWidth(2);
+  // TLine *line = new TLine(0.5,0.,1.5,0.);
+  TLine *line = new TLine(0.7,0.,1.23,0.);
+  line->SetLineWidth(4);
   line->SetLineColor(kGray);
   line->Draw();
+  LThetaVsLTPoneHe->Draw("same");
   pmThetaVsLTPHe->Draw("same");
   LThetaVsLTPthreeHe->Draw("Lsame");
   LThetaVsLTPtwoHe->Draw("Lsame");
@@ -373,11 +363,13 @@ void ContourPlots(){
 
   smallpad->cd(2);
   // gPad->SetLeftMargin(0.2);
-  gPad->SetLeftMargin(0.2);
+  gPad->SetLeftMargin(0.28);
+  // gPad->SetTopMargin(0.1);
+  // gPad->SetLeftMargin(0.2);
   // gPad->SetLeftMargin(0.12);
   // gPad->SetRightMargin(0.1);
   gPad->SetRightMargin(0.01);
-  gPad->SetBottomMargin(0.13);
+  gPad->SetBottomMargin(0.2);
   gPad->SetTickx(1);
   gPad->SetTicky(1);
   gPad->SetGridx();
@@ -391,20 +383,21 @@ void ContourPlots(){
   // LThetaVsLTPtwoCs->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLTPtwoCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPtwoCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPtwoCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPtwoCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPtwoCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPtwoCs->GetXaxis()->SetTitleSize(0.1);
   TAxis *axis2 = LThetaVsLTPtwoCs->GetXaxis();
   // axis2->SetLimits(0.6,2.0);                 // along X
   // axis2->SetLimits(-1.,2.0);                 // along X
   // axis2->SetLimits(0.5,2.5);                 // along X // OFFICIAL
-  axis2->SetLimits(0.5,1.5);                 // along X
+  axis2->SetLimits(0.7,1.23);                 // along X
   // LThetaVsLTPtwoCs->GetHistogram()->SetMaximum( 0.19);   // along
   // LThetaVsLTPtwoCs->GetHistogram()->SetMinimum(-0.19);  //   Y
   // LThetaVsLTPtwoCs->GetHistogram()->SetMaximum( 0.95);   // along
   // LThetaVsLTPtwoCs->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LThetaVsLTPtwoCs->GetHistogram()->SetMaximum( 0.35);   // along
-  LThetaVsLTPtwoCs->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LThetaVsLTPtwoCs->GetHistogram()->SetMaximum( 0.18);   // along
+  LThetaVsLTPtwoCs->GetHistogram()->SetMinimum(-0.18);  //   Y
   LThetaVsLTPtwoCs->SetLineWidth(3);
+  LThetaVsLTPtwoCs->SetLineStyle(2);
   LThetaVsLTPtwoCs->SetLineColor(4);
   LThetaVsLTPtwoCs->Draw("AL");
 
@@ -418,9 +411,10 @@ void ContourPlots(){
   // LThetaVsLTPoneCs->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLTPoneCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPoneCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPoneCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPoneCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPoneCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPoneCs->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLTPoneCs->SetLineWidth(3);
+  LThetaVsLTPoneCs->SetLineStyle(1);
   // LThetaVsLTPoneCs->SetMarkerStyle(21);
   LThetaVsLTPoneCs->SetLineColor(2);
   LThetaVsLTPoneCs->Draw("Lsame");
@@ -433,9 +427,10 @@ void ContourPlots(){
   LThetaVsLTPthreeCs->GetYaxis()->CenterTitle(true);
   LThetaVsLTPthreeCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLTPthreeCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLTPthreeCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLTPthreeCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLTPthreeCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLTPthreeCs->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLTPthreeCs->SetLineWidth(3);
+  LThetaVsLTPthreeCs->SetLineStyle(9);
   // LThetaVsLTPthreeCs->SetMarkerStyle(21);
   LThetaVsLTPthreeCs->SetLineColor(kBlack);
   LThetaVsLTPthreeCs->Draw("Lsame");
@@ -445,13 +440,13 @@ void ContourPlots(){
   pmThetaVsLTPCs->SetMarkerColor(kBlack);
   pmThetaVsLTPCs->SetMarkerSize(1.0);
   pmThetaVsLTPCs->Draw("same");
-  auto texD = new TLatex(0.7665754,0.1546582,"(d)");
+  auto texD = new TLatex(0.7665754,0.12,"(d) CS");
   texD->SetTextSize(0.08);
   texD->SetLineWidth(2);
   texD->Draw();
   // TLine *line2 = new TLine(0.5,0.,2.5,0.); // OFFICIAL
-  TLine *line2 = new TLine(0.5,0.,1.5,0.);
-  line2->SetLineWidth(2);
+  TLine *line2 = new TLine(0.7,0.,1.23,0.);
+  line2->SetLineWidth(4);
   line2->SetLineColor(kGray);
   line2->Draw();
   pmThetaVsLTPCs->Draw("same");
@@ -486,7 +481,9 @@ void ContourPlots(){
   smallpad2->cd(1);
   // gPad->SetLeftMargin(0.2);
   // gPad->SetLeftMargin(0.15);
-  gPad->SetLeftMargin(0.12);
+  // gPad->SetLeftMargin(0.12);
+  gPad->SetLeftMargin(0.2);
+  gPad->SetTopMargin(0.1);
   // gPad->SetRightMargin(0.1);
   gPad->SetRightMargin(0.01);
   // gPad->SetBottomMargin(0.13);
@@ -503,7 +500,7 @@ void ContourPlots(){
   // LPhiVsLTPtwoHe->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPtwoHe->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPtwoHe->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPtwoHe->GetYaxis()->SetTitleSize(0.07);
+  LPhiVsLTPtwoHe->GetYaxis()->SetTitleSize(0.1);
   LPhiVsLTPtwoHe->GetXaxis()->SetTitleSize(0.07);
   TAxis *axis3 = LPhiVsLTPtwoHe->GetXaxis();
   // axis3->SetLimits(-0.09,0.19);                    // along X
@@ -513,9 +510,10 @@ void ContourPlots(){
   // LPhiVsLTPtwoHe->GetHistogram()->SetMinimum(-0.17);  //   Y
   // LPhiVsLTPtwoHe->GetHistogram()->SetMaximum( 0.95);   // along
   // LPhiVsLTPtwoHe->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LPhiVsLTPtwoHe->GetHistogram()->SetMaximum( 0.35);   // along
-  LPhiVsLTPtwoHe->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LPhiVsLTPtwoHe->GetHistogram()->SetMaximum( 0.18);   // along
+  LPhiVsLTPtwoHe->GetHistogram()->SetMinimum(-0.18);  //   Y
   LPhiVsLTPtwoHe->SetLineWidth(3);
+  LPhiVsLTPtwoHe->SetLineStyle(2);
   LPhiVsLTPtwoHe->SetLineColor(4);
   LPhiVsLTPtwoHe->Draw("AL");
 
@@ -529,9 +527,10 @@ void ContourPlots(){
   // LPhiVsLTPoneHe->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPoneHe->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPoneHe->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPoneHe->GetYaxis()->SetTitleSize(0.07);
+  LPhiVsLTPoneHe->GetYaxis()->SetTitleSize(0.1);
   LPhiVsLTPoneHe->GetXaxis()->SetTitleSize(0.07);
   LPhiVsLTPoneHe->SetLineWidth(3);
+  LPhiVsLTPoneHe->SetLineStyle(1);
   // LPhiVsLTPoneHe->SetMarkerStyle(21);
   LPhiVsLTPoneHe->SetLineColor(2);
   LPhiVsLTPoneHe->Draw("Lsame");
@@ -545,9 +544,10 @@ void ContourPlots(){
   // LPhiVsLTPthreeHe->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPthreeHe->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPthreeHe->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPthreeHe->GetYaxis()->SetTitleSize(0.07);
+  LPhiVsLTPthreeHe->GetYaxis()->SetTitleSize(0.1);
   LPhiVsLTPthreeHe->GetXaxis()->SetTitleSize(0.07);
   LPhiVsLTPthreeHe->SetLineWidth(3);
+  LPhiVsLTPthreeHe->SetLineStyle(9);
   // LPhiVsLTPthreeHe->SetMarkerStyle(21);
   LPhiVsLTPthreeHe->SetLineColor(kBlack);
   LPhiVsLTPthreeHe->Draw("Lsame");
@@ -557,12 +557,12 @@ void ContourPlots(){
   pmPhiVsLTPthreeHe->SetMarkerColor(kBlack);
   pmPhiVsLTPthreeHe->SetMarkerSize(1.0);
   pmPhiVsLTPthreeHe->Draw("same");
-  auto texB = new TLatex(-0.035,0.1546582,"(b)");
+  auto texB = new TLatex(-0.035,0.12,"(b) HE");
   texB->SetTextSize(0.08);
   texB->SetLineWidth(2);
   texB->Draw();
   TLine *line3 = new TLine(-0.11,0.,0.19,0.);
-  line3->SetLineWidth(2);
+  line3->SetLineWidth(4);
   line3->SetLineColor(kGray);
   line3->Draw();
   pmPhiVsLTPthreeHe->Draw("same");
@@ -578,10 +578,11 @@ void ContourPlots(){
   smallpad2->cd(2);
   // gPad->SetLeftMargin(0.2);
   // gPad->SetLeftMargin(0.15);
-  gPad->SetLeftMargin(0.12);
+  // gPad->SetLeftMargin(0.12);
+  gPad->SetLeftMargin(0.2);
   // gPad->SetRightMargin(0.1);
   gPad->SetRightMargin(0.01);
-  gPad->SetBottomMargin(0.13);
+  gPad->SetBottomMargin(0.2);
   gPad->SetTickx(1);
   gPad->SetTicky(1);
   gPad->SetGridx();
@@ -595,8 +596,8 @@ void ContourPlots(){
   // LPhiVsLTPtwoCs->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPtwoCs->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPtwoCs->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPtwoCs->GetYaxis()->SetTitleSize(0.07);
-  LPhiVsLTPtwoCs->GetXaxis()->SetTitleSize(0.07);
+  LPhiVsLTPtwoCs->GetYaxis()->SetTitleSize(0.1);
+  LPhiVsLTPtwoCs->GetXaxis()->SetTitleSize(0.1);
   TAxis *axis4 = LPhiVsLTPtwoCs->GetXaxis();
   // axis4->SetLimits(-0.09,0.19);                 // along X
   axis4->SetLimits(-0.11,0.19);                 // along X
@@ -604,9 +605,10 @@ void ContourPlots(){
   // LPhiVsLTPtwoCs->GetHistogram()->SetMinimum(-0.17);  //   Y
   // LPhiVsLTPtwoCs->GetHistogram()->SetMaximum( 0.95);   // along
   // LPhiVsLTPtwoCs->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LPhiVsLTPtwoCs->GetHistogram()->SetMaximum( 0.35);   // along
-  LPhiVsLTPtwoCs->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LPhiVsLTPtwoCs->GetHistogram()->SetMaximum( 0.18);   // along
+  LPhiVsLTPtwoCs->GetHistogram()->SetMinimum(-0.18);  //   Y
   LPhiVsLTPtwoCs->SetLineWidth(3);
+  LPhiVsLTPtwoCs->SetLineStyle(2);
   LPhiVsLTPtwoCs->SetLineColor(4);
   LPhiVsLTPtwoCs->Draw("AL");
 
@@ -620,9 +622,10 @@ void ContourPlots(){
   // LPhiVsLTPoneCs->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPoneCs->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPoneCs->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPoneCs->GetYaxis()->SetTitleSize(0.07);
-  LPhiVsLTPoneCs->GetXaxis()->SetTitleSize(0.07);
+  LPhiVsLTPoneCs->GetYaxis()->SetTitleSize(0.1);
+  LPhiVsLTPoneCs->GetXaxis()->SetTitleSize(0.1);
   LPhiVsLTPoneCs->SetLineWidth(3);
+  LPhiVsLTPoneCs->SetLineStyle(1);
   // LPhiVsLTPoneCs->SetMarkerStyle(21);
   LPhiVsLTPoneCs->SetLineColor(2);
   LPhiVsLTPoneCs->Draw("Lsame");
@@ -636,9 +639,10 @@ void ContourPlots(){
   // LPhiVsLTPthreeCs->GetXaxis()->SetTitleOffset(1.1);
   LPhiVsLTPthreeCs->GetYaxis()->SetTitleOffset(0.8);
   LPhiVsLTPthreeCs->GetXaxis()->SetTitleOffset(0.8);
-  LPhiVsLTPthreeCs->GetYaxis()->SetTitleSize(0.07);
-  LPhiVsLTPthreeCs->GetXaxis()->SetTitleSize(0.07);
+  LPhiVsLTPthreeCs->GetYaxis()->SetTitleSize(0.1);
+  LPhiVsLTPthreeCs->GetXaxis()->SetTitleSize(0.1);
   LPhiVsLTPthreeCs->SetLineWidth(3);
+  LPhiVsLTPthreeCs->SetLineStyle(9);
   // LPhiVsLTPthreeCs->SetMarkerStyle(21);
   LPhiVsLTPthreeCs->SetLineColor(kBlack);
   LPhiVsLTPthreeCs->Draw("Lsame");
@@ -648,12 +652,12 @@ void ContourPlots(){
   pmPhiVsLTPthreeCs->SetMarkerColor(kBlack);
   pmPhiVsLTPthreeCs->SetMarkerSize(1.0);
   pmPhiVsLTPthreeCs->Draw("same");
-  auto texE = new TLatex(-0.035,0.1546582,"(e)");
+  auto texE = new TLatex(-0.035,0.12,"(e) CS");
   texE->SetTextSize(0.08);
   texE->SetLineWidth(2);
   texE->Draw();
   TLine *line4 = new TLine(-0.11,0.,0.19,0.);
-  line4->SetLineWidth(2);
+  line4->SetLineWidth(4);
   line4->SetLineColor(kGray);
   line4->Draw();
   pmPhiVsLTPthreeCs->Draw("same");
@@ -678,7 +682,9 @@ void ContourPlots(){
   smallpad3->cd(1);
   // gPad->SetLeftMargin(0.2);
   // gPad->SetLeftMargin(0.15);
-  gPad->SetLeftMargin(0.12);
+  // gPad->SetLeftMargin(0.12);
+  gPad->SetTopMargin(0.1);
+  gPad->SetLeftMargin(0.2);
   // gPad->SetRightMargin(0.1);
   gPad->SetRightMargin(0.01);
   // gPad->SetBottomMargin(0.13);
@@ -695,19 +701,20 @@ void ContourPlots(){
   // LThetaVsLPtwoHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPtwoHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPtwoHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPtwoHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPtwoHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPtwoHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPtwoHe->GetXaxis()->SetTitleSize(0.1);
   TAxis *axis5 = LThetaVsLPtwoHe->GetXaxis();
   // axis5->SetLimits(0.6,2.0);                   // along X
   // axis5->SetLimits(0.5,2.5);                   // along X // OFFICIAL
-  axis5->SetLimits(0.5,1.5);                   // along X
+  axis5->SetLimits(0.7,1.23);                   // along X
   // LThetaVsLPtwoHe->GetHistogram()->SetMaximum( 0.19);   // along
   // LThetaVsLPtwoHe->GetHistogram()->SetMinimum(-0.09);  //   Y
   // LThetaVsLPtwoHe->GetHistogram()->SetMaximum( 0.95);   // along
   // LThetaVsLPtwoHe->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LThetaVsLPtwoHe->GetHistogram()->SetMaximum( 0.35);   // along
-  LThetaVsLPtwoHe->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LThetaVsLPtwoHe->GetHistogram()->SetMaximum( 0.18);   // along
+  LThetaVsLPtwoHe->GetHistogram()->SetMinimum(-0.18);  //   Y
   LThetaVsLPtwoHe->SetLineWidth(3);
+  LThetaVsLPtwoHe->SetLineStyle(2);
   LThetaVsLPtwoHe->SetLineColor(4);
   LThetaVsLPtwoHe->Draw("AL");
 
@@ -721,9 +728,10 @@ void ContourPlots(){
   // LThetaVsLPoneHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPoneHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPoneHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPoneHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPoneHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPoneHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPoneHe->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLPoneHe->SetLineWidth(3);
+  LThetaVsLPoneHe->SetLineStyle(1);
   // LThetaVsLPoneHe->SetMarkerStyle(21);
   LThetaVsLPoneHe->SetLineColor(2);
   LThetaVsLPoneHe->Draw("Lsame");
@@ -737,9 +745,10 @@ void ContourPlots(){
   // LThetaVsLPthreeHe->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPthreeHe->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPthreeHe->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPthreeHe->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPthreeHe->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPthreeHe->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPthreeHe->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLPthreeHe->SetLineWidth(3);
+  LThetaVsLPthreeHe->SetLineStyle(9);
   // LThetaVsLPthreeHe->SetMarkerStyle(21);
   LThetaVsLPthreeHe->SetLineColor(kBlack);
   LThetaVsLPthreeHe->Draw("Lsame");
@@ -749,13 +758,13 @@ void ContourPlots(){
   pmThetaVsLPthreeHe->SetMarkerColor(kBlack);
   pmThetaVsLPthreeHe->SetMarkerSize(1.0);
   pmThetaVsLPthreeHe->Draw("same");
-  auto texC = new TLatex(0.7665754,0.1546582,"(c)");
+  auto texC = new TLatex(0.7665754,0.12,"(c) HE");
   texC->SetTextSize(0.08);
   texC->SetLineWidth(2);
   texC->Draw();
   // TLine *line5 = new TLine(0.5,0.,2.5,0.); // OFFICIAL
-  TLine *line5 = new TLine(0.5,0.,1.5,0.);
-  line5->SetLineWidth(2);
+  TLine *line5 = new TLine(0.7,0.,1.23,0.);
+  line5->SetLineWidth(4);
   line5->SetLineColor(kGray);
   line5->Draw();
   pmThetaVsLPthreeHe->Draw("same");
@@ -771,10 +780,11 @@ void ContourPlots(){
   smallpad3->cd(2);
   // gPad->SetLeftMargin(0.2);
   // gPad->SetLeftMargin(0.15);
-  gPad->SetLeftMargin(0.12);
+  // gPad->SetLeftMargin(0.12);
+  gPad->SetLeftMargin(0.2);
   // gPad->SetRightMargin(0.1);
   gPad->SetRightMargin(0.01);
-  gPad->SetBottomMargin(0.13);
+  gPad->SetBottomMargin(0.2);
   gPad->SetTickx(1);
   gPad->SetTicky(1);
   gPad->SetGridx();
@@ -788,20 +798,21 @@ void ContourPlots(){
   // LThetaVsLPtwoCs->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPtwoCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPtwoCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPtwoCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPtwoCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPtwoCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPtwoCs->GetXaxis()->SetTitleSize(0.1);
   TAxis *axis6 = LThetaVsLPtwoCs->GetXaxis();
   // axis6->SetLimits(0.6,2.0);                 // along X
   // axis6->SetLimits(-1.,2.0);                 // along X
   // axis6->SetLimits(0.5,2.5);                 // along X // OFFICIAL
-  axis6->SetLimits(0.5,1.5);                 // along X
+  axis6->SetLimits(0.7,1.23);                 // along X
   // LThetaVsLPtwoCs->GetHistogram()->SetMaximum( 0.19);   // along
   // LThetaVsLPtwoCs->GetHistogram()->SetMinimum(-0.09);  //   Y
   // LThetaVsLPtwoCs->GetHistogram()->SetMaximum( 0.95);   // along
   // LThetaVsLPtwoCs->GetHistogram()->SetMinimum(-0.95);  //   Y
-  LThetaVsLPtwoCs->GetHistogram()->SetMaximum( 0.35);   // along
-  LThetaVsLPtwoCs->GetHistogram()->SetMinimum(-0.35);  //   Y
+  LThetaVsLPtwoCs->GetHistogram()->SetMaximum( 0.18);   // along
+  LThetaVsLPtwoCs->GetHistogram()->SetMinimum(-0.18);  //   Y
   LThetaVsLPtwoCs->SetLineWidth(3);
+  LThetaVsLPtwoCs->SetLineStyle(2);
   LThetaVsLPtwoCs->SetLineColor(4);
   LThetaVsLPtwoCs->Draw("AL");
 
@@ -815,9 +826,10 @@ void ContourPlots(){
   // LThetaVsLPoneCs->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPoneCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPoneCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPoneCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPoneCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPoneCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPoneCs->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLPoneCs->SetLineWidth(3);
+  LThetaVsLPoneCs->SetLineStyle(1);
   // LThetaVsLPoneCs->SetMarkerStyle(21);
   LThetaVsLPoneCs->SetLineColor(2);
   LThetaVsLPoneCs->Draw("Lsame");
@@ -831,9 +843,10 @@ void ContourPlots(){
   // LThetaVsLPthreeCs->GetXaxis()->SetTitleOffset(1.1);
   LThetaVsLPthreeCs->GetYaxis()->SetTitleOffset(0.8);
   LThetaVsLPthreeCs->GetXaxis()->SetTitleOffset(0.8);
-  LThetaVsLPthreeCs->GetYaxis()->SetTitleSize(0.07);
-  LThetaVsLPthreeCs->GetXaxis()->SetTitleSize(0.07);
+  LThetaVsLPthreeCs->GetYaxis()->SetTitleSize(0.1);
+  LThetaVsLPthreeCs->GetXaxis()->SetTitleSize(0.1);
   LThetaVsLPthreeCs->SetLineWidth(3);
+  LThetaVsLPthreeCs->SetLineStyle(9);
   // LThetaVsLPthreeCs->SetMarkerStyle(21);
   LThetaVsLPthreeCs->SetLineColor(kBlack);
   LThetaVsLPthreeCs->Draw("Lsame");
@@ -843,41 +856,39 @@ void ContourPlots(){
   pmThetaVsLPthreeCs->SetMarkerColor(kBlack);
   pmThetaVsLPthreeCs->SetMarkerSize(1.0);
   pmThetaVsLPthreeCs->Draw("same");
-  auto texF = new TLatex(0.7665754,0.1546582,"(f)");
+  auto texF = new TLatex(0.7665754,0.12,"(f) CS");
   texF->SetTextSize(0.08);
   texF->SetLineWidth(2);
   texF->Draw();
-  // TLine *line6 = new TLine(0.5,0.,2.5,0.); // OFFICIAL
-  TLine *line6 = new TLine(0.5,0.,1.5,0.); // OFFICIAL
-  line6->SetLineWidth(2);
+  TLine *line6 = new TLine(0.7,0.,1.23,0.); // OFFICIAL
+  line6->SetLineWidth(4);
   line6->SetLineColor(kGray);
   line6->Draw();
   pmThetaVsLPthreeCs->Draw("same");
   LThetaVsLPthreeCs->Draw("Lsame");
   LThetaVsLPtwoCs->Draw("Lsame");
   LThetaVsLPoneCs->Draw("Lsame");
-  // TLegend *leg = new TLegend(0.5,0.55,0.95,0.79);
-  // leg->SetFillStyle(0);
-  // leg->SetBorderSize(0);
-  // leg->SetTextSize(0.04);
-  // // leg->AddEntry("CorrectedTildePhi","Helicity", "ep");
-  // // leg->AddEntry("CorrectedTildePhiCS","Collins-Soper #times 1.6", "ep");
-  // leg->AddEntry(LThetaVsLPthreeCs,"3 #sigma", "L");
-  // leg->AddEntry(LThetaVsLPtwoCs,  "2 #sigma", "L");
-  // leg->AddEntry(LThetaVsLPoneCs,  "1 #sigma", "L");
+  // auto leg = new TLatex(1.2,-0.1,"3 #sigma");
+  // leg->SetTextSize(0.08);
+  // leg->SetLineWidth(2);
   // leg->Draw();
-  // auto leg = new TLatex(1.8,-0.1,"3 #sigma"); // OFFICIAL
-  auto leg = new TLatex(1.2,-0.1,"3 #sigma");
+  // auto leg2 = new TLatex(1.2,-0.17,"#color[4]{2 #sigma}");
+  // leg2->SetTextSize(0.08);
+  // leg2->SetLineWidth(2);
+  // leg2->Draw();
+  // auto leg3 = new TLatex(1.2,-0.24,"#color[2]{1 #sigma}");
+  // leg3->SetTextSize(0.08);
+  // leg3->SetLineWidth(2);
+  // leg3->Draw();
+  auto leg = new TLatex(1.1,-0.05,"3 #sigma");
   leg->SetTextSize(0.08);
   leg->SetLineWidth(2);
   leg->Draw();
-  // auto leg2 = new TLatex(1.8,-0.17,"#color[4]{2 #sigma}"); // OFFICIAL
-  auto leg2 = new TLatex(1.2,-0.17,"#color[4]{2 #sigma}");
+  auto leg2 = new TLatex(1.1,-0.10,"#color[4]{2 #sigma}");
   leg2->SetTextSize(0.08);
   leg2->SetLineWidth(2);
   leg2->Draw();
-  // auto leg3 = new TLatex(1.8,-0.24,"#color[2]{1 #sigma}"); // OFFICIAL
-  auto leg3 = new TLatex(1.2,-0.24,"#color[2]{1 #sigma}");
+  auto leg3 = new TLatex(1.1,-0.15,"#color[2]{1 #sigma}");
   leg3->SetTextSize(0.08);
   leg3->SetLineWidth(2);
   leg3->Draw();
@@ -889,13 +900,13 @@ void ContourPlots(){
   latex5->SetTextFont(42);
   latex5->SetTextAlign(11);
   latex5->SetNDC();
-  latex5->DrawLatex(0.31,0.91,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex5->DrawLatex(0.26,0.91,"ALICE, Pb-Pb #sqrt{#it{s}_{NN}} = 5.02 TeV, Coherent J/#psi");
 
 
 
 
-  c_super->SaveAs("pngResults/ContourPlotsPaperV2.png",  "RECREATE");
-  c_super->SaveAs("pngResults/ContourPlotsPaperV2.pdf",  "RECREATE");
+  c_super->SaveAs("pngResults/ContourPlotsPaperV3.png",  "RECREATE");
+  c_super->SaveAs("pngResults/ContourPlotsPaperV3.pdf",  "RECREATE");
   // c_super->SaveAs("pngResults/ContourPlotsPaper.C",  "RECREATE");
 
 

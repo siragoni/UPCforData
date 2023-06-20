@@ -467,7 +467,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   CorrectedCosTheta->GetXaxis()->SetRangeUser(-0.7, 0.7);
   // CorrectedCosTheta->SetTitle(  Form(  ";cos(#theta); ACCxEFF Corrected Counts / %.3f",
   //                          CorrectedCosTheta->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedCosTheta->SetTitle(  ";cos(#theta); Corrected dN/dcos#theta" );
+  CorrectedCosTheta->SetTitle(  ";cos(#it{#theta}); Corrected d#it{N}/dcos#it{#theta}" );
   // CorrectedCosTheta->GetXaxis()->SetTitleSize(1.15);
   // CorrectedCosTheta->GetYaxis()->SetTitleSize(1.15);
   // CorrectedCosTheta->GetXaxis()->SetTitleOffset(0.65);
@@ -482,11 +482,12 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex->SetTextFont(42);
   latex->SetTextAlign(11);
   latex->SetNDC();
-  // latex->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->DrawLatex(0.2,0.81,"ALICE Public");
-  latex->DrawLatex(0.2,0.74,"PbPb");
-  latex->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
-  latex->SetTextSize(0.055);
+  // latex->DrawLatex(0.17,0.89,"ALICE, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.2,0.81,"ALICE");
+  latex->DrawLatex(0.2,0.74,"Pb-Pb");
+  latex->DrawLatex(0.2,0.67,"#sqrt{#it{s}_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.2,0.60,"Coherent J/#psi");
+  latex->SetTextSize(0.045);
   // latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   // latex->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   // latex->DrawLatex(0.55,0.70,Form("#lambda_{#theta} = %.3f #pm %.3f", LambdaTheta, LambdaThetaErr));
@@ -510,14 +511,15 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   ModelCS->Draw("PLC PMC same");
   ModelCS->Draw(" same");
   // TLegend *leg_costheta = new TLegend(0.6,0.45,0.95,0.79);
-  TLegend *leg_costheta = new TLegend(0.5,0.65,0.95,0.85);
+  // TLegend *leg_costheta = new TLegend(0.5,0.65,0.95,0.85);
+  TLegend *leg_costheta = new TLegend(0.45,0.65,0.6,0.85);
   leg_costheta->SetFillStyle(0);
   leg_costheta->SetBorderSize(0);
-  leg_costheta->SetTextSize(0.055);
+  leg_costheta->SetTextSize(0.045);
   leg_costheta->AddEntry("CorrectedCosTheta","Helicity", "ep");
   leg_costheta->AddEntry("CorrectedCosThetaCS","Collins-Soper #times 1.6", "ep");
-  leg_costheta->AddEntry("Model","Helicity fit", "L");
-  leg_costheta->AddEntry("ModelCS","Collins-Soper fit #times 1.6", "L");
+  leg_costheta->AddEntry("Model","Helicity fit, #chi^{2}/NDF = 1.50", "L");
+  leg_costheta->AddEntry("ModelCS","Collins-Soper fit #times 1.6, #chi^{2}/NDF = 1.39", "L");
   leg_costheta->Draw();
 
 
@@ -570,7 +572,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // CorrectedPhi->GetXaxis()->SetRangeUser(2, 6);
   // CorrectedPhi->SetTitle(  Form(  ";#phi; ACCxEFF Corrected Counts / %.3f",
   //                          CorrectedPhi->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedPhi->SetTitle( ";#varphi; Corrected dN/d#varphi" );
+  CorrectedPhi->SetTitle( ";#it{#varphi}; Corrected d#it{N}/d#it{#varphi}" );
   // CorrectedPhi->Draw();
   CorrectedPhi->Draw("PLC PMC");
   CorrectedPhiCS->Sumw2();
@@ -582,11 +584,12 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex2->SetTextFont(42);
   latex2->SetTextAlign(11);
   latex2->SetNDC();
-  // latex2->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex2->DrawLatex(0.2,0.81,"ALICE Public");
-  latex2->DrawLatex(0.2,0.74,"PbPb");
-  latex2->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
-  latex2->SetTextSize(0.055);
+  // latex2->DrawLatex(0.17,0.89,"ALICE, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex2->DrawLatex(0.2,0.81,"ALICE");
+  latex2->DrawLatex(0.2,0.74,"Pb-Pb");
+  latex2->DrawLatex(0.2,0.67,"#sqrt{#it{s}_{NN}} = 5.02 TeV");
+  latex2->DrawLatex(0.2,0.60,"Coherent J/#psi");
+  latex2->SetTextSize(0.045);
   // latex2->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   // latex2->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   // latex2->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",   LambdaPhi,   LambdaPhiErr));
@@ -614,14 +617,14 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model2CS->Draw(" same");
   // TLegend *leg_costheta = new TLegend(0.6,0.45,0.95,0.79);
   // TLegend *leg_phi = new TLegend(0.5,0.55,0.95,0.79);
-  TLegend *leg_phi = new TLegend(0.5,0.65,0.95,0.85);
+  TLegend *leg_phi = new TLegend(0.45,0.65,0.6,0.85);
   leg_phi->SetFillStyle(0);
   leg_phi->SetBorderSize(0);
-  leg_phi->SetTextSize(0.055);
+  leg_phi->SetTextSize(0.045);
   leg_phi->AddEntry("CorrectedPhi","Helicity", "ep");
   leg_phi->AddEntry("CorrectedPhiCS","Collins-Soper #times 1.6", "ep");
-  leg_phi->AddEntry("Model2","Helicity fit", "L");
-  leg_phi->AddEntry("Model2CS","Collins-Soper fit #times 1.6", "L");
+  leg_phi->AddEntry("Model2","Helicity fit, #chi^{2}/NDF = 1.50", "L");
+  leg_phi->AddEntry("Model2CS","Collins-Soper fit #times 1.6, #chi^{2}/NDF = 1.39", "L");
   leg_phi->Draw();
 
 
@@ -677,7 +680,7 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // CorrectedTildePhi->GetXaxis()->SetRangeUser(2, 6);
   // CorrectedTildePhi->SetTitle(  Form(  ";#tilde{#phi}; ACCxEFF Corrected Counts / %.3f",
   //                          CorrectedTildePhi->GetXaxis()->GetBinWidth(1)  )  );
-  CorrectedTildePhi->SetTitle( ";#tilde{#varphi}; Corrected dN/d#tilde{#varphi}" );
+  CorrectedTildePhi->SetTitle( ";#tilde{#it{#varphi}}; Corrected d#it{N}/d#tilde{#it{#varphi}}" );
   // CorrectedTildePhi->Draw();
   CorrectedTildePhi->Draw("PLC PMC");
   CorrectedTildePhiCS->Sumw2();
@@ -689,11 +692,12 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex3->SetTextFont(42);
   latex3->SetTextAlign(11);
   latex3->SetNDC();
-  // latex3->DrawLatex(0.17,0.89,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex3->DrawLatex(0.2,0.81,"ALICE Public");
-  latex3->DrawLatex(0.2,0.74,"PbPb");
-  latex3->DrawLatex(0.2,0.67,"#sqrt{s_{NN}} = 5.02 TeV");
-  latex3->SetTextSize(0.055);
+  // latex3->DrawLatex(0.17,0.89,"ALICE, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex3->DrawLatex(0.2,0.81,"ALICE");
+  latex3->DrawLatex(0.2,0.74,"Pb-Pb");
+  latex3->DrawLatex(0.2,0.67,"#sqrt{#it{s}_{NN}} = 5.02 TeV");
+  latex3->DrawLatex(0.2,0.60,"Coherent J/#psi");
+  latex3->SetTextSize(0.045);
   // latex3->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");
   // latex3->DrawLatex(0.55,0.78,"Simultaneous Minuit Fit");
   // // latex3->DrawLatex(0.55,0.70,Form("#lambda_{#phi} = %.3f #pm %.3f",       LambdaPhi,      LambdaPhiErr));
@@ -722,17 +726,17 @@ void PolarisationHeMinuit1D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   Model3CS->Draw("PLC PMC same");
   Model3CS->Draw(" same");
   // TLegend *leg_tildephi = new TLegend(0.5,0.55,0.95,0.79);
-  TLegend *leg_tildephi = new TLegend(0.5,0.65,0.95,0.85);
+  TLegend *leg_tildephi = new TLegend(0.45,0.65,0.6,0.85);
   leg_tildephi->SetFillStyle(0);
   leg_tildephi->SetBorderSize(0);
-  leg_tildephi->SetTextSize(0.055);
+  leg_tildephi->SetTextSize(0.045);
   // leg_tildephi->SetFillStyle(0);
   // leg_tildephi->SetBorderSize(0);
   // leg_tildephi->SetTextSize(0.04);
   leg_tildephi->AddEntry("CorrectedTildePhi","Helicity", "ep");
   leg_tildephi->AddEntry("CorrectedTildePhiCS","Collins-Soper #times 1.6", "ep");
-  leg_tildephi->AddEntry("Model3","Helicity fit", "L");
-  leg_tildephi->AddEntry("Model3CS","Collins-Soper fit #times 1.6", "L");
+  leg_tildephi->AddEntry("Model3","Helicity fit, #chi^{2}/NDF = 1.50", "L");
+  leg_tildephi->AddEntry("Model3CS","Collins-Soper fit #times 1.6, #chi^{2}/NDF = 1.39", "L");
   leg_tildephi->Draw();
 
 

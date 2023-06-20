@@ -301,7 +301,7 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   // // Distr2D->GetXaxis()->SetRangeUser(2, 6);
   // Distr2D->SetTitle( ";cos(#theta); #phi" );
   // Distr2D->Draw("colZ");
-  helicity2DafterSignalExtractionErrors->SetTitle( "; #varphi ;cos(#theta)" );
+  helicity2DafterSignalExtractionErrors->SetTitle( "; #it{#varphi} ;cos(#it{#theta})" );
   // Int_t Number = 5;
   // Double_t Red[5] = { 0.00, 0.09, 0.18, 0.09, 0.00 };
   // Double_t Green[5] = { 0.01, 0.02, 0.39, 0.68, 0.97 };
@@ -382,7 +382,7 @@ void PolarisationHeMinuit2D( Int_t SignalRangeSelectionMode = 0, Int_t FitRangeM
   latex->SetTextAlign(11);
   latex->SetNDC();
   // latex->DrawLatex(0.17,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
-  latex->DrawLatex(0.12,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  latex->DrawLatex(0.12,0.94,"ALICE, Pb-Pb #sqrt{#it{s}_{NN}} = 5.02 TeV");
   latex->SetTextSize(0.055);
   latex->DrawLatex(0.7,0.94,"Helicity");
   // latex->DrawLatex(0.55,0.84,"UPC, Run 2 dataset, HE");

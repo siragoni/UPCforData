@@ -1,0 +1,77 @@
+{
+//========= Macro generated from object: LambdaTheta/LambdaThetaSys = 0.143494 / 1.259449 = 0.113934
+//========= by ROOT version6.14/04
+   
+   Double_t LambdaTheta_fx1001[7] = {
+   0.5,
+   1.5,
+   2.5,
+   3.5,
+   4.5,
+   5.5,
+   6.5};
+   Double_t LambdaTheta_fy1001[7] = {
+   1.25945,
+   1.2594,
+   1.25803,
+   1.33002,
+   1.48222,
+   1.50547,
+   1.36273};
+   Double_t LambdaTheta_fex1001[7] = {
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0};
+   Double_t LambdaTheta_fey1001[7] = {
+   0.0448071,
+   0.0450532,
+   0.0448462,
+   0.15189,
+   0.15385,
+   0.143494,
+   0.0419123};
+   TGraphErrors *gre = new TGraphErrors(7,LambdaTheta_fx1001,LambdaTheta_fy1001,LambdaTheta_fex1001,LambdaTheta_fey1001);
+   gre->SetName("LambdaTheta");
+   gre->SetTitle("LambdaThetaSys = 0.143494 / 1.259449 = 0.113934");
+   gre->SetFillColor(1);
+   gre->SetFillStyle(1000);
+   gre->SetMarkerColor(4);
+   gre->SetMarkerStyle(21);
+   gre->SetMarkerSize(1.3);
+   
+   TH1F *Graph_LambdaTheta1001 = new TH1F("Graph_LambdaTheta1001","LambdaThetaSys = 0.143494 / 1.259449 = 0.113934",100,0,7.1);
+   Graph_LambdaTheta1001->SetMinimum(1.13104);
+   Graph_LambdaTheta1001->SetMaximum(1.69605);
+   Graph_LambdaTheta1001->SetDirectory(0);
+   Graph_LambdaTheta1001->SetStats(0);
+
+   Int_t ci;      // for color index setting
+   TColor *color; // for color definition with alpha
+   ci = TColor::GetColor("#000099");
+   Graph_LambdaTheta1001->SetLineColor(ci);
+   Graph_LambdaTheta1001->GetXaxis()->SetTitle("Different modes");
+   Graph_LambdaTheta1001->GetXaxis()->CenterTitle(true);
+   Graph_LambdaTheta1001->GetXaxis()->SetLabelFont(42);
+   Graph_LambdaTheta1001->GetXaxis()->SetLabelSize(0.035);
+   Graph_LambdaTheta1001->GetXaxis()->SetTitleSize(0.035);
+   Graph_LambdaTheta1001->GetXaxis()->SetTitleOffset(1.2);
+   Graph_LambdaTheta1001->GetXaxis()->SetTitleFont(42);
+   Graph_LambdaTheta1001->GetYaxis()->SetTitle("#lambda{#theta}");
+   Graph_LambdaTheta1001->GetYaxis()->CenterTitle(true);
+   Graph_LambdaTheta1001->GetYaxis()->SetLabelFont(42);
+   Graph_LambdaTheta1001->GetYaxis()->SetLabelSize(0.035);
+   Graph_LambdaTheta1001->GetYaxis()->SetTitleSize(0.035);
+   Graph_LambdaTheta1001->GetYaxis()->SetTitleOffset(1.2);
+   Graph_LambdaTheta1001->GetYaxis()->SetTitleFont(42);
+   Graph_LambdaTheta1001->GetZaxis()->SetLabelFont(42);
+   Graph_LambdaTheta1001->GetZaxis()->SetLabelSize(0.035);
+   Graph_LambdaTheta1001->GetZaxis()->SetTitleSize(0.035);
+   Graph_LambdaTheta1001->GetZaxis()->SetTitleFont(42);
+   gre->SetHistogram(Graph_LambdaTheta1001);
+   
+   gre->Draw("");
+}

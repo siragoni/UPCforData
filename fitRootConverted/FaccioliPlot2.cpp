@@ -80,7 +80,7 @@ void FaccioliPlot()
   latex5->SetTextFont(42);
   latex5->SetTextAlign(11);
   latex5->SetNDC();
-  latex5->DrawLatex(0.31,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  // latex5->DrawLatex(0.31,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
 
   gPad->SaveAs("pngResults/Faccioli1.pdf", "recreate");
 
@@ -139,7 +139,7 @@ void FaccioliPlot()
   latex6->SetTextFont(42);
   latex6->SetTextAlign(11);
   latex6->SetNDC();
-  latex6->DrawLatex(0.31,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
+  // latex6->DrawLatex(0.31,0.94,"ALICE Public, PbPb #sqrt{s_{NN}} = 5.02 TeV");
 
 
   gPad->SaveAs("pngResults/Faccioli2.pdf", "recreate");
